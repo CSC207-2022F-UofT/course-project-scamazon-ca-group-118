@@ -5,7 +5,7 @@ This repository contains starter code for a gradle project.
 It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
 
 ## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
+- [X] Verify the correct settings for your project repository
 - [ ] Set up Github Projects
 - [ ] Create the implementation plan using issues and Github Projects
 - [ ] Create deveopment branches for your features
