@@ -2,7 +2,6 @@ import java.util.List;
 import features.Cart;
 import features.Listing;
 import features.Review;
-import features.Search;
 
 public class User {
     private String username;
