@@ -86,7 +86,7 @@ public class User {
         this.rating = rating;
     }
 
-    //TODO: Implement these methods
+    //TODO: Implement
     public void setCart(Cart cart) {
         this.cart = cart;
     }
