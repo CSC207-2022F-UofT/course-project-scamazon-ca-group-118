@@ -8,12 +8,13 @@ public class User {
     private String password;
     private int id;
     private String email;
-    private int reviews;
+    private List<Review> reviews;
     private List<Listing> listings;
     private Cart cart;
+    private int rating;
 
-    public User(String username, String password, int id, String email, int reviews,
-                List<Listing> listings, Cart cart) {
+    public User(String username, String password, int id, String email, List<Review> reviews,
+                List<Listing> listings, Cart cart, int rating) {
         this.username = username;
         this.password = password;
         this.id = id;
@@ -21,6 +22,7 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
+        this.rating = rating;
     }
 
 
@@ -56,11 +58,11 @@ public class User {
         this.email = email;
     }
 
-    public int getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(int reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 
@@ -74,6 +76,14 @@ public class User {
 
     public Cart getCart() {
         return cart;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     //TODO: Implement these methods
@@ -101,4 +111,6 @@ public class User {
     public void removeReview() {
 
     }
+
+
 }
