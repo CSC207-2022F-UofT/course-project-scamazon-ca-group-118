@@ -1,4 +1,8 @@
 import java.util.List;
+import features.Cart;
+import features.Listing;
+import features.Review;
+import features.Search;
 
 public class User {
     private String username;
@@ -6,11 +10,11 @@ public class User {
     private int id;
     private String email;
     private Review reviews;
-    private List<Listings> listings;
+    private List<Listing> listings;
     private Cart cart;
 
     public User(String username, String password, int id, String email, Review reviews,
-                List<Listings> listings, Cart cart) {
+                List<Listing> listings, Cart cart) {
         this.username = username;
         this.password = password;
         this.id = id;
@@ -61,11 +65,11 @@ public class User {
         this.reviews = reviews;
     }
 
-    public List<Listings> getListings() {
+    public List<Listing> getListings() {
         return listings;
     }
 
-    public void setListings(List<Listings> listings) {
+    public void setListings(List<Listing> listings) {
         this.listings = listings;
     }
 
