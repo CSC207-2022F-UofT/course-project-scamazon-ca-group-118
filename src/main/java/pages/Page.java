@@ -1,4 +1,5 @@
 package pages;
 
-public class Page {
+public abstract class Page {
+    private String title;
 }

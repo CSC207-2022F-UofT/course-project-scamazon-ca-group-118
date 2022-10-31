@@ -1,4 +1,23 @@
 package forms;
 
-public class Form {
+public abstract class Form {
+    private String title;
+    private String submit;
+
+    public String getTitle() {
+        return this.title;
+    }
+    public void setTitle (String title) {
+        this.title = title;
+    }
+    public String getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(String submit) {
+        this.submit = submit;
+    }
+
+    abstract boolean validateForm();
+    abstract void submitForm();
 }
