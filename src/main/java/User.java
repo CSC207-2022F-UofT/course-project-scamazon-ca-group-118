@@ -11,10 +11,9 @@ public class User {
     private List<Review> reviews;
     private List<Listing> listings;
     private Cart cart;
-    private int rating;
 
     public User(String username, String password, int id, String email, List<Review> reviews,
-                List<Listing> listings, Cart cart, int rating) {
+                List<Listing> listings, Cart cart) {
         this.username = username;
         this.password = password;
         this.id = id;
@@ -22,7 +21,6 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
-        this.rating = rating;
     }
 
 
@@ -78,14 +76,6 @@ public class User {
         return cart;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     //TODO: Implement
     public void setCart(Cart cart) {
         this.cart = cart;
@@ -111,6 +101,9 @@ public class User {
     public void removeReview() {
 
     }
+//    public int calculateRating() {
+//
+//    }
 
 
 }
