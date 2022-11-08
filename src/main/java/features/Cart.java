@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-    private List<Listing> listings;
+    private ArrayList<Listing> listings;
 
     public Cart(ArrayList<Listing> item_listings){
         this.listings = item_listings;
@@ -16,7 +16,7 @@ public class Cart {
     }
 
     //We make a shallow copy of listings.
-    public List<Listing> getItems(){
+    public ArrayList<Listing> getItems(){
         ArrayList<Listing> copied_listings = new ArrayList<Listing>();
         for (Listing listing : this.listings){
             copied_listings.add(listing);
