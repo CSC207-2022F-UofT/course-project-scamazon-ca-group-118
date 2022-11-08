@@ -1,3 +1,5 @@
+package entities;
+
 import java.util.List;
 import features.Cart;
 import features.Listing;
