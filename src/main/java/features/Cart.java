@@ -4,18 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
+
     private ArrayList<Listing> listings;
 
-    public Cart(ArrayList<Listing> item_listings){
-        this.listings = item_listings;
+    /** A Constructor for Cart that sets contents of the cart to be itemListings.
+     *
+     * @param itemListings an ArrayList of unique Listings.
+     */
+    public Cart(ArrayList<Listing> itemListings){
+        this.listings = itemListings;
     }
 
-    //Overloading since I don't know how it will be used.
+    //OVERLOADED
+    /** A Constructor for Cart that takes no arguments*/
     public Cart(){
         this.listings = new ArrayList<Listing>();
     }
 
-    //We make a shallow copy of listings.
+
+    /** Get all Listings in the cart.
+     *
+     * @return A shallow copy of the list of Listings within Cart (An ArrayList of Listings).
+     */
     public ArrayList<Listing> getItems(){
         ArrayList<Listing> copied_listings = new ArrayList<Listing>();
         for (Listing listing : this.listings){
@@ -24,8 +34,11 @@ public class Cart {
         return copied_listings;
     }
 
-    //If the item is already in the cart we return false.
-    // else if listing is not in cart and has been added properly we return "true".
+    /** Adds item to the cart if item isn't in it already.
+     *
+     * @param item A Listing to be added to this.listings.
+     * @return A boolean indicating whether item was successfully added to the cart.
+     */
     public boolean addItem(Listing item){
         if (this.listings.contains(item)){
             return false;
@@ -35,21 +48,35 @@ public class Cart {
         }
     }
 
-    //precondition: there is 1 and only 1 instance of item in this.listings
+    /** We assume item appears only once in the cart and we remove it.
+     *
+     * @param item A Listing that appears in this.listings once and only once
+     */
     public void removeItem(Listing item){
         this.listings.remove(item);
     }
 
-    //Overloading the method for indexes.
+    //OVERLOADED
+    /** We remove the Listing at index num in the cart.
+     *
+     * @param num An int, representing an index that exists in this.listings.
+     */
     public void removeItem(int num){
         this.listings.remove(num);
     }
 
-    //No clue how this would be used but implemented it anyway just in case
+    /** The contents of the cart are reassigned to be list.
+     *
+     * @param list An ArrayList made up of Listings.
+     */
     public void setItems(ArrayList<Listing> list){
         this.listings = list;
     }
 
+    /** We return the price of all items in the cart combined.
+     *
+     * @return The total price of all items in the cart.
+     */
     public int getPrice(){
         int total_price = 0;
         for (Listing item : this.listings){
