@@ -1,25 +1,21 @@
 package login;
 
+/**
+ * The LoginRequestModel holds data that will be sent from the constructor (in this case, the LoginForm) to the
+ * interactor (in this case, LoginInteractor)
+ */
 public class LoginRequestModel {
-    /**
-     * the username entered by the user
-     */
-    String username;
+    private String username;
+    private String enteredPassword;
 
     /**
-     * the password entered by the user
+     * The constructor for the LoginRequestModel with the specified username and enteredPassword
+     * @param username the username that the user entered and will be stored in this object
+     * @param enteredPassword the password that the user entered and will be stored in this object
      */
-    String enteredPassword;
-
-    /**
-     * the correct password for the user with username
-     */
-    String correctPassword;
-
-    public LoginRequestModel(String username, String enteredPassword, String correctPassword){
+    public LoginRequestModel(String username, String enteredPassword){
         this.username = username;
         this.enteredPassword = enteredPassword;
-        this.correctPassword = correctPassword;
     }
 
     public String getUsername(){
@@ -30,16 +26,8 @@ public class LoginRequestModel {
         return enteredPassword;
     }
 
-    public String getCorrectPassword(){
-        return correctPassword;
-    }
-
     public void setUsername(String username){
         this.username = username;
-    }
-
-    public void setCorrectPassword(String correctPassword){
-        this.correctPassword = correctPassword;
     }
 
     public void setEnteredPassword(String enteredPassword){

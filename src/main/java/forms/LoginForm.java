@@ -1,9 +1,9 @@
 package forms;
-
 import login.LoginDatabaseController;
-import login.LoginFailed;
 import login.LoginRequestModel;
 import login.LoginResponseModel;
+import entities.User;
+
 
 public class LoginForm extends Form{
     /**
@@ -36,21 +36,31 @@ public class LoginForm extends Form{
 
     @Override
     boolean validateForm() {
-        this.user = new LoginDatabaseController(username).getUser();
-        LoginRequestModel requestModel = new LoginRequestModel(username, password, user.getPassword());
-        this.responseModel = new LoginResponseModel(requestModel);
-        return responseModel.getLogIn();
+        return password.length() > 0 && username.length() > 0;
     }
 
     @Override
     public void submitForm(){
-        if(this.validateForm()) {
-            LoginPresenter(user, responseModel);
+        if(this.validateForm()){
+            this.user = new LoginDatabaseController(username).getUser();
+            LoginRequestModel requestModel = new LoginRequestModel(username, password);
+            this.responseModel = new LoginResponseModel(requestModel);
         }
-        else{
-            throw new LoginFailed(responseModel.getMessage());
-        }
-        // log in the user
+    }
 
+    /** TODO once we have UserPresenter implemented
+     *public UserPresenter getPresenter(){
+     *     UserPresenter presenter = new UserPresenter(responseModel.getUsername(),
+     *                               responseModel.getID(),
+     *                               responseModel.getEmail(),
+     *                               responseModel.getReviews(),
+     *                               responseModel.getListings(),
+     *                               responseModel.getCart());  //or whatever the parameters are for a UserPresenter
+     *     return presenter;
+     *}
+     */
+
+    public LoginResponseModel getResponseModel() {
+        return responseModel;
     }
 }
