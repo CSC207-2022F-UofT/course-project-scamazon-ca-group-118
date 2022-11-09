@@ -11,7 +11,8 @@ public class CreateListingForm extends Form {
     private String description;
     private String[] images;
 
-    private int id = 0;
+    private static int id = 0;
+
     public CreateListingForm(String title, float price, User seller, String description, String[] images) {
         super(title);
         this.price = price;
@@ -21,11 +22,11 @@ public class CreateListingForm extends Form {
     }
 
 
-    public void submitListing(){
+    public void submitListing() {
         // This function will be called on the "submit" button click
         // This will add a listing to the databse using the database interactor method.
         String title = this.getTitle();
-        Listing L = new Listing(title, id,price, seller, description, images);
+        Listing L = new Listing(title, id, price, seller, description, images);
         id++;
 
         // addListing(L);
@@ -36,13 +37,11 @@ public class CreateListingForm extends Form {
         /*
         We will have a description limit of 1000 characters
          */
-        if(price >= 0 && description.length() < 1000){// TODO: Check that the seller exists in the database
+        if (price >= 0 && description.length() < 1000) {// TODO: Check that the seller exists in the database
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-
 
 
     }
