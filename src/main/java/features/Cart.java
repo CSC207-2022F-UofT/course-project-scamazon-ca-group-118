@@ -1,7 +1,6 @@
 package features;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Cart {
 
@@ -18,7 +17,7 @@ public class Cart {
     //OVERLOADED
     /** A Constructor for Cart that takes no arguments*/
     public Cart(){
-        this.listings = new ArrayList<Listing>();
+        this.listings = new ArrayList<>();
     }
 
 
@@ -27,7 +26,7 @@ public class Cart {
      * @return A shallow copy of the list of Listings within Cart (An ArrayList of Listings).
      */
     public ArrayList<Listing> getItems(){
-        ArrayList<Listing> copied_listings = new ArrayList<Listing>();
+        ArrayList<Listing> copied_listings = new ArrayList<>();
         for (Listing listing : this.listings){
             copied_listings.add(listing);
         }
@@ -36,7 +35,7 @@ public class Cart {
 
     /** Adds item to the cart if item isn't in it already.
      *
-     * @param item A Listing to be added to this.listings.
+     * @param item A Listing to be added to the cart.
      * @return A boolean indicating whether item was successfully added to the cart.
      */
     public boolean addItem(Listing item){
@@ -48,9 +47,9 @@ public class Cart {
         }
     }
 
-    /** We assume item appears only once in the cart and we remove it.
+    /** We assume item appears only once in the cart, and we remove it.
      *
-     * @param item A Listing that appears in this.listings once and only once
+     * @param item A Listing that appears in cart once and only once
      */
     public void removeItem(Listing item){
         this.listings.remove(item);
