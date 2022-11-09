@@ -2,7 +2,7 @@ package login;
 import entities.User;
 
 /**
- * The LoginIteractor class determines whether a user should be logged in, and which User should be logged in.
+ * The LoginInteractor class determines whether a user should be logged in, and which User should be logged in.
  */
 public class LoginInteractor {
     private String username;
@@ -19,7 +19,7 @@ public class LoginInteractor {
     public LoginInteractor(String username, String enteredPassword){
         this.username = username;
         this.ENTERED_PASSWORD = enteredPassword;
-        this.user = new GetUserWithUsername(this.username).getUser();
+        this.user = new GetUser().getUserWithUsername(this.username);
         this.userExists = new UserExists(this.user).checkExists();
     }
 

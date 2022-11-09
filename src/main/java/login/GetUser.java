@@ -5,18 +5,12 @@ import entities.User;
  * The GetUserWithUsername class will have a final attribute USER holds the User from the database with the
  * specified username, or an empty User if no user has this username
  */
-public class GetUserWithUsername implements LoginDatabaseGateway{
-    /**
-     * either the User whose username is username, or an empty User
-     */
-    private final User USER;
+public class GetUser implements LoginDatabaseGateway{
 
     /**
-     * Retrieves from the database the User whose username is username.
-     * @param username the username that will be searched for in the database
+     * Creates an instance of GetUserWithUsername
      */
-    public GetUserWithUsername(String username){
-        this.USER = getUserWithUsername(username);
+    public GetUser(){
     }
 
     /**
@@ -27,9 +21,5 @@ public class GetUserWithUsername implements LoginDatabaseGateway{
     @Override
     public User getUserWithUsername(String username) {
         return new LoginDatabaseController(username).getUser();
-    }
-
-    public User getUser() {
-        return USER;
     }
 }
