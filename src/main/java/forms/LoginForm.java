@@ -32,15 +32,13 @@ public class LoginForm extends Form{
         this.password = password;
     }
 
-    public
-
     @Override
-    boolean validateForm() {
+    protected boolean validateForm() {
         return password.length() > 0 && username.length() > 0;
     }
 
     @Override
-    public void submitForm(){
+    protected void submitForm(){
         if(this.validateForm()){
             this.user = new LoginDatabaseController(username).getUser();
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
