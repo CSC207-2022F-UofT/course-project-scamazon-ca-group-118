@@ -58,7 +58,12 @@ public class LoginForm extends Form{
      *}
      */
 
+    /**
+     * submit the form then return the response model generated
+     * @return the response model generated after submitting the form
+     */
     public LoginResponseModel getResponseModel() {
+        this.submitForm();
         return responseModel;
     }
 }

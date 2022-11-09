@@ -49,7 +49,6 @@ public class LoginFormUnitTests {
     @Test
     void LoginFormValidEntryCorrectPassword(){
         LoginForm form = new LoginForm("clare", "12345");
-        form.submitForm();
         assert(form.getResponseModel().getUsername().equals("clare"));
         assert(form.getResponseModel().getPassword().equals("12345"));
         assert(form.getResponseModel().getId() == 1);
