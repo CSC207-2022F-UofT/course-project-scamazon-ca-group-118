@@ -13,27 +13,25 @@ public class CreateListingForm extends Form {
     private float price;
     private String description;
     private List<String> images;
-
-    private static int id = 0;
-
+    private int id;
 
 
     public CreateListingForm(String title
-            , float price, User seller, String description, List<String> images) {
+            , float price, User seller, String description, List<String> images, int id) {
         super(title);
         this.price = price;
         this.seller = seller;
         this.description = description;
         this.images = images;
+        this.id = id;
     }
 
 
     public void submitListing() {
         // This function will be called on the "submit" button click
-        // This will add a listing to the databse using the database interactor method.
+        // This will add a listing to the database using the database interactor method.
         String title = this.getTitle();
         Listing L = new Listing(title, id, price, seller, description, images);
-        id++;
 
         // addListing(L);
     }

@@ -8,16 +8,17 @@ import java.util.List;
 
 public class Listing {
     private String title;
-    private static int id; // String or int -> dependent on database implementation
+    private int id; // String or int -> dependent on database implementation
+    private static int nextId = 0;
     private LocalDate dateAdded; // Represents a date (year, month, day (yyyy-MM-dd))
     private float price;
     private User seller;
     private String description;
     private List<String> images; // Will store the directory path of the images
 
-    public Listing(String title, int id, float price, User seller, String description, List<String> images) {
+    public Listing(String title, float price, User seller, String description, List<String> images) {
         this.title = title;
-        this.id = id;
+        this.id = nextId++;
         this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
         this.price = price;
         this.seller = seller;
@@ -25,10 +26,15 @@ public class Listing {
         this.images = images;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
-    public LocalDate getDate(){
+
+    public LocalDate getDate() {
         return dateAdded;
     }
 
@@ -36,7 +42,8 @@ public class Listing {
     public float getPrice() {
         return price;
     }
-    public User getSeller(){
+
+    public User getSeller() {
         return seller;
     }
 
@@ -51,46 +58,43 @@ public class Listing {
             return images.get(imageIndex);
         }
     }
-    public boolean setPrice(float price){
-        if (price > 0){
+
+    public boolean setPrice(float price) {
+        if (price > 0) {
             this.price = price;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public boolean setDescription(String description){
-        if(description.length() < 1000){
+    public boolean setDescription(String description) {
+        if (description.length() < 1000) {
             this.description = description;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
 
     }
-    public boolean addImage(String imgPath){
+
+    public boolean addImage(String imgPath) {
         File img = new File(imgPath);
-        if(img.exists()){
+        if (img.exists()) {
             images.add(imgPath);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
-    public boolean removeImages(String imgPath){
+
+    public boolean removeImages(String imgPath) {
         File img = new File(imgPath);
-        if(img.exists()){
+        if (img.exists()) {
             images.remove(imgPath);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
-
-
 }
