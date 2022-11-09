@@ -6,14 +6,17 @@ public abstract class Form {
     public Form(String title) {
         this.title = title;
     }
+
     public String getTitle() {
         return this.title;
     }
-    public void setTitle (String title) {
+
+    public void setTitle(String title) {
         this.title = title;
     }
 
     // TODO: Implement
     abstract boolean validateForm();
+
     abstract void submitForm();
 }

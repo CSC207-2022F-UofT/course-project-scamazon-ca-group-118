@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class LoginFormUnitTests {
     @Test
-    void LoginFormInvalidUsername(){
+    void LoginFormInvalidUsername() {
         LoginForm form = new LoginForm("", "12345");
         assertFalse(form.validateForm());
         form.submitForm();
@@ -16,7 +16,7 @@ public class LoginFormUnitTests {
     }
 
     @Test
-    void LoginFormInvalidPassword(){
+    void LoginFormInvalidPassword() {
         LoginForm form = new LoginForm("clare", "");
         assertFalse(form.validateForm());
         form.submitForm();
@@ -24,36 +24,36 @@ public class LoginFormUnitTests {
     }
 
     @Test
-    void LoginFormValidEntryUserDoesNotExist(){
+    void LoginFormValidEntryUserDoesNotExist() {
         LoginForm form = new LoginForm("not clare", "12345");
-        try{
+        try {
             form.submitForm();
-            assert 4==5; //assert a false statement to ensure the try failed
-        }catch(LoginFailed e){
-            assert(e.getMessage().equals("No user exists with this username"));
+            assert 4 == 5; //assert a false statement to ensure the try failed
+        } catch (LoginFailed e) {
+            assert (e.getMessage().equals("No user exists with this username"));
         }
     }
 
     @Test
-    void LoginFormValidEntryWrongPassword(){
+    void LoginFormValidEntryWrongPassword() {
         LoginForm form = new LoginForm("clare", "1234");
-        assert(form.validateForm());
-        try{
+        assert (form.validateForm());
+        try {
             form.submitForm();
-            assert 4==5; //assert a false statement to ensure the try failed
-        }catch(LoginFailed e){
-            assert(e.getMessage().equals("The password you entered is incorrect"));
+            assert 4 == 5; //assert a false statement to ensure the try failed
+        } catch (LoginFailed e) {
+            assert (e.getMessage().equals("The password you entered is incorrect"));
         }
     }
 
     @Test
-    void LoginFormValidEntryCorrectPassword(){
+    void LoginFormValidEntryCorrectPassword() {
         LoginForm form = new LoginForm("clare", "12345");
-        assert(form.getResponseModel().getUsername().equals("clare"));
-        assert(form.getResponseModel().getPassword().equals("12345"));
-        assert(form.getResponseModel().getId() == 1);
-        assert(form.getResponseModel().getEmail().equals("clare@gmail.com"));
-        assert(form.getResponseModel().getReviews().isEmpty());
-        assert(form.getResponseModel().getListings().isEmpty());
+        assert (form.getResponseModel().getUsername().equals("clare"));
+        assert (form.getResponseModel().getPassword().equals("12345"));
+        assert (form.getResponseModel().getId() == 1);
+        assert (form.getResponseModel().getEmail().equals("clare@gmail.com"));
+        assert (form.getResponseModel().getReviews().isEmpty());
+        assert (form.getResponseModel().getListings().isEmpty());
     }
 }

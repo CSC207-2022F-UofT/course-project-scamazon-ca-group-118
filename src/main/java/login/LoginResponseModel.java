@@ -1,4 +1,5 @@
 package login;
+
 import features.Cart;
 import features.Listing;
 import features.Review;
@@ -20,13 +21,14 @@ public class LoginResponseModel {
 
     /**
      * A constructor for the LoginResponseModel
+     *
      * @param requestModel the request model to be fed into the LoginInteractor that will generate the
      *                     necessary data for this LoginResponseModel
      */
-    public LoginResponseModel(LoginRequestModel requestModel){
+    public LoginResponseModel(LoginRequestModel requestModel) {
         LoginInteractor interactor =
                 new LoginInteractor(requestModel.getUsername(), requestModel.getEnteredPassword());
-        if(interactor.shouldLogin()) {
+        if (interactor.shouldLogin()) {
             this.username = interactor.getUser().getUsername();
             this.password = interactor.getUser().getPassword();
             this.id = interactor.getUser().getID();
@@ -37,7 +39,7 @@ public class LoginResponseModel {
         }
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
@@ -66,7 +68,7 @@ public class LoginResponseModel {
     }
 
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 

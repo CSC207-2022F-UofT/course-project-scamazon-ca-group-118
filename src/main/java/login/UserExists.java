@@ -1,4 +1,5 @@
 package login;
+
 import entities.User;
 
 /**
@@ -9,17 +10,19 @@ public class UserExists {
 
     /**
      * A constructor for the UserExists class
+     *
      * @param user the User that's existence is being checked
      */
-    public UserExists(User user){
+    public UserExists(User user) {
         this.PASSWORD = user.getPassword();
     }
 
     /**
      * Checks whether the User given as a parameter to the constructor is non-empty i.e. exists
+     *
      * @return boolean of whether the User given to the constructor exists
      */
-    public boolean checkExists(){
+    public boolean checkExists() {
         return !this.PASSWORD.equals("");
     }
 }

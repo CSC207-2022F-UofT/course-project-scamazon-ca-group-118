@@ -10,27 +10,28 @@ public class LoginRequestModel {
 
     /**
      * The constructor for the LoginRequestModel with the specified username and enteredPassword
-     * @param username the username that the user entered and will be stored in this object
+     *
+     * @param username        the username that the user entered and will be stored in this object
      * @param enteredPassword the password that the user entered and will be stored in this object
      */
-    public LoginRequestModel(String username, String enteredPassword){
+    public LoginRequestModel(String username, String enteredPassword) {
         this.username = username;
         this.enteredPassword = enteredPassword;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public String getEnteredPassword(){
+    public String getEnteredPassword() {
         return enteredPassword;
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setEnteredPassword(String enteredPassword){
+    public void setEnteredPassword(String enteredPassword) {
         this.enteredPassword = enteredPassword;
     }
 

@@ -10,19 +10,21 @@ public class CheckPassword {
 
     /**
      * Creates a CheckPassword object with the specified enteredPassword and correctPassword
+     *
      * @param enteredPassword the password entered by the user
      * @param correctPassword the correct password for the user being checked
      */
-    public CheckPassword(String enteredPassword, String correctPassword){
+    public CheckPassword(String enteredPassword, String correctPassword) {
         this.ENTERED_PASSWORD = enteredPassword;
         this.CORRECT_PASSWORD = correctPassword;
     }
 
     /**
      * Checks whether ENTERED_PASSWORD and CORRECT_PASSWORD are the same
+     *
      * @return ENTERED_PASSWORD == CORRECT_PASSWORD
      */
-    public boolean passwordsMatch(){
+    public boolean passwordsMatch() {
         return this.CORRECT_PASSWORD.equals(this.ENTERED_PASSWORD);
     }
 }
