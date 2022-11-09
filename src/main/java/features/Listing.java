@@ -3,17 +3,17 @@ import entities.User;
 
 import java.time.*; // to store date
 public class Listing {
-    String title;
-    int id; // String or int -> dependent on database implementation
-    LocalDate ld; // Represents a date (year, month, day (yyyy-MM-dd))
-    float price;
-    User seller;
-    String description;
-    String [] images;
+    private String title;
+    private int id; // String or int -> dependent on database implementation
+    private LocalDate dateAdded; // Represents a date (year, month, day (yyyy-MM-dd))
+    private float price;
+    private User seller;
+    private String description;
+    private String[] images; // Will store the directory path of the images
     public Listing(String title, int id, float price, User seller, String description, String[] images){
         this.title = title;
         this.id = id;
-        this.ld = LocalDate.now(); // assigns the localDate with the current time
+        this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
         this.price = price;
         this.seller = seller;
         this.description = description;

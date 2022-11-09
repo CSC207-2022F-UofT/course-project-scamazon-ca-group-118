@@ -3,7 +3,7 @@ package forms;
 import entities.User;
 import features.Listing;
 
-public class CreateListingForm extends Form{
+public class CreateListingForm extends Form {
 
 
     private final User seller;
@@ -33,7 +33,18 @@ public class CreateListingForm extends Form{
 
     @Override
     protected boolean validateForm() {
-        return false;
+        /*
+        We will have a description limit of 1000 characters
+         */
+        if(price >= 0 && description.length() < 1000){// TODO: Check that the seller exists in the database
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
+
     }
 
     @Override
