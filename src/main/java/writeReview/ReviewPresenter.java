@@ -1,4 +1,5 @@
 package writeReview;
+
 import forms.ReviewForm;
 
 /**
@@ -9,10 +10,11 @@ public class ReviewPresenter {
 
     /**
      * The constructor for the ReviewPresenter
+     *
      * @param form the form from which this presenter retrieves a message
      */
-    public ReviewPresenter(ReviewForm form){
-        this.message  = form.getMessage();
+    public ReviewPresenter(ReviewForm form) {
+        this.message = form.getMessage();
     }
 
     /**

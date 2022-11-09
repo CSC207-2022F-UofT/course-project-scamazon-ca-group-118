@@ -1,4 +1,5 @@
 package writeReview;
+
 import entities.User;
 
 /**
@@ -10,17 +11,19 @@ public class UserExists {
 
     /**
      * Constructor for the UserExists class
+     *
      * @param user the user that will be checked for existence
      */
-    public UserExists(User user){
+    public UserExists(User user) {
         this.PASSWORD = user.getPassword();
     }
 
     /**
      * Checks if the user passed to the constructor is non-empty or exists
+     *
      * @return true iff the user passed to the constructor is non-empty
      */
-    public boolean checkExists(){
+    public boolean checkExists() {
         return !this.PASSWORD.equals("");
     }
 }

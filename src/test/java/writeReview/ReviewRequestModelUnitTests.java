@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 public class ReviewRequestModelUnitTests {
     @Test
-    void testReviewRequestModel(){
+    void testReviewRequestModel() {
         ReviewRequestModel requestModel = new ReviewRequestModel(
                 "user1",
                 "user2",

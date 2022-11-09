@@ -10,13 +10,14 @@ public class ReviewRequestModel {
 
     /**
      * Constructor for a ReviewRequestModel
+     *
      * @param reviewerUsername the username of the user writing the review
      * @param reviewedUsername the username of the user being reviewed
-     * @param rating the rating being given to the user being reviewed
+     * @param rating           the rating being given to the user being reviewed
      */
-    public ReviewRequestModel(String reviewerUsername, String reviewedUsername, int rating){
-        this. reviewerUsername = reviewerUsername;
-        this. reviewedUsername = reviewedUsername;
+    public ReviewRequestModel(String reviewerUsername, String reviewedUsername, int rating) {
+        this.reviewerUsername = reviewerUsername;
+        this.reviewedUsername = reviewedUsername;
         this.rating = rating;
     }
 

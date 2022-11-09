@@ -1,4 +1,5 @@
 package writeReview;
+
 import entities.User;
 
 /**
@@ -12,9 +13,10 @@ public class ReviewInteractor {
 
     /**
      * The constructor for the ReviewInteractor class
+     *
      * @param requestModel the request model that's data will be manipulated
      */
-    public ReviewInteractor(ReviewRequestModel requestModel){
+    public ReviewInteractor(ReviewRequestModel requestModel) {
         this.reviewer = getUserWithUsername(requestModel.getReviewerUsername());
         this.reviewed = getUserWithUsername(requestModel.getReviewedUsername());
         this.rating = requestModel.getRating();
@@ -22,19 +24,21 @@ public class ReviewInteractor {
 
     /**
      * Returns the user from the database with the given username
+     *
      * @param username the username being searched for
      * @return the user with the given username
      */
-    private User getUserWithUsername(String username){
+    private User getUserWithUsername(String username) {
         return new GetUser().getUserWithUsername(username);
     }
 
     /**
      * Checks if the user is non-empty i.e. exists.
+     *
      * @param user the user being checked for existence
      * @return true iff the user exists
      */
-    private boolean userExists(User user){
+    private boolean userExists(User user) {
         return new UserExists(user).checkExists();
     }
 
@@ -42,7 +46,7 @@ public class ReviewInteractor {
      * Creates a review with the given reviewer, reviewed, and rating as the same fields in the new Review.
      * Then, adds this new review reviewed's reviews
      */
-    private void createReview(){
+    private void createReview() {
         this.reviewer.writeReview(reviewed, rating);
     }
 
@@ -50,13 +54,14 @@ public class ReviewInteractor {
      * Determines whether the Review can be successfully created i.e. the reviewed user exists.
      * If possible, it creates the review then returns a success message.
      * If the review can't be created, it returns a failure message
+     *
      * @return String that communicates whether the review was successfully created
      */
-    public String getMessage(){
-        if(userExists(reviewed)){
+    public String getMessage() {
+        if (userExists(reviewed)) {
             this.createReview();
             return "Review Successful";
-        }else{
+        } else {
             return "Review Unsuccessful: No User exists with this username";
         }
     }

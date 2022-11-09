@@ -23,13 +23,14 @@ public class UserExistsUnitTests {
             new ArrayList<>(),
             new ArrayList<>(),
             new Cart());
+
     @Test
-    void testUserExistsNo(){
+    void testUserExistsNo() {
         assertFalse(new UserExists(emptyUser).checkExists());
     }
 
     @Test
-    void testUserExistsYes(){
-        assert(new UserExists(clare).checkExists());
+    void testUserExistsYes() {
+        assert (new UserExists(clare).checkExists());
     }
 }

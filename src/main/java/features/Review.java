@@ -27,11 +27,12 @@ public class Review {
 
     /**
      * The constructor for the Review class
+     *
      * @param reviewer the User who wrote the review
      * @param reviewed the User being reviewed
-     * @param rating the rating given to the reviewed User
+     * @param rating   the rating given to the reviewed User
      */
-    public Review(User reviewer, User reviewed, int rating){
+    public Review(User reviewer, User reviewed, int rating) {
         this.reviewer = reviewer;
         this.reviewed = reviewed;
         this.rating = rating;

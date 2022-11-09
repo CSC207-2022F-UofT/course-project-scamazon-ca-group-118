@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.List;
+
 import features.Cart;
 import features.Listing;
 import features.Review;
@@ -95,19 +96,22 @@ public class User {
     public void addCart() {
 
     }
+
     public void removeCart() {
 
     }
+
     public void writeReview(User reviewed, int rating) {
         new ReviewCreator().createReview(this, reviewed, rating);
 
     }
+
     public void removeReview() {
 
     }
 
     //TODO: check if this is necessary/who gets to hold reviews
-    public void addReview(Review review){
+    public void addReview(Review review) {
         this.reviews.add(review);
     }
 //    public int calculateRating() {

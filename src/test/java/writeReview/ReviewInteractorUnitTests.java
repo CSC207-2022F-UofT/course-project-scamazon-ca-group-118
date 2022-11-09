@@ -9,12 +9,14 @@ public class ReviewInteractorUnitTests {
     ReviewRequestModel userDoesntExistRequestModel = new ReviewRequestModel("user1",
             "not user2",
             3);
+
     @Test
-    void testReviewInteractorUserExists(){
+    void testReviewInteractorUserExists() {
         assert new ReviewInteractor(userExistsRequestModel).getMessage().equals("Review Successful");
     }
+
     @Test
-    void testReviewInteractorUserDoesntExist(){
+    void testReviewInteractorUserDoesntExist() {
         assert new ReviewInteractor(userDoesntExistRequestModel).getMessage()
                 .equals("Review Unsuccessful: No User exists with this username");
     }

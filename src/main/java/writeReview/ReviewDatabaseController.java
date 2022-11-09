@@ -1,6 +1,8 @@
 package writeReview;
+
 import features.Cart;
 import entities.User;
+
 import java.util.ArrayList;
 
 /**
@@ -42,7 +44,7 @@ public class ReviewDatabaseController implements ReviewDatabaseGateway {
                     new ArrayList<>(),
                     new ArrayList<>(),
                     new Cart());
-        } else if (username.equals("user2")){
+        } else if (username.equals("user2")) {
             return new User("user2",
                     "678910",
                     2,
@@ -50,7 +52,7 @@ public class ReviewDatabaseController implements ReviewDatabaseGateway {
                     new ArrayList<>(),
                     new ArrayList<>(),
                     new Cart());
-        }else {
+        } else {
             return new User("",
                     "",
                     0,
