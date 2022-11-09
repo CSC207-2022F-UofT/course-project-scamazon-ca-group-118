@@ -4,6 +4,7 @@ import java.util.List;
 import features.Cart;
 import features.Listing;
 import features.Review;
+import writeReview.ReviewCreator;
 
 public class User {
     private String username;
@@ -97,11 +98,17 @@ public class User {
     public void removeCart() {
 
     }
-    public void writeReview() {
+    public void writeReview(User reviewed, int rating) {
+        new ReviewCreator().createReview(this, reviewed, rating);
 
     }
     public void removeReview() {
 
+    }
+
+    //TODO: check if this is necessary/who gets to hold reviews
+    public void addReview(Review review){
+        this.reviews.add(review);
     }
 //    public int calculateRating() {
 //
