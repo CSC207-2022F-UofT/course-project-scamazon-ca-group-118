@@ -2,7 +2,9 @@ package features;
 
 import entities.User;
 
+import java.io.File;
 import java.time.*; // to store date
+import java.util.List;
 
 public class Listing {
     private String title;
@@ -11,9 +13,9 @@ public class Listing {
     private float price;
     private User seller;
     private String description;
-    private String[] images; // Will store the directory path of the images
+    private List<String> images; // Will store the directory path of the images
 
-    public Listing(String title, int id, float price, User seller, String description, String[] images) {
+    public Listing(String title, int id, float price, User seller, String description, List<String> images) {
         this.title = title;
         this.id = id;
         this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
@@ -23,8 +25,19 @@ public class Listing {
         this.images = images;
     }
 
+    public String getTitle() {
+        return title;
+    }
+    public LocalDate getDate(){
+        return dateAdded;
+    }
+
+
     public float getPrice() {
         return price;
+    }
+    public User getSeller(){
+        return seller;
     }
 
     public String getDescription() {
@@ -32,10 +45,50 @@ public class Listing {
     }
 
     public String getImage(int imageIndex) {
-        if (imageIndex >= images.length) {
+        if (imageIndex >= images.size()) {
             return "No Image";
         } else {
-            return images[imageIndex];
+            return images.get(imageIndex);
+        }
+    }
+    public boolean setPrice(float price){
+        if (price > 0){
+            this.price = price;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean setDescription(String description){
+        if(description.length() < 1000){
+            this.description = description;
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    public boolean addImage(String imgPath){
+        File img = new File(imgPath);
+        if(img.exists()){
+            images.add(imgPath);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean removeImages(String imgPath){
+        File img = new File(imgPath);
+        if(img.exists()){
+            images.remove(imgPath);
+            return true;
+        }
+        else{
+            return false;
         }
     }
 

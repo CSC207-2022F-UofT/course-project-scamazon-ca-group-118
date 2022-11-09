@@ -3,17 +3,23 @@ package forms;
 import entities.User;
 import features.Listing;
 
+
+import java.util.List;
+
 public class CreateListingForm extends Form {
 
 
     private final User seller;
     private float price;
     private String description;
-    private String[] images;
+    private List<String> images;
 
     private static int id = 0;
 
-    public CreateListingForm(String title, float price, User seller, String description, String[] images) {
+
+
+    public CreateListingForm(String title
+            , float price, User seller, String description, List<String> images) {
         super(title);
         this.price = price;
         this.seller = seller;
