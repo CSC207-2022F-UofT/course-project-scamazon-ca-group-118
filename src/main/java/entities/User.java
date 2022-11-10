@@ -1,4 +1,7 @@
+package entities;
+
 import java.util.List;
+
 import features.Cart;
 import features.Listing;
 import features.Review;
@@ -92,12 +95,15 @@ public class User {
     public void addCart() {
 
     }
+
     public void removeCart() {
 
     }
+
     public void writeReview() {
 
     }
+
     public void removeReview() {
 
     }
