@@ -17,6 +17,7 @@ public class CartPage extends Page {
      */
     public CartPage(String title, Cart itemCart) {
         super(title);
+        //TODO Make title be "(User)'s Cart"
         this.cart = itemCart;
     }
 
