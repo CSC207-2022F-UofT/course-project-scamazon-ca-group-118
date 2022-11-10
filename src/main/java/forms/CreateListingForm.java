@@ -28,7 +28,7 @@ public class CreateListingForm extends Form {
 
 
     public void submitListing() {
-        // This function will be called on the "submit" button click
+        // TODO: This function will be called on the "submit" button click
         // This will add a listing to the database using the database interactor method.
         String title = this.getTitle();
         Listing L = new Listing(title, id, price, seller, description, images);
