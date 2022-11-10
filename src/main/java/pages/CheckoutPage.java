@@ -1,4 +1,5 @@
 package pages;
+import forms.CheckoutForm;
 
 public class CheckoutPage extends Page {
 
