@@ -1,11 +1,11 @@
 package forms;
 
-public class RegisterForm extends Form{
+public class RegisterForm extends Form {
 
     private String username;
     private String email;
     private String password;
-    private String confirmpassword;
+    private String confirmPassword;
 
     public RegisterForm(String title) {
         super(title);
@@ -13,15 +13,31 @@ public class RegisterForm extends Form{
 
     @Override
     boolean validateForm() {
-        return false;
+        //password and confirm password
+        if (!((this.password.equals(this.confirmPassword)) && (password.length() >= 8))) {
+            //output error msg
+            return false;
+        }
+
+        //email validation
+        if (!this.email.contains("@")) {
+            //error msg
+            return false;
+        }
+
+        //use database interactor to see if input is unique
+
+        return true;
+
     }
 
     @Override
     void submitForm() {
 
     }
-    public void createUser(String username, String email, String password){
-        //call createUser method in user class using database interactor
+
+    public void createUser(String username, String email, String password) {
+        //TODO: call createUser method in user class using database interactor
     }
 
 }
