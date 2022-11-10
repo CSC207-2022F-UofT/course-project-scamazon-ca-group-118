@@ -15,8 +15,6 @@ public abstract class Form {
         this.title = title;
     }
 
-    // TODO: Implement
-    abstract boolean validateForm();
-
-    abstract void submitForm();
+    protected abstract boolean validateForm();
+    protected abstract void submitForm();
 }
