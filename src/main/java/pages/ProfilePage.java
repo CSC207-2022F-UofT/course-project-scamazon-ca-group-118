@@ -73,6 +73,7 @@ public class ProfilePage extends Page {
     }
 
     /**
+     * TODO
      * This method displays all of the pertinent information to the profile page that we collected from the current
      * user object when the profile button is clicked. I'm not sure what we are doing for clean architecture,
      * but I think this would be in some kind of controller class for our program.
