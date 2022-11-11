@@ -1,5 +1,6 @@
 package writeReview;
 
+import database.UserExists;
 import entities.User;
 import features.Cart;
 import org.junit.jupiter.api.Test;
