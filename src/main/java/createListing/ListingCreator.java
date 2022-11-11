@@ -8,11 +8,11 @@ import features.Listing;
 /**
  * Represents a listingCreator object, to create listings
  */
-public class listingCreator {
+public class ListingCreator {
     /**
      * constructor for listingCreator class
      */
-    public listingCreator(){
+    public ListingCreator(){
     }
     /**
      * createListing takes in the seller, title, price, description, and a list of images to create a listing object
