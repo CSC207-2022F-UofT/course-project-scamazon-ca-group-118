@@ -5,6 +5,7 @@ import java.util.List;
 import features.Cart;
 import features.Listing;
 import features.Review;
+import writeReview.ReviewCreator;
 
 public class User {
     private String username;
@@ -102,14 +103,53 @@ public class User {
 
     public void writeReview() {
 
+
+    /**
+     * Creates a new review with this User as the reviewer, and the specified reviewer and rating
+     * then adds it to the reviewed User's reviews
+     *
+     * @param reviewed the User being reviewed/the User whose reviews the new Review will be added to
+     * @param rating   the rating given to the User being reviewed
+     */
+    public void writeReview(User reviewed, int rating) {
+        new ReviewCreator().createReview(this, reviewed, rating);
+
     }
+
+    /**
+     * Removes a review from this User's list of reviews
+     *
+     * @param toBeRemoved the Review to be removed from this User's reviews
+     */
+    public void removeReview(Review toBeRemoved) {
+        this.reviews.remove(toBeRemoved);
+    }
+
+    /**
+     * Adds a review to this User's list of reviews
+     *
+     * @param review the review to be added to this User's reviews
+     */
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
 
     public void removeReview() {
 
+    /**
+     * calculates the average integer rating earned by this User
+     *
+     * @return the average rating of all this User's reviews
+     */
+    public int calculateRating() {
+        double rating = 0;
+        for (Review review : reviews) {
+            rating += review.getRating();
+        }
+        rating /= reviews.size();
+        return (int) Math.round(rating);
     }
-//    public int calculateRating() {
-//
-//    }
 
 
 }
