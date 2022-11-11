@@ -1,4 +1,4 @@
-package writeReview;
+package database;
 
 import entities.User;
 

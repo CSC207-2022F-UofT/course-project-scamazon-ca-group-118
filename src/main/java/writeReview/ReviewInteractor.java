@@ -1,5 +1,7 @@
 package writeReview;
 
+import database.GetUser;
+import database.UserExists;
 import entities.User;
 
 /**

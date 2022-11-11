@@ -1,5 +1,6 @@
-package writeReview;
+package database;
 
+import database.ReviewDatabaseGateway;
 import features.Cart;
 import entities.User;
 
