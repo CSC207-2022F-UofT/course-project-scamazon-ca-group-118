@@ -3,6 +3,7 @@ package pages;
 import features.Cart;
 import features.Listing;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class CartPage extends Page {
@@ -46,6 +47,16 @@ public class CartPage extends Page {
      */
     public void setCart(Cart newCart) {
         this.cart = newCart;
+    }
+
+    public void render() {
+        JFrame frame = new JFrame(this.getTitle());
+        frame.setVisible(true);
+        frame.setSize(1280, 720);
+        JButton b = new JButton("Submit");
+        JTable t = new JTable(cart.getItems())
+
+
     }
 
     //Hard to implement the logic here without the GUI and other people's logic being
