@@ -88,10 +88,15 @@ public class User {
     public void removeListing() {
 
     }
-
-    public void createListing() {
-
+    /**
+     * addListing takes in a listing and adds it to the users list of listings
+     *
+     * @param listing the listing to be added to the user
+     */
+    public void addListing(Listing listing) {
+        listings.add(listing);
     }
+
 
     public void addCart() {
 

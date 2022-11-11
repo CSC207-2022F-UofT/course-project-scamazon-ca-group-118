@@ -16,12 +16,12 @@ public class Listing {
     private String description;
     private List<String> images; // Will store the directory path of the images
 
-    public Listing(String title, float price, User seller, String description, List<String> images) {
+    public Listing(User seller, String title, float price, String description, List<String> images) {
+        this.seller = seller;
         this.title = title;
         this.id = nextId++;
         this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
         this.price = price;
-        this.seller = seller;
         this.description = description;
         this.images = images;
     }
