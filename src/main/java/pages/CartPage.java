@@ -4,6 +4,7 @@ import features.Cart;
 import features.Listing;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class CartPage extends Page {
@@ -51,11 +52,24 @@ public class CartPage extends Page {
 
     public void render() {
         JFrame frame = new JFrame(this.getTitle());
+        frame.setLayout(new FlowLayout());
         frame.setVisible(true);
         frame.setSize(1280, 720);
-        JButton b = new JButton("Submit");
-        JTable t = new JTable(cart.getItems())
-
+        JButton b = new JButton("Checkout");
+        JTable t = new JTable(cart.countItems(), 2);
+        t.setFont(new Font("Serif", Font.PLAIN, 20));
+        JScrollPane j = new JScrollPane(t);
+        j.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        t.getColumnModel().getColumn(0).setHeaderValue("Items");
+        t.getColumnModel().getColumn(1).setHeaderValue("Price");
+        ArrayList<Listing> items = this.getCartItems();
+        for (int i = 0; i < cart.countItems(); i++) {
+            t.setValueAt(items.get(i).getTitle(), i, 0);
+            t.setValueAt(items.get(i).getPrice(), i, 1);
+        }
+        t.setBounds(190, 100, 900, cart.countItems() * 100);
+        frame.add(j);
+        frame.add(b);
 
     }
 
