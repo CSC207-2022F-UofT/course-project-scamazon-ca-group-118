@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import createListing.ListingCreator;
 import features.Cart;
 import features.Listing;
 import features.Review;
@@ -85,9 +86,15 @@ public class User {
         this.cart = cart;
     }
 
+    public void createListing(String title, float price, String description, List<String> images) {
+        new ListingCreator().createListing(this, title, price, description, images);
+    }
+
+
     public void removeListing() {
 
     }
+
     /**
      * addListing takes in a listing and adds it to the users list of listings
      *
@@ -105,8 +112,6 @@ public class User {
     public void removeCart() {
 
     }
-
-    public void writeReview() {
 
 
     /**
@@ -141,6 +146,7 @@ public class User {
 
 
     public void removeReview() {
+    }
 
     /**
      * calculates the average integer rating earned by this User
@@ -158,3 +164,4 @@ public class User {
 
 
 }
+

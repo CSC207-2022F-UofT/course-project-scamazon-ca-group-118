@@ -1,4 +1,4 @@
-package createListing;
+package database;
 
 import entities.User;
 
