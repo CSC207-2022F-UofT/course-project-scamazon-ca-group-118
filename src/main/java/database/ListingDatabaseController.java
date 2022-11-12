@@ -17,9 +17,10 @@ public class ListingDatabaseController implements ListingDatabaseGateway {
      *
      * @param username the username to be searched for in the database
      */
-    public ListingDatabaseController(String username){
+    public ListingDatabaseController(String username) {
         this.user = getUserWithUsername(username);
     }
+
     /**
      * Retrieves the User whose username is username from the database, and returns it. If no user has this
      * username, return an empty user.

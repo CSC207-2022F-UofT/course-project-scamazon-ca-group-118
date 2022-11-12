@@ -24,7 +24,6 @@ public class CreateListingForm extends Form {
     ListingResponseModel responseModel;
 
 
-
     public CreateListingForm(String listingTitle
             , float price, String seller, String description, List<String> images, int id) {
         super("Create a listing");
@@ -53,17 +52,17 @@ public class CreateListingForm extends Form {
 
     @Override
     protected void submitForm() {
-        if(this.validateForm()){
+        if (this.validateForm()) {
             ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGES);
             responseModel = new ListingResponseModel(requestModel);
         }
     }
-    public String getMessage(){
+
+    public String getMessage() {
         this.submitForm();
-        if(this.validateForm()){
+        if (this.validateForm()) {
             return responseModel.getMessage();
-        }
-        else{
+        } else {
             return "Please ensure all details are correct before submitting the form";
         }
 

@@ -82,7 +82,7 @@ public class ListingInteractor {
     }
 
     public void setTitle(String listingTitle) {
-        this.listingTitle= listingTitle;
+        this.listingTitle = listingTitle;
     }
 
     public void setPrice(float price) {

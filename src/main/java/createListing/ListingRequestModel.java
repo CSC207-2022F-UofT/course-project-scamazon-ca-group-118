@@ -17,11 +17,11 @@ public class ListingRequestModel {
     /**
      * Constructor for a ListingRequestModel
      *
-     * @param sellerUsername      the seller username of the listing
-     * @param listingTitle     the title of the listing
-     * @param price       the price of the listing
-     * @param description the description of the listing
-     * @param images      a list of all the file paths to the images
+     * @param sellerUsername the seller username of the listing
+     * @param listingTitle   the title of the listing
+     * @param price          the price of the listing
+     * @param description    the description of the listing
+     * @param images         a list of all the file paths to the images
      */
     public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, List<String> images) {
         this.sellerUsername = sellerUsername;
@@ -31,21 +31,23 @@ public class ListingRequestModel {
         this.images = images;
     }
 
-    public String getSellerUsername(){
+    public String getSellerUsername() {
         return sellerUsername;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return listingTitle;
     }
 
     public float getPrice() {
         return price;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 
-    public List<String> getImages(){
+    public List<String> getImages() {
         return images;
     }
 
