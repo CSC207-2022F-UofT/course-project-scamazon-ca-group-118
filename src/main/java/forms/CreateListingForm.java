@@ -1,5 +1,11 @@
 package forms;
 
+import createListing.ListingInteractor;
+import createListing.ListingRequestModel;
+import createListing.ListingResponseModel;
+import database.GetUser;
+import database.ListingDatabaseController;
+import database.UserExists;
 import entities.User;
 import features.Listing;
 
@@ -9,21 +15,25 @@ import java.util.List;
 public class CreateListingForm extends Form {
 
 
-    private final User seller;
-    private float price;
-    private String description;
-    private List<String> images;
-    private int id;
+    private final String SELLER_USERNAME;
+    private final String LISTING_TITLE;
+    private final float PRICE;
+    private final String DESCRIPTION;
+    private final List<String> IMAGES;
+    private final int ID;
+    ListingResponseModel responseModel;
 
 
-    public CreateListingForm(String title
-            , float price, User seller, String description, List<String> images, int id) {
-        super(title);
-        this.price = price;
-        this.seller = seller;
-        this.description = description;
-        this.images = images;
-        this.id = id;
+
+    public CreateListingForm(String listingTitle
+            , float price, String seller, String description, List<String> images, int id) {
+        super("Create a listing");
+        LISTING_TITLE = listingTitle;
+        PRICE = price;
+        SELLER_USERNAME = seller;
+        DESCRIPTION = description;
+        IMAGES = images;
+        ID = id;
     }
 
 
@@ -32,7 +42,7 @@ public class CreateListingForm extends Form {
         /*
         We will have a description limit of 1000 characters
          */
-        if (price >= 0 && description.length() < 1000) {// TODO: Check that the seller exists in the database
+        if (PRICE >= 0 && DESCRIPTION.length() < 1000 && new UserExists(new GetUser().getUserWithUsername(SELLER_USERNAME)).checkExists()) {
             return true;
         } else {
             return false;
@@ -43,5 +53,19 @@ public class CreateListingForm extends Form {
 
     @Override
     protected void submitForm() {
+        if(this.validateForm()){
+            ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGES);
+            responseModel = new ListingResponseModel(requestModel);
+        }
+    }
+    public String getMessage(){
+        this.submitForm();
+        if(this.validateForm()){
+            return responseModel.getMessage();
+        }
+        else{
+            return "Please ensure all details are correct before submitting the form";
+        }
+
     }
 }

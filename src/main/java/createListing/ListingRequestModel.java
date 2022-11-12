@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class ListingRequestModel {
     private String sellerUsername;
-    private String title;
+    private String listingTitle;
     private float price;
     private String description;
     private List<String> images;
@@ -18,14 +18,14 @@ public class ListingRequestModel {
      * Constructor for a ListingRequestModel
      *
      * @param sellerUsername      the seller username of the listing
-     * @param title       the title of the listing
+     * @param listingTitle     the title of the listing
      * @param price       the price of the listing
      * @param description the description of the listing
      * @param images      a list of all the file paths to the images
      */
-    public ListingRequestModel(String sellerUsername, String title, float price, String description, List<String> images) {
+    public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, List<String> images) {
         this.sellerUsername = sellerUsername;
-        this.title = title;
+        this.listingTitle = listingTitle;
         this.price = price;
         this.description = description;
         this.images = images;
@@ -35,7 +35,7 @@ public class ListingRequestModel {
         return sellerUsername;
     }
     public String getTitle(){
-        return title;
+        return listingTitle;
     }
 
     public float getPrice() {
@@ -53,8 +53,8 @@ public class ListingRequestModel {
         this.sellerUsername = sellerUsername;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String listingTitle) {
+        this.listingTitle = listingTitle;
     }
 
     public void setPrice(float price) {
