@@ -1,6 +1,8 @@
 package pages;
 
-public abstract class Page {
+import javax.swing.*;
+
+public abstract class Page extends JFrame{
     private String title;
 
     public Page(String title) {

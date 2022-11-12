@@ -1,5 +1,6 @@
 package forms;
 import login.LoginDatabaseController;
+import login.LoginFailed;
 import login.LoginRequestModel;
 import login.LoginResponseModel;
 import entities.User;
@@ -34,7 +35,12 @@ public class LoginForm extends Form{
 
     @Override
     protected boolean validateForm() {
-        return password.length() > 0 && username.length() > 0;
+        if(password.length() > 0 && username.length() > 0) {
+            return true;
+        }
+        else{
+            throw new LoginFailed("Please enter a username and password");
+        }
     }
 
     @Override
