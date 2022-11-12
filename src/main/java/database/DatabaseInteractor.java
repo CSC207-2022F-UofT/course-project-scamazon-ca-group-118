@@ -1,4 +1,4 @@
-package entities;
+package database;
 
 interface DatabaseInteractor<T> {
     String table = null;
