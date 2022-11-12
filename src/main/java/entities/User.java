@@ -93,11 +93,11 @@ public class User {
 
     }
 
-    public void addCart() {
-
+    public void addToCart(Listing listing) {
+        this.getCart().addItem(listing);
     }
 
-    public void removeCart() {
+    public void removeFromCart() {
 
     }
 
