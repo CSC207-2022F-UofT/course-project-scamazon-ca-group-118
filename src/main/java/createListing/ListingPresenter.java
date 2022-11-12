@@ -8,7 +8,7 @@ import forms.CreateListingForm;
 public class ListingPresenter {
     private String message;
     /**
-     * The constructor for the ReviewPresenter
+     * The constructor for the ListingPresenter
      *
      * @param form the form from which this presenter retrieves a message
      */
@@ -17,7 +17,7 @@ public class ListingPresenter {
     }
 
     /**
-     * @return a message that communicates whether the review was successfully created
+     * @return a message that communicates whether the listing was successfully created
      */
     public String getMessage() {
         return message;
