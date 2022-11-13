@@ -49,11 +49,11 @@ public class LoginFormUnitTests {
     @Test
     void LoginFormValidEntryCorrectPassword() {
         LoginForm form = new LoginForm("clare", "12345");
-        assert (form.getResponseModel().getUsername().equals("clare"));
-        assert (form.getResponseModel().getPassword().equals("12345"));
-        assert (form.getResponseModel().getId() == 1);
-        assert (form.getResponseModel().getEmail().equals("clare@gmail.com"));
-        assert (form.getResponseModel().getReviews().isEmpty());
-        assert (form.getResponseModel().getListings().isEmpty());
+        assert (form.getResponseModel().getUser().getUsername().equals("clare"));
+        assert (form.getResponseModel().getUser().getPassword().equals("12345"));
+        assert (form.getResponseModel().getUser().getID() == 1);
+        assert (form.getResponseModel().getUser().getEmail().equals("clare@gmail.com"));
+        assert (form.getResponseModel().getUser().getReviews().isEmpty());
+        assert (form.getResponseModel().getUser().getListings().isEmpty());
     }
 }
