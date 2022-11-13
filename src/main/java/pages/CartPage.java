@@ -53,7 +53,6 @@ public class CartPage extends Page {
     public void render() {
         JFrame frame = new JFrame(this.getTitle());
         frame.setLayout(new FlowLayout());
-        frame.setVisible(true);
         frame.setSize(1280, 720);
         JButton b = new JButton("Checkout");
         JTable t = new JTable(cart.countItems(), 2);
@@ -67,10 +66,34 @@ public class CartPage extends Page {
             t.setValueAt(items.get(i).getTitle(), i, 0);
             t.setValueAt(items.get(i).getPrice(), i, 1);
         }
-        t.setBounds(190, 100, 900, cart.countItems() * 100);
+        t.setBounds(190, 100, 900, cart.countItems() * 75);
         frame.add(j);
         frame.add(b);
+        frame.setVisible(true);
 
+    }
+
+    //OVERLOADED
+    public void render(JFrame frame) {
+        frame.removeAll();
+        frame.setLayout(new FlowLayout());
+        frame.setSize(1280, 720);
+        JButton b = new JButton("Checkout");
+        JTable t = new JTable(cart.countItems(), 2);
+        t.setFont(new Font("Serif", Font.PLAIN, 20));
+        JScrollPane j = new JScrollPane(t);
+        j.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        t.getColumnModel().getColumn(0).setHeaderValue("Items");
+        t.getColumnModel().getColumn(1).setHeaderValue("Price");
+        ArrayList<Listing> items = this.getCartItems();
+        for (int i = 0; i < cart.countItems(); i++) {
+            t.setValueAt(items.get(i).getTitle(), i, 0);
+            t.setValueAt(items.get(i).getPrice(), i, 1);
+        }
+        t.setBounds(190, 100, 900, cart.countItems() * 75);
+        frame.add(j);
+        frame.add(b);
+        frame.setVisible(true);
     }
 
     //Hard to implement the logic here without the GUI and other people's logic being
