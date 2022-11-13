@@ -5,7 +5,7 @@ import entities.User;
 /**
  * The ListingDatabaseController class retrieves the user with the specified username from the database
  */
-public class ListingDatabaseController implements ListingDatabaseGateway {
+public class CreateCreateListingDatabaseController implements CreateListingDatabaseGateway {
     /**
      * the user retrieved from the database whose username is username, or an empty user if no user has username
      */
@@ -17,7 +17,7 @@ public class ListingDatabaseController implements ListingDatabaseGateway {
      *
      * @param username the username to be searched for in the database
      */
-    public ListingDatabaseController(String username) {
+    public CreateCreateListingDatabaseController(String username) {
         this.user = getUserWithUsername(username);
     }
 

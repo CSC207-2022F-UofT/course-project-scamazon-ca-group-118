@@ -2,7 +2,7 @@ package database;
 
 import entities.User;
 
-public interface ListingDatabaseGateway {
+public interface CreateListingDatabaseGateway {
     /**
      * should retrieve the User with the specified username from the database, or an empty User if no user has
      * this username
