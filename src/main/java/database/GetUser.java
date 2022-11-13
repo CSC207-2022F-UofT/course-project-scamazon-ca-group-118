@@ -1,5 +1,7 @@
-package writeReview;
+package database;
 
+import database.ReviewDatabaseController;
+import database.ReviewDatabaseGateway;
 import entities.User;
 
 /**
