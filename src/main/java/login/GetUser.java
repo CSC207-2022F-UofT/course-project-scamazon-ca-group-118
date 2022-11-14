@@ -1,5 +1,7 @@
 package login;
 
+import database.DatabaseController;
+import database.LoginDatabaseGateway;
 import entities.User;
 
 /**
@@ -22,6 +24,6 @@ public class GetUser implements LoginDatabaseGateway {
      */
     @Override
     public User getUserWithUsername(String username) {
-        return new LoginDatabaseController(username).getUser();
+        return new DatabaseController().getUserWithUsername(username);
     }
 }

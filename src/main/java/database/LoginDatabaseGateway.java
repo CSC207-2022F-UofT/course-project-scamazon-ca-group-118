@@ -1,4 +1,4 @@
-package login;
+package database;
 
 import entities.User;
 

@@ -1,5 +1,5 @@
 package forms;
-import login.LoginDatabaseController;
+import database.DatabaseController;
 import login.LoginRequestModel;
 import login.LoginResponseModel;
 import entities.User;
@@ -40,7 +40,7 @@ public class LoginForm extends Form{
     @Override
     protected void submitForm(){
         if(this.validateForm()){
-            this.user = new LoginDatabaseController(username).getUser();
+            this.user = new DatabaseController().getUserWithUsername(username);
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
         }

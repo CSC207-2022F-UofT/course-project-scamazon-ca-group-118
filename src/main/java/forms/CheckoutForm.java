@@ -2,8 +2,8 @@ package forms;
 
 import checkout.CheckoutRequestModel;
 import checkout.CheckoutResponseModel;
-import writeReview.ReviewRequestModel;
-import writeReview.ReviewResponseModel;
+import useCase.writeReview.ReviewRequestModel;
+import useCase.writeReview.ReviewResponseModel;
 
 import java.time.*;
 
