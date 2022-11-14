@@ -1,14 +1,12 @@
-package database;
+package checkout;
 
-import database.ReviewDatabaseController;
-import database.ReviewDatabaseGateway;
 import entities.User;
 
 /**
  * The GetUserWithUsername class will have a final attribute USER holds the User from the database with the
  * specified username, or an empty User if no user has this username
  */
-public class GetUser implements ReviewDatabaseGateway {
+public class GetUser implements CheckoutDatabaseGateway {
 
     /**
      * Creates an instance of GetUserWithUsername
@@ -23,8 +21,8 @@ public class GetUser implements ReviewDatabaseGateway {
      * @return either the User with username, or an empty user
      */
     @Override
-    //TODO: Rework this function so it uses Database Interactor instead
     public User getUserWithUsername(String username) {
-        return new ReviewDatabaseController(username).getUser();
+        // TODO
+        return new DatabaseController(username).getUser();
     }
 }

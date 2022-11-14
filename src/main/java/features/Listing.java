@@ -7,7 +7,7 @@ import java.time.*; // to store date
 import java.util.List;
 
 public class Listing {
-    private String title;
+    private String listingTitle;
     private int id; // String or int -> dependent on database implementation
     private static int nextId = 0;
     private LocalDate dateAdded; // Represents a date (year, month, day (yyyy-MM-dd))
@@ -16,12 +16,12 @@ public class Listing {
     private String description;
     private List<String> images; // Will store the directory path of the images
 
-    public Listing(String title, float price, User seller, String description, List<String> images) {
-        this.title = title;
+    public Listing(User seller, String listingTitle, float price, String description, List<String> images) {
+        this.seller = seller;
+        this.listingTitle = listingTitle;
         this.id = nextId++;
         this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
         this.price = price;
-        this.seller = seller;
         this.description = description;
         this.images = images;
     }
@@ -31,7 +31,7 @@ public class Listing {
     }
 
     public String getTitle() {
-        return title;
+        return listingTitle;
     }
 
     public LocalDate getDate() {

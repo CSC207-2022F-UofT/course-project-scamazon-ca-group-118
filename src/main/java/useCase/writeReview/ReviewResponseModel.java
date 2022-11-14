@@ -1,4 +1,4 @@
-package writeReview;
+package useCase.writeReview;
 
 /**
  * Represents a ReviewResponseModel object that stores data retrieved from the ReviewInteractor that must

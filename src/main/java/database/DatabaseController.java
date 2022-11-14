@@ -1,17 +1,6 @@
 package database;
 
-interface DatabaseController<T> extends ListingDatabaseGateway {
+
+public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway{
     String table = null;
-
-    // return true if the object is successfully created in table
-    boolean create();
-
-    // return object of type T from table
-    T query();
-
-    // return true if the object is successfully updated in table
-    boolean update();
-
-    // return true if the object is successfully deleted in table
-    boolean delete();
 }
