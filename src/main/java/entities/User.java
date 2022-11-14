@@ -8,6 +8,7 @@ import features.Review;
 import writeReview.ReviewCreator;
 
 public class User {
+    public static User currentUser;
     private String username;
     private String password;
     private int id;
@@ -25,7 +26,18 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
+        this.setCurrentUser();
     }
+
+    //Precondition: new User instances will always be the current User logged in.
+    public void setCurrentUser(){
+        currentUser = this;
+    }
+
+    static User getCurrentUser(){
+        return currentUser;
+    }
+
 
 
     public String getUsername() {
