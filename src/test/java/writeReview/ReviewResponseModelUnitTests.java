@@ -1,6 +1,8 @@
 package writeReview;
 
 import org.junit.jupiter.api.Test;
+import useCase.writeReview.ReviewRequestModel;
+import useCase.writeReview.ReviewResponseModel;
 
 public class ReviewResponseModelUnitTests {
     ReviewRequestModel userExistsRequestModel = new ReviewRequestModel("user1",

@@ -2,10 +2,11 @@ package entities;
 
 import java.util.List;
 
+import useCase.createListing.ListingCreator;
 import features.Cart;
 import features.Listing;
 import features.Review;
-import writeReview.ReviewCreator;
+import useCase.writeReview.ReviewCreator;
 
 public class User {
     public static User currentUser;
@@ -95,13 +96,25 @@ public class User {
         this.cart = cart;
     }
 
+
+    public void createListing(String title, float price, String description, List<String> images) {
+        new ListingCreator().createListing(this, title, price, description, images);
+    }
+
+
     public void removeListing(Listing listing) {
     //Checkout is going to use this
     }
 
-    public void createListing() {
-
+    /**
+     * addListing takes in a listing and adds it to the users list of listings
+     *
+     * @param listing the listing to be added to the user
+     */
+    public void addListing(Listing listing) {
+        listings.add(listing);
     }
+
 
     public void addCart() {
 
@@ -162,3 +175,4 @@ public class User {
 
 
 }
+

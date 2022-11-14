@@ -1,10 +1,8 @@
 package entities;
-
-import database.DatabaseInteractor;
-
+import database.DatabaseController;
 public class Main {
     public static void main(String[] args) {
-        DatabaseInteractor databaseInteractor = new DatabaseInteractor();
+        DatabaseController databaseInteractor = new DatabaseController();
         User currentUser = null;
     }
 }
