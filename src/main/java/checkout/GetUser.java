@@ -22,6 +22,7 @@ public class GetUser implements CheckoutDatabaseGateway {
      */
     @Override
     public User getUserWithUsername(String username) {
-        return new CheckoutDatabaseController(username).getUser();
+        // TODO
+        return new DatabaseController(username).getUser();
     }
 }
