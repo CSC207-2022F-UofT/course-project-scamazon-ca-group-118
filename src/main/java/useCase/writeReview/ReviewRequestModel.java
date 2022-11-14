@@ -1,4 +1,4 @@
-package writeReview;
+package useCase.writeReview;
 
 /**
  * Represents a ReviewRequestModel object that holds all data to be passed to the ReviewInteractor

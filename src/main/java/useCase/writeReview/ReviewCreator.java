@@ -1,4 +1,4 @@
-package writeReview;
+package useCase.writeReview;
 
 import entities.User;
 import features.Review;
