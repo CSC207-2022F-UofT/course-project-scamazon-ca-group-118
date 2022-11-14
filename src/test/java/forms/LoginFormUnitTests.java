@@ -1,6 +1,6 @@
 package forms;
 
-import login.LoginFailed;
+import useCase.login.LoginFailed;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

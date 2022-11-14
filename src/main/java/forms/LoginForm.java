@@ -1,6 +1,6 @@
 package forms;
-import login.LoginRequestModel;
-import login.LoginResponseModel;
+import useCase.login.LoginRequestModel;
+import useCase.login.LoginResponseModel;
 
 
 public class LoginForm extends Form{
@@ -14,7 +14,7 @@ public class LoginForm extends Form{
     public String password;
 
     /**
-     * the login response model created from the information entered by the user
+     * the useCase.login response model created from the information entered by the user
      */
     private LoginResponseModel responseModel;
 

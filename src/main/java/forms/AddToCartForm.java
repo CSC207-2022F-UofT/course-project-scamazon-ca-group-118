@@ -1,10 +1,9 @@
 package forms;
 
-import addToCart.AddToCartRequestModel;
-import addToCart.AddToCartResponseModel;
+import useCase.addToCart.AddToCartRequestModel;
+import useCase.addToCart.AddToCartResponseModel;
 import database.GetUser;
-import entities.User;
-import features.Listing;
+import entities.Listing;
 
 public class AddToCartForm extends Form {
     private final String BUYER_USERNAME;
