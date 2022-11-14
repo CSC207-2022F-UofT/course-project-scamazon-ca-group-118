@@ -30,15 +30,13 @@ public class User {
     }
 
     //Precondition: new User instances will always be the current User logged in.
-    public void setCurrentUser(){
+    public void setCurrentUser() {
         currentUser = this;
     }
 
-    static User getCurrentUser(){
+    static User getCurrentUser() {
         return currentUser;
     }
-
-
 
     public String getUsername() {
         return this.username;
@@ -113,8 +111,6 @@ public class User {
 
     }
 
-    public void writeReview() {
-
 
     /**
      * Creates a new review with this User as the reviewer, and the specified reviewer and rating
@@ -148,6 +144,7 @@ public class User {
 
 
     public void removeReview() {
+    }
 
     /**
      * calculates the average integer rating earned by this User
