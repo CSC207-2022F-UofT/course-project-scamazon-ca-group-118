@@ -1,11 +1,15 @@
 package entities;
 
 import java.util.List;
+
+import useCase.createListing.ListingCreator;
 import features.Cart;
 import features.Listing;
 import features.Review;
+import useCase.writeReview.ReviewCreator;
 
 public class User {
+    public static User currentUser;
     private String username;
     private String password;
     private int id;
@@ -23,8 +27,17 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
+        this.setCurrentUser();
     }
 
+    //Precondition: new User instances will always be the current User logged in.
+    public void setCurrentUser() {
+        currentUser = this;
+    }
+
+    static User getCurrentUser() {
+        return currentUser;
+    }
 
     public String getUsername() {
         return this.username;
@@ -83,29 +96,82 @@ public class User {
         this.cart = cart;
     }
 
-    public void removeListing() {
+
+    public void createListing(String title, float price, String description, List<String> images) {
+        new ListingCreator().createListing(this, title, price, description, images);
+    }
+
+
+    public void removeListing(Listing listing) {
+    //Checkout is going to use this
+    }
+
+    /**
+     * addListing takes in a listing and adds it to the users list of listings
+     *
+     * @param listing the listing to be added to the user
+     */
+    public void addListing(Listing listing) {
+        listings.add(listing);
+    }
+
+
+    public void addToCart(Listing listing) {
+        this.getCart().addItem(listing);
+    }
+    public void removeFromCart() {
 
     }
 
-    public void createListing() {
+
+    /**
+     * Creates a new review with this User as the reviewer, and the specified reviewer and rating
+     * then adds it to the reviewed User's reviews
+     *
+     * @param reviewed the User being reviewed/the User whose reviews the new Review will be added to
+     * @param rating   the rating given to the User being reviewed
+     */
+    public void writeReview(User reviewed, int rating) {
+        new ReviewCreator().createReview(this, reviewed, rating);
 
     }
 
-    public void addCart() {
-
+    /**
+     * Removes a review from this User's list of reviews
+     *
+     * @param toBeRemoved the Review to be removed from this User's reviews
+     */
+    public void removeReview(Review toBeRemoved) {
+        this.reviews.remove(toBeRemoved);
     }
-    public void removeCart() {
 
+    /**
+     * Adds a review to this User's list of reviews
+     *
+     * @param review the review to be added to this User's reviews
+     */
+    public void addReview(Review review) {
+        this.reviews.add(review);
     }
-    public void writeReview() {
 
-    }
+
     public void removeReview() {
-
     }
-//    public int calculateRating() {
-//
-//    }
+
+    /**
+     * calculates the average integer rating earned by this User
+     *
+     * @return the average rating of all this User's reviews
+     */
+    public int calculateRating() {
+        double rating = 0;
+        for (Review review : reviews) {
+            rating += review.getRating();
+        }
+        rating /= reviews.size();
+        return (int) Math.round(rating);
+    }
 
 
 }
+
