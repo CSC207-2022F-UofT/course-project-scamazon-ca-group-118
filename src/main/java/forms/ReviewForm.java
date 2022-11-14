@@ -1,7 +1,7 @@
 package forms;
 
-import writeReview.ReviewResponseModel;
-import writeReview.ReviewRequestModel;
+import useCase.writeReview.ReviewResponseModel;
+import useCase.writeReview.ReviewRequestModel;
 
 public class ReviewForm extends Form {
     private final String REVIEWER_USERNAME;
