@@ -95,8 +95,8 @@ public class User {
         this.cart = cart;
     }
 
-    public void removeListing() {
-
+    public void removeListing(Listing listing) {
+    //Checkout is going to use this
     }
 
     public void createListing() {
