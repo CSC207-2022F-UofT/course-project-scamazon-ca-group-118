@@ -8,6 +8,7 @@ import features.Review;
 import writeReview.ReviewCreator;
 
 public class User {
+    public static User currentUser;
     private String username;
     private String password;
     private int id;
@@ -25,8 +26,17 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
+        this.setCurrentUser();
     }
 
+    //Precondition: new User instances will always be the current User logged in.
+    public void setCurrentUser() {
+        currentUser = this;
+    }
+
+    static User getCurrentUser() {
+        return currentUser;
+    }
 
     public String getUsername() {
         return this.username;
@@ -85,8 +95,8 @@ public class User {
         this.cart = cart;
     }
 
-    public void removeListing() {
-
+    public void removeListing(Listing listing) {
+    //Checkout is going to use this
     }
 
     public void createListing() {
@@ -100,6 +110,7 @@ public class User {
     public void removeCart() {
 
     }
+
 
     /**
      * Creates a new review with this User as the reviewer, and the specified reviewer and rating
@@ -129,6 +140,10 @@ public class User {
      */
     public void addReview(Review review) {
         this.reviews.add(review);
+    }
+
+
+    public void removeReview() {
     }
 
     /**
