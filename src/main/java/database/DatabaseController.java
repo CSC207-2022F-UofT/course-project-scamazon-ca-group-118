@@ -1,6 +1,6 @@
 package database;
 
-class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway{
+public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway{
     String table = null;
 
 }
