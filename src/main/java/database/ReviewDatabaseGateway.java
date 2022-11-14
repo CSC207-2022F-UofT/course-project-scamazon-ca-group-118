@@ -1,6 +1,9 @@
 package database;
 
 import entities.User;
+import features.Listing;
+
+import java.util.List;
 
 public interface ReviewDatabaseGateway {
     /**
