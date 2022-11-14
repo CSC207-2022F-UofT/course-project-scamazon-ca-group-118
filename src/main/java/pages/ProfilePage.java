@@ -1,4 +1,4 @@
-package pages.profile;
+package pages;
 import pages.Page;
 import entities.User;
 import features.Review;
