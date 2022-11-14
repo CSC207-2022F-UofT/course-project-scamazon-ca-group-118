@@ -20,10 +20,6 @@ public class LoginForm extends Form{
      */
     private LoginResponseModel responseModel;
 
-    /**
-     * the user associated with username. if no user exists with username, user will be an empty user.
-     */
-    public User user;
 
 
     public LoginForm(String username, String password) {
@@ -40,7 +36,6 @@ public class LoginForm extends Form{
     @Override
     protected void submitForm(){
         if(this.validateForm()){
-            this.user = new DatabaseController().getUserWithUsername(username);
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
         }
