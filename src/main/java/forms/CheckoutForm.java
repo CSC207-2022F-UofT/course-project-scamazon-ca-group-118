@@ -1,37 +1,46 @@
 package forms;
+
+import checkout.CheckoutRequestModel;
+import checkout.CheckoutResponseModel;
+import useCase.writeReview.ReviewRequestModel;
+import useCase.writeReview.ReviewResponseModel;
+
 import java.time.*;
 
 public class CheckoutForm extends Form {
-    private final String name;
-    private String number;
-    private String cvv;
-    private LocalDate expiration; //Represents a date (year, month, day (yyyy-MM-dd))
-    private String address;
+    private final String USERNAME;
+    private final String CARD_NUMBER;
+    private final String CVV;
+    private final LocalDate EXPIRATION; //Represents a date (year, month, day (yyyy-MM-dd))
+    private final String ADDRESS;
+    private CheckoutResponseModel responseModel;
 
-    public CheckoutForm(String title, String name, String number, String cvv, LocalDate expiration, String address) {
-        super(title);
-        this.name = name;
-        this.number = number;
-        this.cvv = cvv;
-        this.expiration = expiration;
-        this.address = address;
+
+
+    public CheckoutForm(String name, String number, String cvv, LocalDate expiration, String address) {
+        super("Checkout");
+        this.USERNAME = name;
+        this.CARD_NUMBER = number;
+        this.CVV = cvv;
+        this.EXPIRATION = expiration;
+        this.ADDRESS = address;
     }
 
     @Override
-    boolean validateForm() {
+    protected boolean validateForm() {
         //check number length is equal to 16
-        if (!(getNumber().length() == 16)) {
+        if (!(this.number.length() == 16)) {
             return false;
             //alert UI
         }
         //check cvv length is equal to 3
-        if (!(getCvv().length() == 3)) {
+        if (!(this.cvv.length() == 3)) {
             return false;
             //alert UI
         }
         //check expiration is after today's date
         LocalDate today = LocalDate.now();
-        if (!(getExpiration().isAfter(today))) {
+        if (!(this.expiration.isAfter(today))) {
             return false;
             //alert UI
         }
@@ -39,22 +48,12 @@ public class CheckoutForm extends Form {
     }
 
     @Override
-    void submitForm() {
-        if (validateForm()) {
+    protected void submitForm() {
+        if (this.validateForm()) {
+            CheckoutRequestModel requestModel = new CheckoutRequestModel(USERNAME);
+            responseModel = new CheckoutResponseModel(requestModel);
             //redirect to "home" page
-            //call function to remove item from database
+            //call function to remove items in cart from database
         }
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public LocalDate getExpiration() {
-        return expiration;
     }
 }

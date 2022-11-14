@@ -1,11 +1,9 @@
 package pages;
 import features.Listing;
-import features.Search;
-import entities.DatabaseInteractor;
 
 import java.util.List;
 
-public class ListingListPage extends Page implements DatabaseInteractor{
+public class ListingListPage extends Page {
     private List<Listing> listings;
 
     // super call from page, assume every page title will be listings?
@@ -22,34 +20,17 @@ public class ListingListPage extends Page implements DatabaseInteractor{
         this.listings = listings;
     }
 
-
-
-    // Implementing all methods from interface
-    // placeholder since I won't need this method
-    public void create() {
-        return;
+    public List<Listing> showListings() {
+        // TODO: Implement GUI here? or this will show listings
+        // return data;
+        return null;
     }
-
-    public void update() {
-        return;
-    }
-    public void delete() {
-        return;
-    }
-
-    public T query() {
-        // TODO: Implement query which returns data, will have to access database which is not yet setup
-        return data;
-    }
-    T data = DatabaseInteractor.query();
 
     // will show listings
-    // TODO: Will change once GUI is implemented
-    public void showListings(List <Listing> listings) {
-        for (Listing List : listings) {
-            System.out.println(List);
-        }
-    }
+    // TODO: method for GUI
+//    public void GUI(List <Listing> listings) {
+//
+//    }
 
     // I think the plan is to call showListings with our data variable as a parameter
 }
