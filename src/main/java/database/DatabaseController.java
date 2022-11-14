@@ -1,6 +1,6 @@
 package database;
 
-interface DatabaseInteractor<T> {
+interface DatabaseController<T> {
     String table = null;
 
     // return true if the object is successfully created in table

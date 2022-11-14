@@ -1,23 +1,24 @@
-package createListing;
+package useCase.writeReview;
 
-import forms.CreateListingForm;
+import forms.ReviewForm;
 
 /**
- * The presenter class for creating a listing
+ * The presenter class for writing a review
  */
-public class ListingPresenter {
+public class ReviewPresenter {
     private String message;
+
     /**
-     * The constructor for the ListingPresenter
+     * The constructor for the ReviewPresenter
      *
      * @param form the form from which this presenter retrieves a message
      */
-    public ListingPresenter(CreateListingForm form){
+    public ReviewPresenter(ReviewForm form) {
         this.message = form.getMessage();
     }
 
     /**
-     * @return a message that communicates whether the listing was successfully created
+     * @return a message that communicates whether the review was successfully created
      */
     public String getMessage() {
         return message;

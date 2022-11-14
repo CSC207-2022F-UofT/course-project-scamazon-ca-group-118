@@ -1,4 +1,4 @@
-package writeReview;
+package useCase.writeReview;
 
 import database.GetUser;
 import database.UserExists;

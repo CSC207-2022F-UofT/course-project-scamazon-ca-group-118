@@ -1,4 +1,4 @@
-package createListing;
+package useCase.createListing;
 
 /**
  * Represents a ListingResponseModel object that stores data retrieved from the ReviewInteractor that must

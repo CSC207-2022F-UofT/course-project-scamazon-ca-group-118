@@ -2,11 +2,11 @@ package entities;
 
 import java.util.List;
 
-import createListing.ListingCreator;
+import useCase.createListing.ListingCreator;
 import features.Cart;
 import features.Listing;
 import features.Review;
-import writeReview.ReviewCreator;
+import useCase.writeReview.ReviewCreator;
 
 public class User {
     private String username;

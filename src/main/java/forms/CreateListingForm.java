@@ -1,7 +1,7 @@
 package forms;
 
-import createListing.ListingRequestModel;
-import createListing.ListingResponseModel;
+import useCase.createListing.ListingRequestModel;
+import useCase.createListing.ListingResponseModel;
 import database.GetUser;
 import database.UserExists;
 

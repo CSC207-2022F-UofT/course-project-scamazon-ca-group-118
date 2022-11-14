@@ -1,4 +1,4 @@
-package createListing;
+package useCase.createListing;
 
 import entities.User;
 
