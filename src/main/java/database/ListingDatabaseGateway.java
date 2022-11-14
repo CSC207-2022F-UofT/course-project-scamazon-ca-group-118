@@ -1,5 +1,5 @@
 package database;
-import features.Listing;
+import entities.Listing;
 
 import java.util.List;
 

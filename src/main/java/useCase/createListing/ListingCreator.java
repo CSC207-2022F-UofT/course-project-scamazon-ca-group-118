@@ -4,7 +4,7 @@ import entities.User;
 
 import java.util.List;
 
-import features.Listing;
+import entities.Listing;
 
 
 /**

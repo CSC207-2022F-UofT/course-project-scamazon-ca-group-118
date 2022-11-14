@@ -1,9 +1,7 @@
 package forms;
 
-import checkout.CheckoutRequestModel;
-import checkout.CheckoutResponseModel;
-import useCase.writeReview.ReviewRequestModel;
-import useCase.writeReview.ReviewResponseModel;
+import useCase.checkout.CheckoutRequestModel;
+import useCase.checkout.CheckoutResponseModel;
 
 import java.time.*;
 
@@ -29,18 +27,18 @@ public class CheckoutForm extends Form {
     @Override
     protected boolean validateForm() {
         //check number length is equal to 16
-        if (!(this.number.length() == 16)) {
+        if (!(this.CARD_NUMBER.length() == 16)) {
             return false;
             //alert UI
         }
         //check cvv length is equal to 3
-        if (!(this.cvv.length() == 3)) {
+        if (!(this.CVV.length() == 3)) {
             return false;
             //alert UI
         }
         //check expiration is after today's date
         LocalDate today = LocalDate.now();
-        if (!(this.expiration.isAfter(today))) {
+        if (!(this.EXPIRATION.isAfter(today))) {
             return false;
             //alert UI
         }

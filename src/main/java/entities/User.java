@@ -3,9 +3,6 @@ package entities;
 import java.util.List;
 
 import useCase.createListing.ListingCreator;
-import features.Cart;
-import features.Listing;
-import features.Review;
 import useCase.writeReview.ReviewCreator;
 
 public class User {

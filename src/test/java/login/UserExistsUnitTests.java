@@ -1,4 +1,4 @@
-package login;
+package useCase.login;
 
 import entities.User;
 import features.Cart;

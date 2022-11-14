@@ -1,8 +1,8 @@
 package forms;
 
-import features.Search.SearchDatabaseGateway;
-import features.Search.SearchRequestModel;
-import features.Search.SearchResponseModel;
+import database.SearchDatabaseGateway;
+import useCase.Search.SearchRequestModel;
+import useCase.Search.SearchResponseModel;
 
 public class SearchForm extends Form {
     //TODO Make after database interactor is there
