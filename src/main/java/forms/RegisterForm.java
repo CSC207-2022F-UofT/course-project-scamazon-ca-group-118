@@ -174,7 +174,7 @@ public class RegisterForm extends Form {
     }
 
     @Override
-    boolean validateForm() {
+    protected boolean validateForm() {
         //password and confirm password
         if (!((this.password.equals(this.confirmPassword)) && (password.length() >= 8))) {
             //output error msg
@@ -194,7 +194,7 @@ public class RegisterForm extends Form {
     }
 
     @Override
-    void submitForm() {
+    protected void submitForm() {
 
     }
 
