@@ -1,15 +1,17 @@
-package pages;
+package UI;
 
 import forms.LoginForm;
-import login.LoginFailed;
-import login.LoginResponseModel;
+import pages.LabelButtonPanel;
+import pages.LabelTextPanel;
+import useCase.login.LoginFailed;
+import useCase.login.LoginResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginPage extends Page implements ActionListener{
+public class LoginPage extends Page implements ActionListener {
     final int WIDTH = 800;
     final int HEIGHT = 600;
     private final JButton LOGIN;
@@ -24,6 +26,7 @@ public class LoginPage extends Page implements ActionListener{
      * The password entered by the user
      */
     JPasswordField password = new JPasswordField(15);
+
     public LoginPage() {
         super("Login");
         //TODO change this if we change Page title access
@@ -80,17 +83,17 @@ public class LoginPage extends Page implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == LOGIN){
-            try{
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == LOGIN) {
+            try {
                 LoginForm form = new LoginForm(username.getText(),
                         String.valueOf(password.getPassword()));
                 //TODO implement this part once UserPresenter is running
                 LoginResponseModel responseModel = form.getResponseModel();
-            }catch(LoginFailed error){
+            } catch (LoginFailed error) {
                 errorMessage.setText(error.getMessage());
             }
-        }else if(e.getSource() == REGISTER){
+        } else if (e.getSource() == REGISTER) {
             //TODO implement this, open the registerPage
             System.out.println("Register");
         }
