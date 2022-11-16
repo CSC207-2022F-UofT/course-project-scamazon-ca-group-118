@@ -1,9 +1,6 @@
 package forms;
-import login.LoginDatabaseController;
-import login.LoginFailed;
-import login.LoginRequestModel;
-import login.LoginResponseModel;
-import entities.User;
+import useCase.login.LoginRequestModel;
+import useCase.login.LoginResponseModel;
 
 
 public class LoginForm extends Form{
@@ -17,14 +14,10 @@ public class LoginForm extends Form{
     public String password;
 
     /**
-     * the login response model created from the information entered by the user
+     * the useCase.login response model created from the information entered by the user
      */
     private LoginResponseModel responseModel;
 
-    /**
-     * the user associated with username. if no user exists with username, user will be an empty user.
-     */
-    public User user;
 
 
     public LoginForm(String username, String password) {
@@ -35,18 +28,12 @@ public class LoginForm extends Form{
 
     @Override
     protected boolean validateForm() {
-        if(password.length() > 0 && username.length() > 0) {
-            return true;
-        }
-        else{
-            throw new LoginFailed("Please enter a username and password");
-        }
+        return password.length() > 0 && username.length() > 0;
     }
 
     @Override
     protected void submitForm(){
         if(this.validateForm()){
-            this.user = new LoginDatabaseController(username).getUser();
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
         }

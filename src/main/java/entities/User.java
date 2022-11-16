@@ -2,12 +2,11 @@ package entities;
 
 import java.util.List;
 
-import features.Cart;
-import features.Listing;
-import features.Review;
-import writeReview.ReviewCreator;
+import useCase.createListing.ListingCreator;
+import useCase.writeReview.ReviewCreator;
 
 public class User {
+    public static User currentUser;
     private String username;
     private String password;
     private int id;
@@ -25,8 +24,17 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
+        this.setCurrentUser();
     }
 
+    //Precondition: new User instances will always be the current User logged in.
+    public void setCurrentUser() {
+        currentUser = this;
+    }
+
+    static User getCurrentUser() {
+        return currentUser;
+    }
 
     public String getUsername() {
         return this.username;
@@ -85,21 +93,33 @@ public class User {
         this.cart = cart;
     }
 
-    public void removeListing() {
+
+    public void createListing(String title, float price, String description, List<String> images) {
+        new ListingCreator().createListing(this, title, price, description, images);
+    }
+
+
+    public void removeListing(Listing listing) {
+    //Checkout is going to use this
+    }
+
+    /**
+     * addListing takes in a listing and adds it to the users list of listings
+     *
+     * @param listing the listing to be added to the user
+     */
+    public void addListing(Listing listing) {
+        listings.add(listing);
+    }
+
+
+    public void addToCart(Listing listing) {
+        this.getCart().addItem(listing);
+    }
+    public void removeFromCart() {
 
     }
 
-    public void createListing() {
-
-    }
-
-    public void addCart() {
-
-    }
-
-    public void removeCart() {
-
-    }
 
     /**
      * Creates a new review with this User as the reviewer, and the specified reviewer and rating
@@ -131,6 +151,10 @@ public class User {
         this.reviews.add(review);
     }
 
+
+    public void removeReview() {
+    }
+
     /**
      * calculates the average integer rating earned by this User
      *
@@ -147,3 +171,4 @@ public class User {
 
 
 }
+
