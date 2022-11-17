@@ -50,8 +50,9 @@ public class CartPage extends Page {
 
     //Hard to implement the logic here without the GUI and other people's logic being
     //complete so consider this a rough draft until further notice.
-    public Page goToCheckout() {
-        //NOT IMPLEMENTED, WARRANTS FURTHER DISCUSSION
-        //TODO Implement with the GUI after figuring out View thing
-    }
+//    public Page goToCheckout() {
+//        //NOT IMPLEMENTED, WARRANTS FURTHER DISCUSSION
+//        //TODO Implement with the GUI after figuring out View thing
+//
+//    }
 }

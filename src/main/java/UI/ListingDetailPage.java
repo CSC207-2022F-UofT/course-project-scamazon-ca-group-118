@@ -12,7 +12,7 @@ public class ListingDetailPage extends Page {
         super(title);
         this.listing = listing;
         // TODO: figure out currentUser
-        this.addToCartForm = new AddToCartForm(currentUser.username, listing);
+        // this.addToCartForm = new AddToCartForm(currentUser.username, listing);
         this.canAddToCart = addToCartForm.getCanAddToCart();
     }
 
