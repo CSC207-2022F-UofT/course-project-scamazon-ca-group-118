@@ -1,9 +1,13 @@
 package database;
 
 
+import entities.Listing;
 import entities.User;
 
-public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway{
+import java.util.List;
+
+public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
+        ListingDatabaseGateway{
     String table = null;
 
     public DatabaseController() {
@@ -11,6 +15,16 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     @Override
     public User getUserWithUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public List<Listing> getListingWithSearch(String keyword) {
+        return null;
+    }
+
+    @Override
+    public List<Listing> getListingDefault() {
         return null;
     }
 }
