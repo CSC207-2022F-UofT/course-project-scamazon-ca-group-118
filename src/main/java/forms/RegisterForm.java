@@ -1,5 +1,9 @@
 package forms;
 
+import database.RegisterDatabaseGateway;
+import useCase.Register.RegisterRequestModel;
+import useCase.Register.RegisterResponseModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -162,12 +166,13 @@ class Registration {
     }
 }
 
-public class RegisterForm extends Form {
+public class RegisterForm extends Form{
 
     private String username;
     private String email;
     private String password;
     private String confirmPassword;
+    private RegisterResponseModel responseModel;
 
     public RegisterForm(String title) {
         super(title);
@@ -187,19 +192,16 @@ public class RegisterForm extends Form {
             return false;
         }
 
-        //use database interactor to see if input is unique
-
         return true;
 
     }
 
     @Override
     protected void submitForm() {
-
-    }
-
-    public void createUser(String username, String email, String password) {
-        //TODO: call createUser method in user class using database interactor
+        if (this.validateForm()){
+            RegisterRequestModel requestModel = new RegisterRequestModel(username, email, password);
+            this.responseModel = new RegisterResponseModel(requestModel);
+        }
     }
 
 }
