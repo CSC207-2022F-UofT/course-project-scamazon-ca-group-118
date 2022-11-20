@@ -23,5 +23,6 @@ public class GetUser implements ReviewDatabaseGateway {
     @Override
     public User getUserWithUsername(String username) {
         return new DatabaseController().getUserWithUsername(username);
+
     }
 }
