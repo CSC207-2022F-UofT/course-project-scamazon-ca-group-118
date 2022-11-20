@@ -32,7 +32,7 @@ public class User {
         currentUser = this;
     }
 
-    static User getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 
@@ -100,7 +100,7 @@ public class User {
 
 
     public void removeListing(Listing listing) {
-    //Checkout is going to use this
+        //Checkout is going to use this
     }
 
     /**
@@ -116,6 +116,7 @@ public class User {
     public void addToCart(Listing listing) {
         this.getCart().addItem(listing);
     }
+
     public void removeFromCart() {
     }
 
