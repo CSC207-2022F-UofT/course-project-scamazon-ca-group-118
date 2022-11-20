@@ -31,7 +31,11 @@ public class Listing {
     }
 
     public String getTitle() {
+<<<<<<< Updated upstream:src/main/java/features/Listing.java
         return title;
+=======
+        return this.listingTitle;
+>>>>>>> Stashed changes:src/main/java/entities/Listing.java
     }
 
     public LocalDate getDate() {

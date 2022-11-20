@@ -2,7 +2,7 @@ package writeReview;
 
 import database.UserExists;
 import entities.User;
-import features.Cart;
+import entities.Cart;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
