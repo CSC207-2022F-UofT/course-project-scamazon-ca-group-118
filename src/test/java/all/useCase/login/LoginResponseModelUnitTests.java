@@ -1,8 +1,8 @@
 package all.useCase.login;
 
-import org.junit.jupiter.api.Test;
 
-
+/**
+ * TODO uncomment and implement these tests once Database implemented
 public class LoginResponseModelUnitTests {
     @Test
     void testLoginResponseModelShouldLogin() {
@@ -37,3 +37,4 @@ public class LoginResponseModelUnitTests {
         }
     }
 }
+*/

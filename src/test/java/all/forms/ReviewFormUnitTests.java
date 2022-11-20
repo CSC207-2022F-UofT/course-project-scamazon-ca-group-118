@@ -2,6 +2,8 @@ package all.forms;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * TODO uncomment and implement these tests once Database implemented
 public class ReviewFormUnitTests {
     @Test
     void testReviewFormUserDoesntExist() {
@@ -21,3 +23,4 @@ public class ReviewFormUnitTests {
                 .equals("Please enter the username of the User you wish to review");
     }
 }
+ */
