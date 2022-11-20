@@ -13,14 +13,12 @@ public class Listing {
     private LocalDate dateAdded; // Represents a date (year, month, day (yyyy-MM-dd))
     private float price;
     private String sellerUsername;
-    private int sellerRating;
     private static int nextID = 0;
     private String description;
     private String imagePath; // Will store the directory path of the images
 
     public Listing(User seller, String listingTitle, float price, String description, String imagePath) {
         this.sellerUsername = seller.getUsername();
-        this.sellerRating = seller.calculateRating();
         this.listingTitle = listingTitle;
         this.id = nextId++;
         this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
@@ -28,11 +26,10 @@ public class Listing {
         this.description = description;
         this.imagePath = imagePath;
     }
-    public Listing(int id, String sellerUsername, String listingTitle, int sellerRating, LocalDate dateAdded,
+    public Listing(int id, String sellerUsername, String listingTitle, LocalDate dateAdded,
                    float price, String description, String imagePath) {
         this.id = id;
         this.sellerUsername = sellerUsername;
-        this.sellerRating = sellerRating;
         this.listingTitle = listingTitle;
         this.id = nextId++;
         this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
@@ -91,14 +88,6 @@ public class Listing {
 
     public void setSellerUsername(String sellerUsername) {
         this.sellerUsername = sellerUsername;
-    }
-
-    public int getSellerRating() {
-        return sellerRating;
-    }
-
-    public void setSellerRating(int sellerRating) {
-        this.sellerRating = sellerRating;
     }
 
     public String getImagePath() {

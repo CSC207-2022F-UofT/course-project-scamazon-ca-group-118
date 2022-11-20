@@ -7,6 +7,7 @@ import entities.User;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -16,9 +17,9 @@ import java.awt.Graphics2D;
 import static javax.swing.SwingUtilities.paintComponent;
 
 public class ListingListPage extends JFrame implements ActionListener {
-    private List<String> example_images = new ArrayList();
-    private User example_user = new User("sam", "pass", 5, "gmail", new ArrayList<>(),
-            new ArrayList<>(), new Cart());
+    private String example_images;
+    private User example_user = new User(0, "sam", "pass", "gmail",
+            new ArrayList<>(), new ArrayList<>(), new Cart());
     // Components of the Form
     private Container c;
     private JLabel title;
@@ -58,7 +59,7 @@ public class ListingListPage extends JFrame implements ActionListener {
         for (Listing result : searchResults) {
             JLabel resultTitle = new JLabel(result.getTitle());
             JLabel resultPrice = new JLabel("Price: " + String.valueOf(result.getPrice()));
-            JLabel resultImage = new JLabel(result.getImage(result.getId()));
+            JLabel resultImage = new JLabel(result.getImagePath());
             JLabel resultDescription = new JLabel(result.getDescription());
             JLabel resultDate = new JLabel(result.getDate().toString());
 
@@ -94,11 +95,11 @@ public class ListingListPage extends JFrame implements ActionListener {
 
         setVisible(true);
     }
-    public void paint(Graphics g) {
-        for (int i = 0; i < 10; i++) {
-            g.drawRect(x_length, y_height + i * 100 - 200, box_length, box_height);
-        }
-    }
+//    public void paint(Graphics g) {
+//        for (int i = 0; i < 10; i++) {
+//            g.drawRect(x_length, y_height + i * 100 - 200, box_length, box_height);
+//        }
+//    }
 
 
     // method actionPerformed()
@@ -118,9 +119,9 @@ public class ListingListPage extends JFrame implements ActionListener {
         // reroute to listing detail
 
     }
-    public List<Listing> showListings() {
+    public List<Listing> showListings() throws IOException {
         DatabaseController controller = new DatabaseController();
-        List <Listing> listings = controller.getListingDefault();
+        List <Listing> listings = controller.getAllListings();
         return listings;
     }
 

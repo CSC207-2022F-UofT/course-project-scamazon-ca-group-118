@@ -1,2 +1,2 @@
 0;first_user;first listing;1.0;2022-11-19;5.0;this is the first listing in our new database!;null;
-id;sellerUsername;title;price;dateAdded;sellerRating;description;imagePath
+id;sellerUsername;title;price;dateAdded;description;imagePath

@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import useCase.createListing.ListingCreator;
@@ -11,13 +12,13 @@ public class User {
     private String password;
     private int id;
     private String email;
-    private List<Integer> reviews;
-    private List<Listing> listings;
+    private ArrayList<Integer> reviews;
+    private ArrayList<Listing> listings;
     private Cart cart;
     private static int nextID = 0;
 
-    public User(int id, String username, String password, String email, List<Integer> reviews,
-                List<Listing> listings, Cart cart) {
+    public User(int id, String username, String password, String email, ArrayList<Integer> reviews,
+                ArrayList<Listing> listings, Cart cart) {
         this.username = username;
         this.password = password;
         this.id = id;
@@ -61,10 +62,6 @@ public class User {
         return this.id;
     }
 
-    public void setID(int id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -74,12 +71,16 @@ public class User {
     }
 
 
-    public List<Listing> getListings() {
+    public ArrayList<Listing> getListings() {
         return listings;
     }
 
-    public void setListings(List<Listing> listings) {
+    public void setListings(ArrayList<Listing> listings) {
         this.listings = listings;
+    }
+
+    public ArrayList<Integer> getReviews() {
+        return this.reviews;
     }
 
     public Cart getCart() {
@@ -92,7 +93,7 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, List<String> images) {
+    public void createListing(String title, float price, String description, ArrayList<String> images) {
         new ListingCreator().createListing(this, title, price, description, images);
     }
 
