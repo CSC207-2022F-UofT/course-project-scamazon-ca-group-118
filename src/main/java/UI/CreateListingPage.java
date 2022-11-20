@@ -1,8 +1,16 @@
 package UI;
+import forms.CreateListingForm;
+import useCase.createListing.ListingInteractor;
+
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.ArrayList;
 public class CreateListingPage extends Page{
+        List<String> images = new ArrayList<String>();
         public CreateListingPage(String title) {
             super(title);
 
@@ -59,11 +67,42 @@ public class CreateListingPage extends Page{
             JButton upload = new JButton("Upload Images");
             upload.setSize(150, 30);
             upload.setLocation(850, 425);
+
+            upload.addActionListener(e -> {
+                String fileName;
+                String filePath;
+                final JFileChooser imgFiles = new JFileChooser();
+                int returnVal = imgFiles.showOpenDialog(CreateListingPage.this);
+                if (returnVal == imgFiles.APPROVE_OPTION){
+                    fileName = imgFiles.getSelectedFile().getName();
+                    filePath = imgFiles.getCurrentDirectory().toString();
+                    System.out.println("File Name: " + fileName);
+                    System.out.println("File Path: " + filePath);
+                    images.add(filePath + "/" + fileName);
+                }
+                if(returnVal == JFileChooser.CANCEL_OPTION){
+                    fileName = "";
+                    filePath = "";
+                }
+
+
+            });
             createListingPanel.add(upload);
 
             JButton submit = new JButton("Submit Listing");
             submit.setSize(250, 30);
             submit.setLocation(550, 550);
+            submit.addActionListener(e -> {
+                String listingTitle = listing_text.getText();
+                DecimalFormat df = new DecimalFormat("0.00");
+                double listingPrice = Double.parseDouble(df.format(Double.parseDouble(price_text.getText())));
+                String listingDesc = desc_text.getText();
+
+                //use Class to submit information
+
+
+
+            });
             createListingPanel.add(submit);
 
 
@@ -76,6 +115,7 @@ public class CreateListingPage extends Page{
             this.setMinimumSize(new Dimension(1280, 720));
             this.add(createListingPanel);
             this.pack();
+            this.setResizable(false);
             this.setVisible(true);
 
 
