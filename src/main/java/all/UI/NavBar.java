@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+/**
+ * The NavBar class sets up the GUI for the NavBar (i.e. navigation bar) that will be displayed at the top of
+ * each View Frame
+ */
 public class NavBar extends JPanel implements ActionListener {
     private JButton profileButton;
     private JButton listingsButton;
@@ -16,6 +20,9 @@ public class NavBar extends JPanel implements ActionListener {
     private JButton logButton;
     private final SpringLayout LAYOUT;
 
+    /**
+     * The constructor class for the NavBar
+     */
     public NavBar() {
         this.LAYOUT = new SpringLayout();
         this.setBackground(new Color(185, 235, 255));
@@ -24,9 +31,25 @@ public class NavBar extends JPanel implements ActionListener {
         setUpLayout();
     }
 
+    /**
+     * Set up and add all components to this NavBar
+     */
     private void setUpPanel() {
         this.setLayout(LAYOUT);
         this.setPreferredSize(new Dimension(1280, 100));
+
+        setUpButtonsAndListeners();
+
+        this.add(profileButton);
+        this.add(listingsButton);
+        this.add(cartButton);
+        this.add(logButton);
+    }
+
+    /**
+     * Sets up the JButtons in this navBar, along with their actionListeners
+     */
+    public void setUpButtonsAndListeners(){
         profileButton = new JButton("Profile");
         listingsButton = new JButton("Listings");
         cartButton = new JButton("Cart");
@@ -36,13 +59,11 @@ public class NavBar extends JPanel implements ActionListener {
         listingsButton.addActionListener(this);
         cartButton.addActionListener(this);
         logButton.addActionListener(this);
-
-        this.add(profileButton);
-        this.add(listingsButton);
-        this.add(cartButton);
-        this.add(logButton);
     }
 
+    /**
+     * Fix the layout for the components in this NavBar
+     */
     protected void setUpLayout() {
         //vertical alignment
         LAYOUT.putConstraint(SpringLayout.NORTH, logButton, 40, SpringLayout.NORTH, this);
@@ -57,6 +78,9 @@ public class NavBar extends JPanel implements ActionListener {
         LAYOUT.putConstraint(SpringLayout.EAST, profileButton, -120, SpringLayout.WEST, listingsButton);
     }
 
+    /**
+     * Update this NavBar to display the correct type of Log Button (Log In vs Log Out vs Register)
+     */
     public void updateNavBar() {
         if (Main.getCurrentPage() instanceof LoginPage) {
             logButton.setText("Register");
@@ -69,40 +93,70 @@ public class NavBar extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * The actionListener for the buttons in this NavBar
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO refactor this method - it smells. so bad.
         if (e.getSource() == profileButton ||
                 e.getSource() == listingsButton ||
                 e.getSource() == cartButton) {
-            if (Objects.isNull(Main.getCurrentUser())) {
-                LoginPage newLoginPage = new LoginPage();
-                newLoginPage.setErrorMessage("Please log in or register");
-                Main.setCurrentPage(newLoginPage);
-            } else {
-                if (e.getSource() == profileButton) {
-                    Main.setCurrentPage(new ProfilePage("Profile Page"));
-                    System.out.println(Main.getCurrentPage().getTitle());
-                } else if (e.getSource() == listingsButton) {
-                    Main.setCurrentPage(new ListingListPage(Main.getCurrentUser().getListings()));
-                } else if (e.getSource() == cartButton) {
-                    Main.setCurrentPage(new CartPage("Cart Page", Main.getCurrentUser().getCart()));
-                }
-            }
+            notLogButtonAction((JButton) e.getSource());
 
         } else if (e.getSource() == logButton) {
-            if (logButton.getText().equals("Log In")) {
-                logButton.setText("Register");
-                Main.setCurrentPage(new LoginPage());
-            } else if (logButton.getText().equals("Register")) {
-                logButton.setText("Log In");
-                //TODO fix this, I don't think having title this many times is necessary
-                Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
-            } else if (logButton.getText().equals("Log Out")) {
-                logButton.setText("Log In");
-                Main.setCurrentUser(null);
-                Main.setCurrentPage(new LoginPage());
-            }
+            logButtonAction();
+        }
+    }
+
+    /**
+     * The action that should run when a button other than the logButton is clicked
+     * @param source the button that was clicked to invoke the action listener
+     */
+    private void notLogButtonAction(JButton source){
+        if (Objects.isNull(Main.getCurrentUser())) {
+            userIsNullAction();
+        } else {
+            switchScreenAction(source);
+        }
+    }
+
+    /**
+     * The action that should run if the logButton is clicked
+     */
+    private void logButtonAction(){
+        if (logButton.getText().equals("Log In")) {
+            Main.setCurrentPage(new LoginPage());
+        } else if (logButton.getText().equals("Register")) {
+            Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
+        } else if (logButton.getText().equals("Log Out")) {
+            Main.setCurrentUser(null);
+            Main.setCurrentPage(new LoginPage());
+        }
+        updateNavBar();
+    }
+
+    /**
+     * If no User is logged in (i.e. currentUser is Null) the current page is set to the Login Page with a
+     * relevant error message displayed
+     */
+    private void userIsNullAction(){
+        LoginPage newLoginPage = new LoginPage();
+        newLoginPage.setErrorMessage("Please log in or register");
+        Main.setCurrentPage(newLoginPage);
+    }
+
+    /**
+     * Switches the currentPage in Main to a different Page, to be displayed in View
+     * @param source the button that was clicked to invoke the action listener
+     */
+    private void switchScreenAction(JButton source){
+        if (source == profileButton) {
+            Main.setCurrentPage(new ProfilePage("Profile Page"));
+        } else if (source == listingsButton) {
+            Main.setCurrentPage(new ListingListPage(Main.getCurrentUser().getListings()));
+        } else if (source == cartButton) {
+            Main.setCurrentPage(new CartPage("Cart Page", Main.getCurrentUser().getCart()));
         }
     }
 }
