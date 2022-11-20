@@ -1,8 +1,8 @@
-package pages;
+package UI;
 
+import entities.Cart;
+import entities.Listing;
 import entities.User;
-import features.Cart;
-import features.Listing;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +29,6 @@ public class CartPage extends Page implements ActionListener {
 
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setTitle("Scamazon.ca");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.itemTable = this.createItemTable();
         JScrollPane scrollPane = new JScrollPane(this.itemTable);
