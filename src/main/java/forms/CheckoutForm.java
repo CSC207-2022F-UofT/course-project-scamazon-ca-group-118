@@ -4,12 +4,9 @@ import useCase.checkout.CheckoutRequestModel;
 import useCase.checkout.CheckoutResponseModel;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
-public class CheckoutForm extends Form implements ActionListener {
+public class CheckoutForm extends Form {
     private final String USERNAME;
     private final String NAME;
     private final String CARD_NUMBER;
@@ -17,55 +14,14 @@ public class CheckoutForm extends Form implements ActionListener {
     private final LocalDate EXPIRATION; //Represents a date (year, month, day (yyyy-MM-dd))
     private final String ADDRESS;
     private CheckoutResponseModel responseModel;
-    private JLabel username;
-    private JLabel name;
-    private JLabel cardNumber;
-    private JLabel cvv;
-    private JLabel expiration;
-    private JLabel address;
-    private final JButton SUBMIT;
-
-
-    public CheckoutForm() {
+    public CheckoutForm(String username, String name, String card_number, String cvv, LocalDate expiration, String address) {
         super("Checkout");
-
-        this.username = new JLabel("Username");
-        JTextField jtUsername = new JTextField();
-        this.name = new JLabel("Name");
-        JTextField jtName = new JTextField();
-        this.cardNumber = new JLabel("Card Number");
-        JTextField jtCardNumber = new JTextField();
-        this.cvv = new JLabel("CVV");
-        JTextField jtCVV = new JTextField();
-        this.expiration = new JLabel("Expiration Date");
-        JTextField jtExpiration = new JTextField();
-        this.address = new JLabel("Address");
-        JTextField jtAddress = new JTextField();
-        this.SUBMIT = new JButton("Submit");
-
-        JPanel jpForm = new JPanel();
-        jpForm.setLayout(new GridLayout(5, 2, 10, 5));
-        jpForm.add(this.username);
-        jpForm.add(this.name);
-        jpForm.add(this.cardNumber);
-        jpForm.add(this.cvv);
-        jpForm.add(this.expiration);
-        jpForm.add(this.address);
-        jpForm.add(this.SUBMIT);
-
-        JPanel jpMainPanel = new JPanel();
-        jpMainPanel.setLayout(new BorderLayout(10, 10));
-        jpMainPanel.add(jpForm, BorderLayout.NORTH);
-        jpMainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        this.SUBMIT.addActionListener(this);
-
-        this.USERNAME = jtUsername.getText();
-        this.NAME = jtName.getText();
-        this.CARD_NUMBER = jtCardNumber.getText();
-        this.CVV = jtCVV.getText();
-        this.EXPIRATION = LocalDate.parse(jtExpiration.getText());
-        this.ADDRESS = jtAddress.getText();
+        this.USERNAME = username;
+        this.NAME = name;
+        this.CARD_NUMBER = card_number;
+        this.CVV = cvv;
+        this.EXPIRATION = expiration;
+        this.ADDRESS = address;
     }
 
     @Override
@@ -106,10 +62,8 @@ public class CheckoutForm extends Form implements ActionListener {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.SUBMIT) {
-            this.submitForm();
-        }
+    public CheckoutResponseModel getResponseModel() {
+        this.submitForm();
+        return responseModel;
     }
 }
