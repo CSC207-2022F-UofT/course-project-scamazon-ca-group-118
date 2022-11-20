@@ -1,7 +1,6 @@
-package writeReview;
+package all.useCase.writeReview;
 
 import org.junit.jupiter.api.Test;
-import useCase.writeReview.ReviewRequestModel;
 
 public class ReviewRequestModelUnitTests {
     @Test

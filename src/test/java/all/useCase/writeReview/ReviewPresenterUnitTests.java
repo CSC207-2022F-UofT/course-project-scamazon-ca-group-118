@@ -1,8 +1,7 @@
-package writeReview;
+package all.useCase.writeReview;
 
-import forms.ReviewForm;
+import all.forms.ReviewForm;
 import org.junit.jupiter.api.Test;
-import useCase.writeReview.ReviewPresenter;
 
 public class ReviewPresenterUnitTests {
     @Test

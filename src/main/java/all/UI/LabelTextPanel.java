@@ -1,4 +1,4 @@
-package pages;
+package all.UI;
 
 import javax.swing.*;
 

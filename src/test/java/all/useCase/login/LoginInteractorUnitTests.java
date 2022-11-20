@@ -1,8 +1,8 @@
-package useCase.login;
+package all.useCase.login;
 
-import features.Cart;
+import all.entities.Cart;
 import org.junit.jupiter.api.Test;
-import entities.User;
+import all.entities.User;
 
 import java.util.ArrayList;
 

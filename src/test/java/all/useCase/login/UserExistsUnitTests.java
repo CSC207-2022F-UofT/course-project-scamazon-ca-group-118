@@ -1,8 +1,8 @@
-package writeReview;
+package all.useCase.login;
 
-import database.UserExists;
-import entities.User;
-import features.Cart;
+import all.database.UserExists;
+import all.entities.User;
+import all.entities.Cart;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

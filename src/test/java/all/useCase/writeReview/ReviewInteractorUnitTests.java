@@ -1,8 +1,6 @@
-package writeReview;
+package all.useCase.writeReview;
 
 import org.junit.jupiter.api.Test;
-import useCase.writeReview.ReviewInteractor;
-import useCase.writeReview.ReviewRequestModel;
 
 public class ReviewInteractorUnitTests {
     ReviewRequestModel userExistsRequestModel = new ReviewRequestModel("user1",
