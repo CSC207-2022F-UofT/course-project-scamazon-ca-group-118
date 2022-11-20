@@ -4,34 +4,29 @@ import database.GetUser;
 import entities.User;
 import entities.Cart;
 import entities.Listing;
+import useCase.login.CheckPassword;
+import useCase.login.LoginFailed;
 
 /**
  * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary data for the
  * CheckoutResponseModel
  */
 public class CheckoutInteractor {
-    private final User buyer;
+    private User buyer;
+    private String username;
 
     /**
      * The constructor for the ReviewInteractor class
      *
-     * @param requestModel the request model that's data will be manipulated
+     * @param username the username entered by the User
      */
-    public CheckoutInteractor(CheckoutRequestModel requestModel) {
-        this.buyer = getUserWithUsername(requestModel.getBuyerUsername());
+    public CheckoutInteractor(String username) {
+        this.username = username;
+        this.buyer = new GetUser().getUserWithUsername(this.username);
     }
 
-    /**
-     * Returns the user from the database with the given username
-     *
-     * @param username the username being searched for
-     * @return the user with the given username
-     */
-    private User getUserWithUsername(String username) {
-        return new GetUser().getUserWithUsername(username);
-    }
-
-    private void removeListings() {
+    //removes all items in buyer User's cart by removing each item from the seller User's listings
+    public void removeListings() {
         Cart cart = this.buyer.getCart();
         for (Listing listing: cart.getItems()) {
             User seller = listing.getSeller();

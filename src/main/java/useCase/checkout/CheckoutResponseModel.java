@@ -1,5 +1,6 @@
 package useCase.checkout;
 
+
 public class CheckoutResponseModel {
     private String message;
 
@@ -10,6 +11,7 @@ public class CheckoutResponseModel {
      *                     that this CheckoutResponseModel retrieves data from
      */
     public CheckoutResponseModel(CheckoutRequestModel requestModel) {
-        CheckoutInteractor interactor = new CheckoutInteractor(requestModel);
+        CheckoutInteractor interactor = new CheckoutInteractor(requestModel.getUsername());
+        interactor.removeListings();
     }
 }
