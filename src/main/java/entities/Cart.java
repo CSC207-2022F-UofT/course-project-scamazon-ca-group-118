@@ -81,6 +81,10 @@ public class Cart {
         this.listings = list;
     }
 
+    public int countItems() {
+        return this.listings.size();
+    }
+
     /**
      * We return the price of all items in the cart combined.
      *

@@ -4,16 +4,16 @@ package useCase.checkout;
  * Represents a CheckoutRequestModel object that holds all data to be passed to the CheckoutInteractor
  */
 public class CheckoutRequestModel {
-    private final String buyerUsername;
+    private String username;
 
     /**
      * Constructor for a CheckoutRequestModel
      *
-     * @param buyerUsername the username of the buyer User
+     * @param username the username of the buyer User
      */
-    public CheckoutRequestModel(String buyerUsername) {
-        this.buyerUsername = buyerUsername;
+    public CheckoutRequestModel(String username) {
+        this.username = username;
     }
 
-    public String getBuyerUsername() {return buyerUsername;}
+    public String getUsername() { return username; }
 }
