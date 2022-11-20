@@ -101,8 +101,6 @@ public class User {
 
     }
 
-    public void writeReview() {
-
 
     /**
      * Creates a new review with this User as the reviewer, and the specified reviewer and rating
@@ -133,9 +131,6 @@ public class User {
     public void addReview(Review review) {
         this.reviews.add(review);
     }
-
-
-    public void removeReview() {
 
     /**
      * calculates the average integer rating earned by this User
