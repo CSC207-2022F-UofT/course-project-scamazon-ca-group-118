@@ -7,7 +7,7 @@ public class CheckoutResponseModel {
      * The constructor for CheckoutResponseModel
      *
      * @param requestModel the CheckoutRequestModel that will be used as an argument for the CheckoutInteractor
-     *                     that this CheckoutResponseModel retrieves data from
+     *                     that this CheckoutResponseModel retrieves entities.data from
      */
     public CheckoutResponseModel(CheckoutRequestModel requestModel) {
         CheckoutInteractor interactor = new CheckoutInteractor(requestModel);

@@ -1,7 +1,7 @@
 package useCase.login;
 
 /**
- * The LoginRequestModel holds data that will be sent from the constructor (in this case, the LoginForm) to the
+ * The LoginRequestModel holds entities.data that will be sent from the constructor (in this case, the LoginForm) to the
  * interactor (in this case, LoginInteractor)
  */
 public class LoginRequestModel {

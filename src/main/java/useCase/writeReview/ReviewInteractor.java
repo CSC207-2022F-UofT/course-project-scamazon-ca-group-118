@@ -5,7 +5,7 @@ import database.UserExists;
 import entities.User;
 
 /**
- * The ReviewInteractor class takes in a ReviewRequestModel and generates the necessary data for the
+ * The ReviewInteractor class takes in a ReviewRequestModel and generates the necessary entities.data for the
  * ReviewResponseModel
  */
 public class ReviewInteractor {
@@ -16,7 +16,7 @@ public class ReviewInteractor {
     /**
      * The constructor for the ReviewInteractor class
      *
-     * @param requestModel the request model that's data will be manipulated
+     * @param requestModel the request model that's entities.data will be manipulated
      */
     public ReviewInteractor(ReviewRequestModel requestModel) {
         this.reviewer = getUserWithUsername(requestModel.getReviewerUsername());

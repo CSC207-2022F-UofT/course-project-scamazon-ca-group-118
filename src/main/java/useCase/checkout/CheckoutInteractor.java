@@ -6,7 +6,7 @@ import entities.Cart;
 import entities.Listing;
 
 /**
- * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary data for the
+ * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary entities.data for the
  * CheckoutResponseModel
  */
 public class CheckoutInteractor {
@@ -15,7 +15,7 @@ public class CheckoutInteractor {
     /**
      * The constructor for the ReviewInteractor class
      *
-     * @param requestModel the request model that's data will be manipulated
+     * @param requestModel the request model that's entities.data will be manipulated
      */
     public CheckoutInteractor(CheckoutRequestModel requestModel) {
         this.buyer = getUserWithUsername(requestModel.getBuyerUsername());

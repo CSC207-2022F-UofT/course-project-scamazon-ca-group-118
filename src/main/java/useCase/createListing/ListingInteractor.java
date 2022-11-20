@@ -32,7 +32,7 @@ public class ListingInteractor {
     /**
      * The constructor for the ListingInteractor class
      *
-     * @param requestModel the request model that's data will be manipulated
+     * @param requestModel the request model that's entities.data will be manipulated
      */
     public ListingInteractor(ListingRequestModel requestModel) {
         this.seller = getUserWithUsername(requestModel.getSellerUsername());

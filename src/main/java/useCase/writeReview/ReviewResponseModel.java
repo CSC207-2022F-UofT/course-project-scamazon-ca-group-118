@@ -1,7 +1,7 @@
 package useCase.writeReview;
 
 /**
- * Represents a ReviewResponseModel object that stores data retrieved from the ReviewInteractor that must
+ * Represents a ReviewResponseModel object that stores entities.data retrieved from the ReviewInteractor that must
  * be passed to the ReviewPresenter
  */
 public class ReviewResponseModel {
@@ -11,7 +11,7 @@ public class ReviewResponseModel {
      * The constructor for ReviewResponseModel
      *
      * @param requestModel the ReviewRequestModel that will be used as an argument for the ReviewInteractor
-     *                     that this ReviewResponseModel retrieves data from
+     *                     that this ReviewResponseModel retrieves entities.data from
      */
     public ReviewResponseModel(ReviewRequestModel requestModel) {
         ReviewInteractor interactor = new ReviewInteractor(requestModel);
