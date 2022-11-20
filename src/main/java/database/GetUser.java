@@ -1,7 +1,5 @@
 package database;
 
-import database.ReviewDatabaseController;
-import database.ReviewDatabaseGateway;
 import entities.User;
 
 /**
@@ -24,6 +22,6 @@ public class GetUser implements ReviewDatabaseGateway {
      */
     @Override
     public User getUserWithUsername(String username) {
-        return new ReviewDatabaseController(username).getUser();
+        return new DatabaseController().getUserWithUsername(username);
     }
 }
