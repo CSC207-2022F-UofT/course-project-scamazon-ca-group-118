@@ -100,7 +100,7 @@ public class User {
 
 
     public void removeListing(Listing listing) {
-        //Checkout is going to use this
+        listings.remove(listing);
     }
 
     /**
