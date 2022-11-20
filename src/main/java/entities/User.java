@@ -117,7 +117,6 @@ public class User {
         this.getCart().addItem(listing);
     }
     public void removeFromCart() {
-
     }
 
 
