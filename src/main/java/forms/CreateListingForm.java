@@ -16,19 +16,19 @@ public class CreateListingForm extends Form {
     private final float PRICE;
     private final String DESCRIPTION;
     private final List<String> IMAGES;
-    private final int ID;
+    //private final int ID;
     ListingResponseModel responseModel;
 
 
     public CreateListingForm(String listingTitle
-            , float price, String seller, String description, List<String> images, int id) {
+            , float price, String seller, String description, List<String> images) {
         super("Create a listing");
         LISTING_TITLE = listingTitle;
         PRICE = price;
         SELLER_USERNAME = seller;
         DESCRIPTION = description;
         IMAGES = images;
-        ID = id;
+        //ID = id
     }
 
 

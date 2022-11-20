@@ -59,7 +59,7 @@ public class CreateListingPage extends Page{
             img_label.setLocation(350, 425);
             createListingPanel.add(img_label);
 
-            JList imgs = new JList(); // put img array as argument
+            JList imgs = new JList(images.toArray()); // put img array as argument
             imgs.setSize(250, 60);
             imgs.setLocation(550, 425);
             createListingPanel.add(imgs);
@@ -95,12 +95,16 @@ public class CreateListingPage extends Page{
             submit.addActionListener(e -> {
                 String listingTitle = listing_text.getText();
                 DecimalFormat df = new DecimalFormat("0.00");
-                double listingPrice = Double.parseDouble(df.format(Double.parseDouble(price_text.getText())));
+                float listingPrice = Float.parseFloat(df.format(Float.parseFloat(price_text.getText())));
                 String listingDesc = desc_text.getText();
 
                 //use Class to submit information
 
-
+                //String sellerUsername = "temp"; //temp variable while we figure out current user
+                //CreateListingForm clf = new CreateListingForm(listingTitle, listingPrice, sellerUsername, listingDesc, images);
+                //String message = clf.getMessage();
+                //System.out.println(message);
+               // submit.setText(message);
 
             });
             createListingPanel.add(submit);
