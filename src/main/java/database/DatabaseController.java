@@ -162,13 +162,13 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded, sellerRating,
      * description, and imagePath from createListingForm after a listing is submitted
      *
-     * @param sellerUsername
-     * @param listingTitle
-     * @param price
-     * @param dateAdded
-     * @param sellerRating
-     * @param description
-     * @param imagePath
+     * @param sellerUsername username of seller
+     * @param listingTitle title of listing
+     * @param price price of listing
+     * @param dateAdded date added of listing
+     * @param sellerRating rating of seller
+     * @param description description of item
+     * @param imagePath image of item
      *
      *
      */
