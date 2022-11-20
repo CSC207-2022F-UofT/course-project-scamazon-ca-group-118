@@ -5,7 +5,7 @@ import entities.User;
 import java.util.List;
 
 /**
- * Represents a ListingRequestModel object that holds all entities.data to be passed to the ListingInteractor
+ * Represents a ListingRequestModel object that holds all data to be passed to the ListingInteractor
  */
 public class ListingRequestModel {
     private String sellerUsername;

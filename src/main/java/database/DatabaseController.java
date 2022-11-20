@@ -13,9 +13,9 @@ import java.util.Objects;
 
 /**
  * For all methods, we assume validation was passed
-* */
+ */
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
-        ListingDatabaseGateway{
+        ListingDatabaseGateway {
     String table = null;
 
     public DatabaseController() {
@@ -28,6 +28,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * assume ISO-8601 format
+     *
      * @param date date we want to convert
      * @return LocalDate version of date
      */
@@ -37,6 +38,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * assume ISO-8601 format
+     *
      * @param date date we want to convert
      * @return String version of date
      */
@@ -47,12 +49,13 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * Helper method that gets all listings for a certain user
+     *
      * @param username user that we want to create listings for
      * @return list of listings
      */
     public ArrayList<Listing> getListingsByUser(String username) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/Listings.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Listings.csv"));
             String currLine;
             ArrayList<Listing> listings = new ArrayList<>();
             while ((currLine = reader.readLine()) != null) {
@@ -84,12 +87,11 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      *
      * @param username the username that will be searched for in the database
      * @return a user
-     *
      */
     @Override
     public User getUserWithUsername(String username) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/Users.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Users.csv"));
             String currLine;
             String[] user = null;
             boolean foundUser = false;
@@ -138,8 +140,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      *
      * @param username username that is inputted
      * @param password password that is inputted
-     * @param email email that is inputted
-     *
+     * @param email    email that is inputted
      */
     public void createUser(String username, String password, String email) {
         try {
@@ -158,19 +159,16 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
 
     /**
-     *
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded, sellerRating,
      * description, and imagePath from createListingForm after a listing is submitted
      *
      * @param sellerUsername username of seller
-     * @param listingTitle title of listing
-     * @param price price of listing
-     * @param dateAdded date added of listing
-     * @param sellerRating rating of seller
-     * @param description description of item
-     * @param imagePath image of item
-     *
-     *
+     * @param listingTitle   title of listing
+     * @param price          price of listing
+     * @param dateAdded      date added of listing
+     * @param sellerRating   rating of seller
+     * @param description    description of item
+     * @param imagePath      image of item
      */
     public void createListing(String sellerUsername, String listingTitle, int price, LocalDate dateAdded,
                               int sellerRating, String description, String imagePath) {
@@ -190,6 +188,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public List<Listing> getListingWithSearch(String keyword) {
         return null;

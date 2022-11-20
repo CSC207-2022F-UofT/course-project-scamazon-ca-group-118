@@ -1,7 +1,7 @@
 package useCase.checkout;
 
 /**
- * Represents a CheckoutRequestModel object that holds all entities.data to be passed to the CheckoutInteractor
+ * Represents a CheckoutRequestModel object that holds all data to be passed to the CheckoutInteractor
  */
 public class CheckoutRequestModel {
     private final String buyerUsername;
@@ -15,5 +15,7 @@ public class CheckoutRequestModel {
         this.buyerUsername = buyerUsername;
     }
 
-    public String getBuyerUsername() {return buyerUsername;}
+    public String getBuyerUsername() {
+        return buyerUsername;
+    }
 }
