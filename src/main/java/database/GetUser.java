@@ -23,6 +23,6 @@ public class GetUser implements ReviewDatabaseGateway {
     @Override
     //TODO: Rework this function so it uses Database Interactor instead
     public User getUserWithUsername(String username) {
-        return new ReviewDatabaseController(username).getUser();
+        return null;
     }
 }
