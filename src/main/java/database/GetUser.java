@@ -25,9 +25,10 @@ public class GetUser implements ReviewDatabaseGateway {
      * @param username the username that will be searched for in the database
      * @return either the User with username, or an empty user
      */
-//    @Override
-//    //TODO: Rework this function so it uses Database Interactor instead
-////    public User getUserWithUsername(String username) {
-////        return new ReviewDatabaseController(username).getUser();
-////    }
+
+    @Override
+    public User getUserWithUsername(String username) {
+        return new DatabaseController().getUserWithUsername(username);
+
+    }
 }

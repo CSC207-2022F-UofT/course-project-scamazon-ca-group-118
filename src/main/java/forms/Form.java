@@ -1,6 +1,8 @@
 package forms;
 
-public abstract class Form {
+import javax.swing.*;
+
+public abstract class Form extends JFrame {
     private String title;
 
     public Form(String title) {

@@ -1,6 +1,10 @@
 package UI;
 
-public abstract class Page {
+import javax.swing.*;
+
+
+public abstract class Page extends JPanel {
+
     private String title;
 
     public Page(String title) {
