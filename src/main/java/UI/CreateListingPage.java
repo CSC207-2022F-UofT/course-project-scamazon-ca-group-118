@@ -59,7 +59,7 @@ public class CreateListingPage extends Page{
             img_label.setLocation(350, 425);
             createListingPanel.add(img_label);
 
-            JLabel img = new JLabel("No image selected")
+            JLabel img = new JLabel("No image selected");
             img.setSize(250, 30);
             img.setLocation(550, 425);
             createListingPanel.add(img);

@@ -93,7 +93,7 @@ public class ListingInteractor {
         this.description = description;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
