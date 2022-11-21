@@ -15,19 +15,19 @@ public class CreateListingForm extends Form {
     private final String LISTING_TITLE;
     private final float PRICE;
     private final String DESCRIPTION;
-    private final List<String> IMAGES;
+    private final String IMAGE;
     //private final int ID;
     ListingResponseModel responseModel;
 
 
     public CreateListingForm(String listingTitle
-            , float price, String seller, String description, List<String> images) {
+            , float price, String seller, String description, String images) {
         super("Create a listing");
         LISTING_TITLE = listingTitle;
         PRICE = price;
         SELLER_USERNAME = seller;
         DESCRIPTION = description;
-        IMAGES = images;
+        IMAGE = images;
         //ID = id
     }
 
@@ -49,7 +49,7 @@ public class CreateListingForm extends Form {
     @Override
     protected void submitForm() {
         if (this.validateForm()) {
-            ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGES);
+            ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGE);
             responseModel = new ListingResponseModel(requestModel);
         }
     }
