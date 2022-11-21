@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class UserExistsUnitTests {
-    static User clare = new User("clare",
+    static User clare = new User(1,
+            "Clare",
             "12345",
-            1,
             "clare@gmail.com",
             new ArrayList<>(),
             new ArrayList<>(),
             new Cart());
-    static User emptyUser = new User("",
+    static User emptyUser = new User(0,
             "",
-            0,
+            "",
             "",
             new ArrayList<>(),
             new ArrayList<>(),
