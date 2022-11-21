@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ArrayList;
 public class CreateListingPage extends Page{
-        List<String> images = new ArrayList<String>();
+
         public CreateListingPage(String title) {
             super(title);
 
@@ -59,10 +59,10 @@ public class CreateListingPage extends Page{
             img_label.setLocation(350, 425);
             createListingPanel.add(img_label);
 
-            JList imgs = new JList(images.toArray()); // put img array as argument
-            imgs.setSize(250, 60);
-            imgs.setLocation(550, 425);
-            createListingPanel.add(imgs);
+            JLabel img = new JLabel("No image selected")
+            img.setSize(250, 30);
+            img.setLocation(550, 425);
+            createListingPanel.add(img);
 
             JButton upload = new JButton("Upload Images");
             upload.setSize(150, 30);
@@ -78,7 +78,7 @@ public class CreateListingPage extends Page{
                     filePath = imgFiles.getCurrentDirectory().toString();
                     System.out.println("File Name: " + fileName);
                     System.out.println("File Path: " + filePath);
-                    images.add(filePath + "/" + fileName);
+                    img.setText(filePath + "/" + fileName);
                 }
                 if(returnVal == JFileChooser.CANCEL_OPTION){
                     fileName = "";
@@ -114,12 +114,12 @@ public class CreateListingPage extends Page{
             createListingPanel.setMaximumSize(new Dimension(1280, 570));
 
 
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setTitle("Create a listing");
             this.setMinimumSize(new Dimension(1280, 720));
             this.add(createListingPanel);
-            this.pack();
-            this.setResizable(false);
+//            this.pack();
+//            this.setResizable(false);
             this.setVisible(true);
 
 
