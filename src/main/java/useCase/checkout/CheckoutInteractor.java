@@ -23,31 +23,14 @@ public class CheckoutInteractor {
      *
      * @param username the username entered by the User
      */
-<<<<<<< HEAD
-    public CheckoutInteractor(CheckoutRequestModel requestModel) throws IOException {
-        this.buyer = getUserWithUsername(requestModel.getBuyerUsername());
-    }
 
-    /**
-     * Returns the user from the database with the given username
-     *
-     * @param username the username being searched for
-     * @return the user with the given username
-     */
-    private User getUserWithUsername(String username) throws IOException {
-        return new GetUser().getUserWithUsername(username);
-}
-
-    private void removeListings() throws IOException {
-=======
-    public CheckoutInteractor(String username) {
+    public CheckoutInteractor(String username) throws IOException {
         this.username = username;
         this.buyer = new GetUser().getUserWithUsername(this.username);
     }
 
     //removes all items in buyer User's cart by removing each item from the seller User's listings
-    public void removeListings() {
->>>>>>> origin/main
+    public void removeListings() throws IOException {
         Cart cart = this.buyer.getCart();
         for (Listing listing : cart.getItems()) {
             String seller = listing.getSellerUsername();
