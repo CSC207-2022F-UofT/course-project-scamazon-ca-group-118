@@ -1,11 +1,13 @@
 package forms;
+
+import useCase.login.LoginFailed;
 import useCase.login.LoginRequestModel;
 import useCase.login.LoginResponseModel;
 
 import java.io.IOException;
 
 
-public class LoginForm extends Form{
+public class LoginForm extends Form {
     /**
      * The username entered by the user
      */
@@ -21,7 +23,6 @@ public class LoginForm extends Form{
     private LoginResponseModel responseModel;
 
 
-
     public LoginForm(String username, String password) {
         super("Log In");
         this.username = username;
@@ -30,12 +31,21 @@ public class LoginForm extends Form{
 
     @Override
     protected boolean validateForm() {
-        return password.length() > 0 && username.length() > 0;
+        if (password.length() > 0 && username.length() > 0) {
+            return true;
+        } else {
+            throw new LoginFailed("Please enter a username and password");
+        }
     }
 
     @Override
+<<<<<<< HEAD
     protected void submitForm() throws IOException {
         if(this.validateForm()){
+=======
+    protected void submitForm() {
+        if (this.validateForm()) {
+>>>>>>> origin/main
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
         }
@@ -55,6 +65,7 @@ public class LoginForm extends Form{
 
     /**
      * submit the form then return the response model generated
+     *
      * @return the response model generated after submitting the form
      */
     public LoginResponseModel getResponseModel() throws IOException {

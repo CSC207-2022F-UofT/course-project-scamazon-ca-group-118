@@ -21,7 +21,7 @@ public class ListingRequestModel {
      * @param listingTitle   the title of the listing
      * @param price          the price of the listing
      * @param description    the description of the listing
-     * @param images         a list of all the file paths to the images
+     * @param image          the file path to the listing image
      */
     public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, String image) {
         this.sellerUsername = sellerUsername;
@@ -66,5 +66,4 @@ public class ListingRequestModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    // TODO: Implement set images
 }

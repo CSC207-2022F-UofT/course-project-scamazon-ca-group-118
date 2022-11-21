@@ -37,7 +37,7 @@ public class User {
         currentUser = this;
     }
 
-    static User getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 
@@ -92,13 +92,13 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, String images) {
-        new ListingCreator().createListing(this, title, price, description, images);
+    public void createListing(String title, float price, String description, String image) {
+        new ListingCreator().createListing(this, title, price, description, image);
     }
 
 
     public void removeListing(Listing listing) {
-    //Checkout is going to use this
+        listings.remove(listing);
     }
 
     /**
@@ -114,8 +114,8 @@ public class User {
     public void addToCart(Listing listing) {
         this.getCart().addItem(listing);
     }
-    public void removeFromCart() {
 
+    public void removeFromCart() {
     }
 
 

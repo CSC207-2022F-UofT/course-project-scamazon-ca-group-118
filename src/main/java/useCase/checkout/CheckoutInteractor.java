@@ -5,6 +5,8 @@ import database.GetUser;
 import entities.User;
 import entities.Cart;
 import entities.Listing;
+import useCase.login.CheckPassword;
+import useCase.login.LoginFailed;
 
 import java.io.IOException;
 
@@ -13,13 +15,15 @@ import java.io.IOException;
  * CheckoutResponseModel
  */
 public class CheckoutInteractor {
-    private final User buyer;
+    private User buyer;
+    private String username;
 
     /**
      * The constructor for the ReviewInteractor class
      *
-     * @param requestModel the request model that's data will be manipulated
+     * @param username the username entered by the User
      */
+<<<<<<< HEAD
     public CheckoutInteractor(CheckoutRequestModel requestModel) throws IOException {
         this.buyer = getUserWithUsername(requestModel.getBuyerUsername());
     }
@@ -35,6 +39,15 @@ public class CheckoutInteractor {
 }
 
     private void removeListings() throws IOException {
+=======
+    public CheckoutInteractor(String username) {
+        this.username = username;
+        this.buyer = new GetUser().getUserWithUsername(this.username);
+    }
+
+    //removes all items in buyer User's cart by removing each item from the seller User's listings
+    public void removeListings() {
+>>>>>>> origin/main
         Cart cart = this.buyer.getCart();
         for (Listing listing : cart.getItems()) {
             String seller = listing.getSellerUsername();
