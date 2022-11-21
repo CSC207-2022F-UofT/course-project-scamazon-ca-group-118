@@ -4,6 +4,7 @@ import useCase.checkout.CheckoutRequestModel;
 import useCase.checkout.CheckoutResponseModel;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class CheckoutForm extends Form {
@@ -53,7 +54,7 @@ public class CheckoutForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             CheckoutRequestModel requestModel = new CheckoutRequestModel(USERNAME);
             responseModel = new CheckoutResponseModel(requestModel);
@@ -62,7 +63,7 @@ public class CheckoutForm extends Form {
         }
     }
 
-    public CheckoutResponseModel getResponseModel() {
+    public CheckoutResponseModel getResponseModel() throws IOException {
         this.submitForm();
         return responseModel;
     }

@@ -1,7 +1,5 @@
 package entities;
 
-import entities.User;
-
 import java.io.File;
 import java.time.*; // to store date
 import java.util.List;

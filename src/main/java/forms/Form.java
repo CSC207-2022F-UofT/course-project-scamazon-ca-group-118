@@ -1,6 +1,7 @@
 package forms;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public abstract class Form extends JFrame {
     private String title;
@@ -17,6 +18,6 @@ public abstract class Form extends JFrame {
         this.title = title;
     }
 
-    abstract boolean validateForm();
-    abstract void submitForm();
+    abstract boolean validateForm() throws IOException;
+    abstract void submitForm() throws IOException;
 }

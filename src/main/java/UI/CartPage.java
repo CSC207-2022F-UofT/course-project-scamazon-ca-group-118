@@ -68,7 +68,7 @@ public class CartPage extends Page implements ActionListener {
 
 
     public Page goToCheckout() {
-        return new CheckoutPage("Checkout");
+        return new CheckoutPage();
     }
 
     @Override

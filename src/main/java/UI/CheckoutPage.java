@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class CheckoutPage extends Page implements ActionListener {
@@ -83,7 +84,11 @@ public class CheckoutPage extends Page implements ActionListener {
             CheckoutForm form = new CheckoutForm(jtUsername.getText(), jtName.getText(),
                     jtCardNumber.getText(), jtCVV.getText(), LocalDate.parse(jtExpiration.getText()),
                     jtAddress.getText() );
-            CheckoutResponseModel responseModel = form.getResponseModel();
+            try {
+                CheckoutResponseModel responseModel = form.getResponseModel();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

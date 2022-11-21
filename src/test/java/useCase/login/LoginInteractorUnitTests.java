@@ -1,13 +1,9 @@
 package useCase.login;
 
-import features.Cart;
-import org.junit.jupiter.api.Test;
-import entities.User;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * TODO uncomment and implement these tests once Database implemented
 public class LoginInteractorUnitTests {
     static User clare = new User("clare",
             "12345",
@@ -66,3 +62,4 @@ public class LoginInteractorUnitTests {
     }
 
 }
+ */

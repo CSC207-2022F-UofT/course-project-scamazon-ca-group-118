@@ -4,16 +4,18 @@ import database.GetUser;
 import entities.User;
 import entities.Listing;
 
+import java.io.IOException;
+
 public class AddToCartInteractor {
     private User buyer;
     private Listing listing;
 
-    public AddToCartInteractor(AddToCartRequestModel requestModel) {
+    public AddToCartInteractor(AddToCartRequestModel requestModel) throws IOException {
         this.buyer = getUserWithUsername(requestModel.getBuyerUsername());
         this.listing = requestModel.getListing();
     }
 
-    private User getUserWithUsername(String buyerUsername) {
+    private User getUserWithUsername(String buyerUsername) throws IOException {
         return new GetUser().getUserWithUsername(buyerUsername);
     }
 

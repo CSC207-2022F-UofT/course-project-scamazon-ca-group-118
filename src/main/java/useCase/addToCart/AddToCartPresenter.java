@@ -2,10 +2,12 @@ package useCase.addToCart;
 
 import forms.AddToCartForm;
 
+import java.io.IOException;
+
 public class AddToCartPresenter {
     private String message;
 
-    public AddToCartPresenter(AddToCartForm addToCartForm) {
+    public AddToCartPresenter(AddToCartForm addToCartForm) throws IOException {
         this.message = addToCartForm.getMessage();
     }
 

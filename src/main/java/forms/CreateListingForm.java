@@ -6,6 +6,7 @@ import database.GetUser;
 import database.UserExists;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public class CreateListingForm extends Form {
@@ -33,7 +34,7 @@ public class CreateListingForm extends Form {
 
 
     @Override
-    protected boolean validateForm() {
+    protected boolean validateForm() throws IOException {
         /*
         We will have a description limit of 1000 characters
          */
@@ -47,14 +48,14 @@ public class CreateListingForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGE);
             responseModel = new ListingResponseModel(requestModel);
         }
     }
 
-    public String getMessage() {
+    public String getMessage() throws IOException {
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();

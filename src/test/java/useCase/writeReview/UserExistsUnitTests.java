@@ -1,8 +1,8 @@
-package writeReview;
+package useCase.writeReview;
 
 import database.UserExists;
 import entities.User;
-import features.Cart;
+import entities.Cart;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,16 +10,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class UserExistsUnitTests {
-    static User clare = new User("clare",
+    static User clare = new User(1, "clare",
             "12345",
-            1,
             "clare@gmail.com",
             new ArrayList<>(),
             new ArrayList<>(),
             new Cart());
-    static User emptyUser = new User("",
+    static User emptyUser = new User(0, "",
             "",
-            0,
             "",
             new ArrayList<>(),
             new ArrayList<>(),
