@@ -160,7 +160,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             ArrayList<Listing> listings = new ArrayList<>();
             while ((currLine = reader.readLine()) != null) {
                 Listing listingObject = createListingObject(currLine);
-                if (listingObject.getSellerUsername().contains(keyword)) {
+                if (listingObject.getTitle().contains(keyword)) {
                     listings.add(listingObject);
                 }
             }
