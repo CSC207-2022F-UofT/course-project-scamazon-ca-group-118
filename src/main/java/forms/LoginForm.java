@@ -39,13 +39,8 @@ public class LoginForm extends Form {
     }
 
     @Override
-<<<<<<< HEAD
     protected void submitForm() throws IOException {
         if(this.validateForm()){
-=======
-    protected void submitForm() {
-        if (this.validateForm()) {
->>>>>>> origin/main
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
         }
