@@ -1,6 +1,5 @@
 package UI;
 
-import Main.Main;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
@@ -24,9 +23,9 @@ public class CartPage extends Page implements ActionListener {
 
 
     public CartPage() {
-        super(Main.getCurrentUser().getUsername() + "'s Cart");
+        super(User.getCurrentUser().getUsername() + "'s Cart");
         this.setLayout(new GridLayout(1, 2));
-        this.itemCart = Main.getCurrentUser().getCart();
+        this.itemCart = User.getCurrentUser().getCart();
 
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setTitle("Scamazon.ca");
