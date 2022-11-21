@@ -1,6 +1,8 @@
 package UI;
+import entities.Cart;
 import entities.Listing;
 import database.DatabaseController;
+import entities.User;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,7 @@ import javax.swing.*;
 
 import static javax.swing.SwingUtilities.paintComponent;
 
-public class ListingListPage extends JFrame implements ActionListener {
+public class ListingListPage extends Page implements ActionListener {
     private String example_images;
     private User example_user = new User(0, "sam", "pass", "gmail",
             new ArrayList<>(), new ArrayList<>(), new Cart());
@@ -28,12 +30,8 @@ public class ListingListPage extends JFrame implements ActionListener {
     private int box_length = 1080;
     private int box_height = 100;
     public ListingListPage() {
-        setTitle("Listings");
+        super("Listings");
         setBounds(length / 2, 90, length, height);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-
-        c = getContentPane();
         c.setLayout(null);
 
         title = new JLabel("Listings");
@@ -123,7 +121,7 @@ public class ListingListPage extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new ListingListPage("Listings");
+        new ListingListPage();
 
 
     }

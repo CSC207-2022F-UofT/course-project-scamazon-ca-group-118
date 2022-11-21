@@ -7,6 +7,8 @@ import entities.Listing;
 import useCase.login.CheckPassword;
 import useCase.login.LoginFailed;
 
+import java.io.IOException;
+
 /**
  * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary data for the
  * CheckoutResponseModel
@@ -20,7 +22,7 @@ public class CheckoutInteractor {
      *
      * @param username the username entered by the User
      */
-    public CheckoutInteractor(String username) {
+    public CheckoutInteractor(String username) throws IOException {
         this.username = username;
         this.buyer = new GetUser().getUserWithUsername(this.username);
     }
@@ -29,8 +31,8 @@ public class CheckoutInteractor {
     public void removeListings() {
         Cart cart = this.buyer.getCart();
         for (Listing listing : cart.getItems()) {
-            User seller = listing.getSeller();
-            seller.removeListing(listing);
+            //User seller = listing.getSeller();
+            //seller.removeListing(listing);
         }
     }
 }

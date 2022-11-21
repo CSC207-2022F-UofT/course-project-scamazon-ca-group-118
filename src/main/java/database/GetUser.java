@@ -2,6 +2,8 @@ package database;
 
 import entities.User;
 
+import java.io.IOException;
+
 /**
  * The GetUserWithUsername class will have a final attribute USER holds the User from the database with the
  * specified username, or an empty User if no user has this username
@@ -14,11 +16,6 @@ public class GetUser implements ReviewDatabaseGateway {
     public GetUser() {
     }
 
-    @Override
-    public User getUserWithUsername(String username) {
-        return null;
-    }
-
     /**
      * Returns the user from the database whose username is user, or an empty user if no user has this username
      *
@@ -27,7 +24,7 @@ public class GetUser implements ReviewDatabaseGateway {
      */
 
     @Override
-    public User getUserWithUsername(String username) {
+    public User getUserWithUsername(String username) throws IOException {
         return new DatabaseController().getUserWithUsername(username);
 
     }

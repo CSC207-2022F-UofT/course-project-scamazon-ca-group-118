@@ -1,5 +1,7 @@
 package useCase.writeReview;
 
+import java.io.IOException;
+
 /**
  * Represents a ReviewResponseModel object that stores data retrieved from the ReviewInteractor that must
  * be passed to the ReviewPresenter
@@ -13,7 +15,7 @@ public class ReviewResponseModel {
      * @param requestModel the ReviewRequestModel that will be used as an argument for the ReviewInteractor
      *                     that this ReviewResponseModel retrieves data from
      */
-    public ReviewResponseModel(ReviewRequestModel requestModel) {
+    public ReviewResponseModel(ReviewRequestModel requestModel) throws IOException {
         ReviewInteractor interactor = new ReviewInteractor(requestModel);
         this.message = interactor.getMessage();
     }

@@ -114,12 +114,9 @@ public class CreateListingPage extends Page{
             createListingPanel.setMaximumSize(new Dimension(1280, 570));
 
 
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setTitle("Create a listing");
             this.setMinimumSize(new Dimension(1280, 720));
             this.add(createListingPanel);
-            this.pack();
-            this.setResizable(false);
             this.setVisible(true);
 
 

@@ -154,7 +154,7 @@ public class NavBar extends JPanel implements ActionListener {
         if (source == profileButton) {
             Main.setCurrentPage(new ProfilePage("Profile Page"));
         } else if (source == listingsButton) {
-            Main.setCurrentPage(new ListingListPage(Main.getCurrentUser().getListings()));
+            Main.setCurrentPage(new ListingListPage());
         } else if (source == cartButton) {
             Main.setCurrentPage(new CartPage());
         }

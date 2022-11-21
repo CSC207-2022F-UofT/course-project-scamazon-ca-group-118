@@ -28,7 +28,7 @@ public class ListingCreator {
      * @param images       a list of all the file paths to the images
      */
     public void createListing(User seller, String listingTitle, float price, String description, List<String> images) {
-        Listing listing = new Listing(seller, listingTitle, price, description, images);
+        Listing listing = new Listing(seller, listingTitle, price, description, images.toString());
         seller.addListing(listing);
 
     }
