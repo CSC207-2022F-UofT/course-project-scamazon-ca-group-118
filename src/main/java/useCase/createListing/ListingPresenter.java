@@ -2,6 +2,8 @@ package useCase.createListing;
 
 import forms.CreateListingForm;
 
+import java.io.IOException;
+
 /**
  * The presenter class for creating a listing
  */
@@ -12,7 +14,7 @@ public class ListingPresenter {
      *
      * @param form the form from which this presenter retrieves a message
      */
-    public ListingPresenter(CreateListingForm form){
+    public ListingPresenter(CreateListingForm form) throws IOException {
         this.message = form.getMessage();
     }
 

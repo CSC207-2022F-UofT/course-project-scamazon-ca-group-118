@@ -1,6 +1,6 @@
 package database;
 
-import com.opencsv.CSVWriter;
+//import com.opencsv.CSVWriter;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
@@ -98,10 +98,10 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     /**
      * Creates a user given username, password, and email from registration form
      *
-     * @param username username that is inputted
-     * @param password password that is inputted
-     * @param email    email that is inputted
-     */
+     * //@param username username that is inputted
+     * //@param password password that is inputted
+     * //@param email    email that is inputted
+
     public void createUser(String username, String password, String email) {
         try {
             FileWriter outputFile = new FileWriter("../entities/Users.csv");
@@ -118,22 +118,22 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
 
-    /**
 
+    /**
      *
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded,
      * description, and imagePath from createListingForm after a listing is submitted
      *
-     * @param sellerUsername username of seller
-     * @param listingTitle title of listing
-     * @param price price of listing
-     * @param dateAdded date added of listing
-     * @param description description of item
-     * @param imagePath image of item
+     * //@param sellerUsername username of seller
+     * //@param listingTitle title of listing
+     * //@param price price of listing
+     * //@param dateAdded date added of listing
+     * //@param description description of item
+     * //@param imagePath image of item
      *
      *
+     /*
 
-     */
     public void createListing(String sellerUsername, String listingTitle, int price, LocalDate dateAdded, String description, String imagePath) {
         try {
             FileWriter outputFile = new FileWriter("../entities/Listings.csv");
@@ -151,6 +151,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             throw new RuntimeException(e);
         }
     }
+     */
+
 
     @Override
     public ArrayList<Listing> getListingWithSearch(String keyword) throws IOException {

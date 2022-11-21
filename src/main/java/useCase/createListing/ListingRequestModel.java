@@ -1,7 +1,5 @@
 package useCase.createListing;
 
-import entities.User;
-
 import java.util.List;
 
 /**

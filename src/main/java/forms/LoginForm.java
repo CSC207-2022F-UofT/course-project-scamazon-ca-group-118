@@ -4,6 +4,8 @@ import useCase.login.LoginFailed;
 import useCase.login.LoginRequestModel;
 import useCase.login.LoginResponseModel;
 
+import java.io.IOException;
+
 
 public class LoginForm extends Form {
     /**
@@ -37,7 +39,7 @@ public class LoginForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
@@ -61,7 +63,7 @@ public class LoginForm extends Form {
      *
      * @return the response model generated after submitting the form
      */
-    public LoginResponseModel getResponseModel() {
+    public LoginResponseModel getResponseModel() throws IOException {
         this.submitForm();
         return responseModel;
     }

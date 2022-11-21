@@ -1,7 +1,5 @@
 package entities;
 
-import entities.User;
-
 import java.time.LocalDate;
 
 public class Review {

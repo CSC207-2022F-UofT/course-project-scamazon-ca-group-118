@@ -7,6 +7,8 @@ import entities.Listing;
 
 import java.io.IOException;
 
+import java.io.IOException;
+
 /**
  * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary data for the
  * CheckoutResponseModel

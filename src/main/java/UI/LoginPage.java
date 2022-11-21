@@ -1,7 +1,6 @@
 package UI;
 
 import Main.Main;
-import entities.User;
 import forms.LoginForm;
 import forms.RegisterForm;
 import useCase.login.LoginFailed;
@@ -11,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * The LoginPage class sets up the GUI for each Login Page to be displayed in the View class
@@ -93,7 +93,6 @@ public class LoginPage extends Page implements ActionListener {
 
     /**
      * The actionListener for this LoginPage
-     *
      * @param e the event to be processed
      */
     @Override
@@ -103,10 +102,12 @@ public class LoginPage extends Page implements ActionListener {
                 LoginForm form = new LoginForm(username.getText(),
                         String.valueOf(password.getPassword()));
                 LoginResponseModel responseModel = form.getResponseModel();
-                User.currentUser = responseModel.getUser();
+                Main.setCurrentUser(responseModel.getUser());
                 Main.setCurrentPage(new ProfilePage("Profile Page"));
             } catch (LoginFailed error) {
                 errorMessage.setText(error.getMessage());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         } else if (e.getSource() == REGISTER) {
             Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
@@ -115,7 +116,6 @@ public class LoginPage extends Page implements ActionListener {
 
     /**
      * Sets the error message for this LoginPage
-     *
      * @param error the String error message that should be displayed on this LoginPage
      */
     public void setErrorMessage(String error) {
@@ -123,3 +123,4 @@ public class LoginPage extends Page implements ActionListener {
         this.errorMessage.updateUI();
     }
 }
+
