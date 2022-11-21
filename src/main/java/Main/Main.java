@@ -6,7 +6,6 @@ import database.DatabaseController;
 import entities.User;
 import entities.View;
 
-
 public class Main {
     /**
      * The current logged in to the application (set to null if not User is logged in)
