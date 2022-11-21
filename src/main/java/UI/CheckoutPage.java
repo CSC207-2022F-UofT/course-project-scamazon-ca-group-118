@@ -7,28 +7,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class CheckoutPage extends Page implements ActionListener {
-    final int WIDTH = 800;
-    final int HEIGHT = 600;
-    private final JButton SUBMIT;
-    JTextField jtUsername = new JTextField();
-    JTextField jtName = new JTextField();
-    JTextField jtCardNumber = new JTextField(16);
-    JTextField jtCVV = new JTextField(3);
-    JTextField jtExpiration = new JTextField();
-    JTextField jtAddress = new JTextField();
+    private final JButton SUBMIT = new JButton("Submit");
+    private JTextField jtUsername = new JTextField();
+    private JTextField jtName = new JTextField();
+    private JTextField jtCardNumber = new JTextField(16);
+    private JTextField jtCVV = new JTextField(3);
+    private JTextField jtExpiration = new JTextField();
+    private JTextField jtAddress = new JTextField();
 
     public CheckoutPage() {
         super("Checkout");
 
         JPanel form = new JPanel();
-        JFrame frame = new JFrame();
-        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        frame.setTitle("Scamazon.ca");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(form);
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setTitle("Scamazon.ca");
+        add(form);
 
         form.setLayout(new BorderLayout(10, 10));
         form.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -69,12 +66,11 @@ public class CheckoutPage extends Page implements ActionListener {
         jtAddress.setBounds(100, 20, 165, 25);
         form.add(jtAddress);
 
-        SUBMIT = new JButton("Submit");
         SUBMIT.addActionListener(this);
         SUBMIT.setBounds(10, 80, 80, 25);
         form.add(SUBMIT);
 
-        frame.setVisible(true);
+        setVisible(true);
     }
 
     @Override
@@ -83,7 +79,11 @@ public class CheckoutPage extends Page implements ActionListener {
             CheckoutForm form = new CheckoutForm(jtUsername.getText(), jtName.getText(),
                     jtCardNumber.getText(), jtCVV.getText(), LocalDate.parse(jtExpiration.getText()),
                     jtAddress.getText() );
-            CheckoutResponseModel responseModel = form.getResponseModel();
+            try {
+                CheckoutResponseModel responseModel = form.getResponseModel();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }
