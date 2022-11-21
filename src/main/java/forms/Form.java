@@ -18,6 +18,11 @@ public abstract class Form extends JFrame {
         this.title = title;
     }
 
+<<<<<<< HEAD
     protected abstract boolean validateForm();
     protected abstract void submitForm() throws IOException;
+=======
+    abstract boolean validateForm();
+    abstract void submitForm();
+>>>>>>> origin
 }

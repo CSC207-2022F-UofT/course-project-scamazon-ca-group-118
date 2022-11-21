@@ -25,10 +25,10 @@ public class ListingCreator {
      * @param listingTitle the title of the listing
      * @param price        the price of the listing
      * @param description  the description of the listing
-     * @param images       a list of all the file paths to the images
+     * @param image        the file path to the listing image
      */
-    public void createListing(User seller, String listingTitle, float price, String description, List<String> images) {
-        Listing listing = new Listing(seller, listingTitle, price, description, images);
+    public void createListing(User seller, String listingTitle, float price, String description, String image) {
+        Listing listing = new Listing(seller, listingTitle, price, description, image);
         seller.addListing(listing);
 
     }
