@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * For all methods, we assume validation was passed
-* */
+ */
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
         ListingDatabaseGateway {
     String table = null;
@@ -43,12 +43,13 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * Helper method that gets all listings for a certain user
+     *
      * @param username user that we want to create listings for
      * @return list of listings
      */
     public ArrayList<Listing> getListingsByUser(String username) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/Listings.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Listings.csv"));
             String currLine;
             ArrayList<Listing> listings = new ArrayList<>();
             while ((currLine = reader.readLine()) != null) {
@@ -71,12 +72,11 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      *
      * @param username the username that will be searched for in the database
      * @return a user
-     *
      */
     @Override
     public User getUserWithUsername(String username) throws IOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/Users.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Users.csv"));
             String currLine;
             while ((currLine = reader.readLine()) != null) {
                 String[] user = currLine.split(";");
@@ -100,8 +100,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      *
      * @param username username that is inputted
      * @param password password that is inputted
-     * @param email email that is inputted
-     *
+     * @param email    email that is inputted
      */
     public void createUser(String username, String password, String email) {
         try {
@@ -120,6 +119,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
 
     /**
+
      *
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded,
      * description, and imagePath from createListingForm after a listing is submitted
@@ -132,6 +132,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param imagePath image of item
      *
      *
+
      */
     public void createListing(String sellerUsername, String listingTitle, int price, LocalDate dateAdded, String description, String imagePath) {
         try {

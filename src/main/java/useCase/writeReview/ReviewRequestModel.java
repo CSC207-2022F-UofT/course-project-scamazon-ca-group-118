@@ -1,7 +1,7 @@
 package useCase.writeReview;
 
 /**
- * Represents a ReviewRequestModel object that holds all entities.data to be passed to the ReviewInteractor
+ * Represents a ReviewRequestModel object that holds all data to be passed to the ReviewInteractor
  */
 public class ReviewRequestModel {
     private String reviewerUsername;
