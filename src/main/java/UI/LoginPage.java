@@ -1,8 +1,9 @@
 package UI;
 
+import Main.Main;
+import entities.User;
 import forms.LoginForm;
-import pages.LabelButtonPanel;
-import pages.LabelTextPanel;
+import forms.RegisterForm;
 import useCase.login.LoginFailed;
 import useCase.login.LoginResponseModel;
 
@@ -11,98 +12,114 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The LoginPage class sets up the GUI for each Login Page to be displayed in the View class
+ */
 public class LoginPage extends Page implements ActionListener {
-    final int WIDTH = 800;
-    final int HEIGHT = 600;
-    private final JButton LOGIN;
-    private final JButton REGISTER;
+    private final JButton LOGIN = new JButton("Log in");
+    private final JButton REGISTER = new JButton("Register");
     private JLabel errorMessage = new JLabel("");
+    private final SpringLayout LAYOUT;
+    private JTextField username = new JTextField(15);
+    private JPasswordField password = new JPasswordField(15);
+    private LabelTextPanel usernameInfo;
+    private LabelTextPanel passwordInfo;
+    private LabelButtonPanel ifNoAccount;
+    private JLabel titleLabel;
 
     /**
-     * The username entered by the user
+     * The constructor for the LoginPage class
      */
-    JTextField username = new JTextField(15);
-    /**
-     * The password entered by the user
-     */
-    JPasswordField password = new JPasswordField(15);
-
     public LoginPage() {
-        super("Login");
-        //TODO change this if we change Page title access
-        String title = "Login";
+        super("Scamazon.ca");
+        this.LAYOUT = new SpringLayout();
 
-        this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        this.setTitle("Scamazon.ca");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        setUpPanel();
+        setUpLayout();
+    }
+
+    /**
+     * Sets up and adds all components to be displayed on this LoginPage
+     */
+    private void setUpPanel() {
+        this.setPreferredSize(new Dimension(1280, 720));
+        this.setLayout(LAYOUT);
+
+        //Add listeners to buttons
+        LOGIN.addActionListener(this);
+        REGISTER.addActionListener(this);
 
 
+        //JLabels
         JLabel usernameLabel = new JLabel("Username: ");
         JLabel passwordLabel = new JLabel("Password: ");
         JLabel ifNoAccountLabel = new JLabel("Don't have an account? ");
+        titleLabel = new JLabel("Log In");
 
-        LOGIN = new JButton("Log in");
-        LOGIN.addActionListener(this);
-        REGISTER = new JButton("Register");
-        REGISTER.addActionListener(this);
+        //LabelTextPanels and LabelButtonPanels
+        usernameInfo = new LabelTextPanel(usernameLabel, username);
+        passwordInfo = new LabelTextPanel(passwordLabel, password);
+        ifNoAccount = new LabelButtonPanel(ifNoAccountLabel, REGISTER);
 
-        JPanel loginPanel = new JPanel();
-        loginPanel.add(LOGIN);
-        loginPanel.setBounds(300, 180, 75, 30);
-        loginPanel.setAlignmentX(500);
-        loginPanel.setAlignmentY(500);
-
-        JPanel registerPanel = new JPanel();
-        registerPanel.add(REGISTER);
-
-        JLabel titleLabel = new JLabel(title);
-        titleLabel.setBounds(106, 60, 50, 25);
-
-        errorMessage.setBounds(100, 220, 275, 25);
-
-        LabelTextPanel usernameInfo = new LabelTextPanel(usernameLabel, username);
-        usernameInfo.setBounds(100, 100, 275, 25);
-        LabelTextPanel passwordInfo = new LabelTextPanel(passwordLabel, password);
-        passwordInfo.setBounds(100, 140, 275, 25);
-        LabelButtonPanel ifNoAccount = new LabelButtonPanel(ifNoAccountLabel, registerPanel);
-        ifNoAccount.setBounds(100, 250, 275, 50);
-
-
+        //add all elements to the panel
         this.add(errorMessage);
         this.add(ifNoAccount);
         this.add(titleLabel);
         this.add(usernameInfo);
         this.add(passwordInfo);
-        this.add(loginPanel);
-        this.add(new JLabel("")); //It won't let me specify the bounds for the last item added??? this
-        //empty JLabel is just a workaround
-
-        this.pack();
-        this.setVisible(true);
+        this.add(LOGIN);
     }
 
+    /**
+     * Fixes the layout of each LoginPage
+     */
+    private void setUpLayout() {
+        //Align everything near the middle
+        LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 500, SpringLayout.WEST, this);
+        LAYOUT.putConstraint(SpringLayout.WEST, usernameInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, passwordInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.EAST, LOGIN, 0, SpringLayout.EAST, passwordInfo);
+        LAYOUT.putConstraint(SpringLayout.WEST, errorMessage, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, ifNoAccount, 0, SpringLayout.WEST, titleLabel);
+
+        //Align everything vertically
+        LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 150, SpringLayout.NORTH, this);
+        LAYOUT.putConstraint(SpringLayout.NORTH, usernameInfo, 30, SpringLayout.SOUTH, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.NORTH, passwordInfo, 30, SpringLayout.SOUTH, usernameInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, LOGIN, 30, SpringLayout.SOUTH, passwordInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, errorMessage, 30, SpringLayout.SOUTH, LOGIN);
+        LAYOUT.putConstraint(SpringLayout.NORTH, ifNoAccount, 90, SpringLayout.SOUTH, LOGIN);
+    }
+
+    /**
+     * The actionListener for this LoginPage
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == LOGIN) {
             try {
                 LoginForm form = new LoginForm(username.getText(),
                         String.valueOf(password.getPassword()));
-                //TODO implement this part once UserPresenter is running
                 LoginResponseModel responseModel = form.getResponseModel();
+                User.currentUser = responseModel.getUser();
+                Main.setCurrentPage(new ProfilePage("Profile Page"));
             } catch (LoginFailed error) {
                 errorMessage.setText(error.getMessage());
             }
         } else if (e.getSource() == REGISTER) {
-            //TODO implement this, open the registerPage
-            System.out.println("Register");
+            Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
         }
     }
 
-    /**TODO:
-     * implement try block to actionPerformed that
-     * tries:
-     * to create a UserPresenter using the controller then open a UserDetailPage with this presenter.
+    /**
+     * Sets the error message for this LoginPage
+     *
+     * @param error the String error message that should be displayed on this LoginPage
      */
+    public void setErrorMessage(String error) {
+        this.errorMessage.setText(error);
+        this.errorMessage.updateUI();
+    }
 }
-
