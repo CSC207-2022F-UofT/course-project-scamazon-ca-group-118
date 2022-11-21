@@ -66,6 +66,7 @@ public class CartPage extends Page implements ActionListener {
         return itemTable;
     }
 
+
     public Page goToCheckout() {
         return new CheckoutPage("Checkout");
     }
@@ -82,4 +83,5 @@ public class CartPage extends Page implements ActionListener {
             this.goToCheckout();
         }
     }
+
 }

@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import useCase.createListing.ListingCreator;
@@ -11,12 +12,13 @@ public class User {
     private String password;
     private int id;
     private String email;
-    private List<Review> reviews;
-    private List<Listing> listings;
+    private ArrayList<Integer> reviews;
+    private ArrayList<Listing> listings;
     private Cart cart;
+    private static int nextID = 0;
 
-    public User(String username, String password, int id, String email, List<Review> reviews,
-                List<Listing> listings, Cart cart) {
+    public User(int id, String username, String password, String email, ArrayList<Integer> reviews,
+                ArrayList<Listing> listings, Cart cart) {
         this.username = username;
         this.password = password;
         this.id = id;
@@ -25,6 +27,10 @@ public class User {
         this.listings = listings;
         this.cart = cart;
         this.setCurrentUser();
+    }
+
+    public static int getNextID() {
+        return nextID++;
     }
 
     //Precondition: new User instances will always be the current User logged in.
@@ -56,10 +62,6 @@ public class User {
         return this.id;
     }
 
-    public void setID(int id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -68,20 +70,17 @@ public class User {
         this.email = email;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<Listing> getListings() {
+    public ArrayList<Listing> getListings() {
         return listings;
     }
 
-    public void setListings(List<Listing> listings) {
+    public void setListings(ArrayList<Listing> listings) {
         this.listings = listings;
+    }
+
+    public ArrayList<Integer> getReviews() {
+        return this.reviews;
     }
 
     public Cart getCart() {
@@ -94,7 +93,7 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, List<String> images) {
+    public void createListing(String title, float price, String description, ArrayList<String> images) {
         new ListingCreator().createListing(this, title, price, description, images);
     }
 
@@ -128,33 +127,34 @@ public class User {
      * @param reviewed the User being reviewed/the User whose reviews the new Review will be added to
      * @param rating   the rating given to the User being reviewed
      */
-    public void writeReview(User reviewed, int rating) {
-        new ReviewCreator().createReview(this, reviewed, rating);
-
-    }
-
-    /**
-     * Removes a review from this User's list of reviews
-     *
-     * @param toBeRemoved the Review to be removed from this User's reviews
-     */
-    public void removeReview(Review toBeRemoved) {
-        this.reviews.remove(toBeRemoved);
-    }
-
-    /**
-     * Adds a review to this User's list of reviews
-     *
-     * @param review the review to be added to this User's reviews
-     */
-    public void addReview(Review review) {
-        this.reviews.add(review);
-    }
-
-
-    public void removeReview() {
-    }
-
+    // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
+//    public void writeReview(User reviewed, int rating) {
+//        new ReviewCreator().createReview(this, reviewed, rating);
+//
+//    }
+//
+//    /**
+//     * Removes a review from this User's list of reviews
+//     *
+//     * @param toBeRemoved the Review to be removed from this User's reviews
+//     */
+//    public void removeReview(Review toBeRemoved) {
+//        this.reviews.remove(toBeRemoved);
+//    }
+//
+//    /**
+//     * Adds a review to this User's list of reviews
+//     *
+//     * @param review the review to be added to this User's reviews
+//     */
+//    public void addReview(Review review) {
+//        this.reviews.add(review);
+//    }
+//
+//
+//    public void removeReview() {
+//    }
+//
     /**
      * calculates the average integer rating earned by this User
      *
@@ -162,11 +162,11 @@ public class User {
      */
     public int calculateRating() {
         double rating = 0;
-        for (Review review : reviews) {
-            rating += review.getRating();
+        for (int review : reviews) {
+            rating += review;
         }
         rating /= reviews.size();
-        return (int) Math.round(rating);
+        return (int) rating;
     }
 
 
