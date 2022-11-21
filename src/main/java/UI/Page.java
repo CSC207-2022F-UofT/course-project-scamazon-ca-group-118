@@ -2,6 +2,7 @@ package UI;
 
 import javax.swing.*;
 
+
 public abstract class Page extends JPanel {
 
     private String title;
@@ -18,4 +19,5 @@ public abstract class Page extends JPanel {
         this.title = title;
     }
 
+    // TODO: missing submit
 }

@@ -1,8 +1,11 @@
 package UI;
-
+import forms.CreateListingForm;
+import useCase.createListing.ListingInteractor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ArrayList;
@@ -111,9 +114,12 @@ public class CreateListingPage extends Page{
             createListingPanel.setMaximumSize(new Dimension(1280, 570));
 
 
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setTitle("Create a listing");
             this.setMinimumSize(new Dimension(1280, 720));
             this.add(createListingPanel);
+            this.pack();
+            this.setResizable(false);
             this.setVisible(true);
 
 

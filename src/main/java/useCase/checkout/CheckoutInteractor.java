@@ -4,6 +4,8 @@ import database.GetUser;
 import entities.User;
 import entities.Cart;
 import entities.Listing;
+import useCase.login.CheckPassword;
+import useCase.login.LoginFailed;
 
 /**
  * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary data for the
@@ -26,7 +28,7 @@ public class CheckoutInteractor {
     //removes all items in buyer User's cart by removing each item from the seller User's listings
     public void removeListings() {
         Cart cart = this.buyer.getCart();
-        for (Listing listing: cart.getItems()) {
+        for (Listing listing : cart.getItems()) {
             User seller = listing.getSeller();
             seller.removeListing(listing);
         }

@@ -66,10 +66,9 @@ public class CartPage extends Page implements ActionListener {
         return itemTable;
     }
 
+
     public Page goToCheckout() {
-        //NOT IMPLEMENTED, WARRANTS FURTHER DISCUSSION
-        //TODO Implement with the GUI after figuring out View thing
-        return null;
+        return new CheckoutPage("Checkout");
     }
 
     @Override
@@ -84,4 +83,5 @@ public class CartPage extends Page implements ActionListener {
             this.goToCheckout();
         }
     }
+
 }

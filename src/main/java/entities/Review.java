@@ -9,7 +9,7 @@ public class Review {
     public User reviewer;
 
     /**
-     * The Uer being reviewed
+     * The User being reviewed
      */
     public User reviewed;
 
@@ -35,6 +35,14 @@ public class Review {
         this.reviewed = reviewed;
         this.rating = rating;
         this.date = LocalDate.now();
+    }
+    /**
+     * The constructor for the Review class
+     *
+     * @param rating   the rating given to the reviewed User
+     */
+    public Review(int rating) {
+        this.rating = rating;
     }
 
     public User getReviewer() {

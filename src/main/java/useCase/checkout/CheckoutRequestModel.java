@@ -15,5 +15,7 @@ public class CheckoutRequestModel {
         this.username = username;
     }
 
+
     public String getUsername() { return username; }
+
 }

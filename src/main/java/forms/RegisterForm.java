@@ -1,5 +1,6 @@
 package forms;
 
+import database.RegisterDatabaseGateway;
 import useCase.Register.RegisterRequestModel;
 import useCase.Register.RegisterResponseModel;
 
