@@ -4,6 +4,8 @@ import database.GetUser;
 import database.UserExists;
 import entities.User;
 
+import java.io.IOException;
+
 /**
  * The LoginInteractor class determines whether a user should be logged in, and which User should be logged in.
  */
@@ -20,7 +22,7 @@ public class LoginInteractor {
      * @param username        the username the user entered
      * @param enteredPassword the password the user entered
      */
-    public LoginInteractor(String username, String enteredPassword) {
+    public LoginInteractor(String username, String enteredPassword) throws IOException {
         this.username = username;
         this.ENTERED_PASSWORD = enteredPassword;
         this.user = new GetUser().getUserWithUsername(this.username);

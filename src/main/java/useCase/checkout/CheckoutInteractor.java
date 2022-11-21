@@ -1,9 +1,12 @@
 package useCase.checkout;
 
+import database.DatabaseController;
 import database.GetUser;
 import entities.User;
 import entities.Cart;
 import entities.Listing;
+
+import java.io.IOException;
 
 /**
  * The CheckoutInteractor class takes in a CheckoutRequestModel and generates the necessary data for the
@@ -17,7 +20,7 @@ public class CheckoutInteractor {
      *
      * @param requestModel the request model that's data will be manipulated
      */
-    public CheckoutInteractor(CheckoutRequestModel requestModel) {
+    public CheckoutInteractor(CheckoutRequestModel requestModel) throws IOException {
         this.buyer = getUserWithUsername(requestModel.getBuyerUsername());
     }
 
@@ -27,15 +30,16 @@ public class CheckoutInteractor {
      * @param username the username being searched for
      * @return the user with the given username
      */
-    private User getUserWithUsername(String username) {
+    private User getUserWithUsername(String username) throws IOException {
         return new GetUser().getUserWithUsername(username);
-    }
+}
 
-    private void removeListings() {
+    private void removeListings() throws IOException {
         Cart cart = this.buyer.getCart();
         for (Listing listing : cart.getItems()) {
-            User seller = listing.getSeller();
-            seller.removeListing(listing);
+            String seller = listing.getSellerUsername();
+            User sellerObject = new DatabaseController().getUserWithUsername(seller);
+            sellerObject.removeListing(listing);
         }
     }
 }

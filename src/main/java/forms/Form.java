@@ -1,5 +1,7 @@
 package forms;
 
+import java.io.IOException;
+
 public abstract class Form {
     private String title;
 
@@ -15,6 +17,6 @@ public abstract class Form {
         this.title = title;
     }
 
-    protected abstract boolean validateForm();
-    protected abstract void submitForm();
+    protected abstract boolean validateForm() throws IOException;
+    protected abstract void submitForm() throws IOException;
 }

@@ -9,7 +9,7 @@ public class ProfileResponseModel {
     private String email;
     private int rating;
     private String profilePic;
-    private List<Review> reviews;
+    private List<Integer> reviews;
 
     /**
      * The ProfileResponseModel constructor that contains all of the user attributes we need to display on
@@ -20,7 +20,7 @@ public class ProfileResponseModel {
      * @param profilePic The user's profilePic.
      * @param reviews The user's reviews about themselves.
      */
-    public ProfileResponseModel(String username, String email, int rating, String profilePic, List<Review> reviews) {
+    public ProfileResponseModel(String username, String email, int rating, String profilePic, List<Integer> reviews) {
         this.username = username;
         this.email = email;
         this.rating = rating;
@@ -60,11 +60,11 @@ public class ProfileResponseModel {
         this.profilePic = imagePath;
     }
 
-    public List<Review> getReviews() {
+    public List<Integer> getReviews() {
         return this.reviews;
     }
 
-    public void setReviews(List<Review> newReviews) {
+    public void setReviews(List<Integer> newReviews) {
         this.reviews = newReviews;
     }
 }

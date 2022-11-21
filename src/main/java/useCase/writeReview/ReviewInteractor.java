@@ -4,6 +4,8 @@ import database.GetUser;
 import database.UserExists;
 import entities.User;
 
+import java.io.IOException;
+
 /**
  * The ReviewInteractor class takes in a ReviewRequestModel and generates the necessary data for the
  * ReviewResponseModel
@@ -18,7 +20,7 @@ public class ReviewInteractor {
      *
      * @param requestModel the request model that's data will be manipulated
      */
-    public ReviewInteractor(ReviewRequestModel requestModel) {
+    public ReviewInteractor(ReviewRequestModel requestModel) throws IOException {
         this.reviewer = getUserWithUsername(requestModel.getReviewerUsername());
         this.reviewed = getUserWithUsername(requestModel.getReviewedUsername());
         this.rating = requestModel.getRating();
@@ -30,7 +32,7 @@ public class ReviewInteractor {
      * @param username the username being searched for
      * @return the user with the given username
      */
-    private User getUserWithUsername(String username) {
+    private User getUserWithUsername(String username) throws IOException {
         return new GetUser().getUserWithUsername(username);
     }
 

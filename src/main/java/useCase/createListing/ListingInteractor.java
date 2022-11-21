@@ -5,6 +5,7 @@ import entities.User;
 import database.GetUser;
 import database.UserExists;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ListingInteractor {
@@ -12,7 +13,7 @@ public class ListingInteractor {
     private String listingTitle;
     private float price;
     private String description;
-    private List<String> images;
+    private String image;
 
 
     /**
@@ -21,7 +22,7 @@ public class ListingInteractor {
      * @param username the username being searched for
      * @return the user with the given username
      */
-    private User getUserWithUsername(String username) {
+    private User getUserWithUsername(String username) throws IOException {
         return new GetUser().getUserWithUsername(username);
     }
 
@@ -34,17 +35,17 @@ public class ListingInteractor {
      *
      * @param requestModel the request model that's data will be manipulated
      */
-    public ListingInteractor(ListingRequestModel requestModel) {
+    public ListingInteractor(ListingRequestModel requestModel) throws IOException {
         this.seller = getUserWithUsername(requestModel.getSellerUsername());
         this.listingTitle = requestModel.getTitle();
         this.price = requestModel.getPrice();
         this.description = requestModel.getDescription();
-        this.images = requestModel.getImages();
+        this.image = requestModel.getImage();
 
     }
 
     private void createListing() {
-        this.seller.createListing(listingTitle, price, description, images);
+        this.seller.createListing(listingTitle, price, description, image);
     }
 
     /**
@@ -77,8 +78,8 @@ public class ListingInteractor {
         return description;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
     public void setTitle(String listingTitle) {
@@ -93,7 +94,7 @@ public class ListingInteractor {
         this.description = description;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

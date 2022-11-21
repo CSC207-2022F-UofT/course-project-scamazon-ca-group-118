@@ -3,6 +3,7 @@ package forms;
 import useCase.checkout.CheckoutRequestModel;
 import useCase.checkout.CheckoutResponseModel;
 
+import java.io.IOException;
 import java.time.*;
 
 public class CheckoutForm extends Form {
@@ -46,7 +47,7 @@ public class CheckoutForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             CheckoutRequestModel requestModel = new CheckoutRequestModel(USERNAME);
             responseModel = new CheckoutResponseModel(requestModel);

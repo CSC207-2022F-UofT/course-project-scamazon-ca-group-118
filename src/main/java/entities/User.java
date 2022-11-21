@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import useCase.createListing.ListingCreator;
 import useCase.writeReview.ReviewCreator;
@@ -93,7 +92,7 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, ArrayList<String> images) {
+    public void createListing(String title, float price, String description, String images) {
         new ListingCreator().createListing(this, title, price, description, images);
     }
 
@@ -128,33 +127,33 @@ public class User {
      * @param rating   the rating given to the User being reviewed
      */
     // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
-//    public void writeReview(User reviewed, int rating) {
-//        new ReviewCreator().createReview(this, reviewed, rating);
-//
-//    }
-//
-//    /**
-//     * Removes a review from this User's list of reviews
-//     *
-//     * @param toBeRemoved the Review to be removed from this User's reviews
-//     */
-//    public void removeReview(Review toBeRemoved) {
-//        this.reviews.remove(toBeRemoved);
-//    }
-//
-//    /**
-//     * Adds a review to this User's list of reviews
-//     *
-//     * @param review the review to be added to this User's reviews
-//     */
-//    public void addReview(Review review) {
-//        this.reviews.add(review);
-//    }
-//
-//
-//    public void removeReview() {
-//    }
-//
+    public void writeReview(User reviewed, int rating) {
+        new ReviewCreator().createReview(this, reviewed, rating);
+
+    }
+
+    /**
+     * Removes a review from this User's list of reviews
+     *
+     * @param toBeRemoved the Review to be removed from this User's reviews
+     */
+    public void removeReview(Review toBeRemoved) {
+        this.reviews.remove(toBeRemoved);
+    }
+
+    /**
+     * Adds a review to this User's list of reviews
+     *
+     * @param review the review to be added to this User's reviews
+     */
+    public void addReview(int review) {
+        this.reviews.add(review);
+    }
+
+
+    public void removeReview() {
+    }
+
     /**
      * calculates the average integer rating earned by this User
      *

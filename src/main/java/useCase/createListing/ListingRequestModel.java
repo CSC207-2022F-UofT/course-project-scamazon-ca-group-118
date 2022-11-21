@@ -12,7 +12,7 @@ public class ListingRequestModel {
     private String listingTitle;
     private float price;
     private String description;
-    private List<String> images;
+    private String image;
 
     /**
      * Constructor for a ListingRequestModel
@@ -23,12 +23,12 @@ public class ListingRequestModel {
      * @param description    the description of the listing
      * @param images         a list of all the file paths to the images
      */
-    public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, List<String> images) {
+    public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, String image) {
         this.sellerUsername = sellerUsername;
         this.listingTitle = listingTitle;
         this.price = price;
         this.description = description;
-        this.images = images;
+        this.image = image;
     }
 
     public String getSellerUsername() {
@@ -47,8 +47,8 @@ public class ListingRequestModel {
         return description;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
     public void setSellerUsername(String sellerUsername) {

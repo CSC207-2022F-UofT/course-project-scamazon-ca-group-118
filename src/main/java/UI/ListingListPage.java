@@ -1,6 +1,8 @@
 package UI;
+import entities.Cart;
 import entities.Listing;
 import database.DatabaseController;
+import entities.User;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -123,7 +125,7 @@ public class ListingListPage extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new ListingListPage("Listings");
+        new ListingListPage();
 
 
     }

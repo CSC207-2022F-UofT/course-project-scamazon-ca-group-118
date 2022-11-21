@@ -23,7 +23,7 @@ public class ReviewCreator {
      * @param rating   the rating value of the new review
      */
     public void createReview(User reviewer, User reviewed, int rating) {
-        Review review = new Review(reviewer, reviewed, rating);
-        reviewed.addReview(review);
+        // Review review = new Review(reviewer, reviewed, rating);
+        reviewed.addReview(rating);
     }
 }
