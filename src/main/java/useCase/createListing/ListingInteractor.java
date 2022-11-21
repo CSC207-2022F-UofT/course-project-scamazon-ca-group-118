@@ -14,7 +14,7 @@ public class ListingInteractor {
     private String listingTitle;
     private float price;
     private String description;
-    private List<String> images;
+    private String image;
 
 
     /**
@@ -41,12 +41,12 @@ public class ListingInteractor {
         this.listingTitle = requestModel.getTitle();
         this.price = requestModel.getPrice();
         this.description = requestModel.getDescription();
-        this.images = requestModel.getImages();
+        this.image = requestModel.getImage();
 
     }
 
     private void createListing() {
-        this.seller.createListing(listingTitle, price, description, (ArrayList<String>) images);
+        this.seller.createListing(listingTitle, price, description, image);
     }
 
     /**
@@ -79,8 +79,8 @@ public class ListingInteractor {
         return description;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImages() {
+        return image;
     }
 
     public void setTitle(String listingTitle) {
@@ -95,7 +95,7 @@ public class ListingInteractor {
         this.description = description;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

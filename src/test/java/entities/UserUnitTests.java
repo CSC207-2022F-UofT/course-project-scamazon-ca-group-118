@@ -1,5 +1,7 @@
 package entities;
 
+import features.Cart;
+import features.Review;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -83,8 +83,8 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, ArrayList<String> images) {
-        new ListingCreator().createListing(this, title, price, description, images);
+    public void createListing(String title, float price, String description, String image) {
+        new ListingCreator().createListing(this, title, price, description, image);
     }
 
 
