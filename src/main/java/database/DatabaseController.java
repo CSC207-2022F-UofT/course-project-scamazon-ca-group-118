@@ -1,6 +1,7 @@
 package database;
 
-//import com.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
+
 import entities.Cart;
 import entities.Listing;
 import entities.User;
@@ -66,7 +67,6 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
 
-
     /**
      * Retrieves a user given a username
      *
@@ -98,10 +98,10 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     /**
      * Creates a user given username, password, and email from registration form
      *
-     * //@param username username that is inputted
-     * //@param password password that is inputted
-     * //@param email    email that is inputted
-
+     * @param username username that is inputted
+     * @param password password that is inputted
+     * @param email    email that is inputted
+     **/
     public void createUser(String username, String password, String email) {
         try {
             FileWriter outputFile = new FileWriter("../entities/Users.csv");
@@ -109,7 +109,6 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
             String[] newUser = {String.valueOf(User.getNextID()), username, password, email, "[]", "[]", "[]"};
             writer.writeNext(newUser);
-
             writer.close();
 
         } catch (IOException e) {
@@ -118,22 +117,17 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
 
-
     /**
-     *
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded,
      * description, and imagePath from createListingForm after a listing is submitted
      *
-     * //@param sellerUsername username of seller
-     * //@param listingTitle title of listing
-     * //@param price price of listing
-     * //@param dateAdded date added of listing
-     * //@param description description of item
-     * //@param imagePath image of item
-     *
-     *
-     /*
-
+     * @param sellerUsername username of seller
+     * @param listingTitle   title of listing
+     * @param price          price of listing
+     * @param dateAdded      date added of listing
+     * @param description    description of item
+     * @param imagePath      image of item
+     **/
     public void createListing(String sellerUsername, String listingTitle, int price, LocalDate dateAdded, String description, String imagePath) {
         try {
             FileWriter outputFile = new FileWriter("../entities/Listings.csv");
@@ -142,16 +136,13 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             String[] newListing = {String.valueOf(Listing.getNextID()), sellerUsername, listingTitle,
                     String.valueOf(price), convertLocalDateToStringDate(dateAdded),
                     description, imagePath};
-
             writer.writeNext(newListing);
 
             writer.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-     */
 
 
     @Override
@@ -192,7 +183,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
     /**
-     * Serializer that a listing object based on a String row
+     * Serializer that creates a Listing object based on a String row
+     *
      * @param row String row from our csv file
      * @return returns a listing object
      */
@@ -208,8 +200,10 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         String image = listingString[7];
         return new Listing(listingID, sellerUsername, listingTitle, dateAdded, price, description, image);
     }
+
     /**
-     * Serializer that creates the String representation of a listing object
+     * Serializer that creates the String representation of a Listing object
+     *
      * @param listing Listing object of a listing
      * @return returns a string version of our listing
      */
@@ -225,7 +219,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
     /**
-     * Serializer that creates a user object based on a line in csv file
+     * Serializer that creates a User object based on a line in csv file
+     *
      * @param row a row in our csv file
      * @return a User based on a row in our csv file
      */
@@ -251,6 +246,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * Creates the string version of a User object
+     *
      * @param user Object of a user
      * @return a string representation of the User
      */
@@ -266,8 +262,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             // don't add comma on last iteration
             if (i == rawReviews.size() - 1) {
                 reviews += String.valueOf(rawReviews.get(i));
-            }
-            else {
+            } else {
                 reviews += String.valueOf(rawReviews.get(i));
                 reviews += ",";
             }
@@ -280,8 +275,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             // don't add comma on last iteration
             if (i == rawReviews.size() - 1) {
                 listings += String.valueOf(rawListings.get(i));
-            }
-            else {
+            } else {
                 listings += String.valueOf(rawListings.get(i));
                 listings += ",";
             }
@@ -294,8 +288,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             // don't add comma on last iteration
             if (i == rawCart.size() - 1) {
                 cart += String.valueOf(rawCart.get(i));
-            }
-            else {
+            } else {
                 cart += String.valueOf(rawCart.get(i));
                 cart += ",";
             }
@@ -307,6 +300,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * assume ISO-8601 format
+     *
      * @param date date we want to convert
      * @return LocalDate version of date
      */
@@ -316,6 +310,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     /**
      * assume ISO-8601 format
+     *
      * @param date date we want to convert
      * @return String version of date
      */
