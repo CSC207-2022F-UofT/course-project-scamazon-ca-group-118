@@ -93,6 +93,7 @@ public class LoginPage extends Page implements ActionListener {
 
     /**
      * The actionListener for this LoginPage
+     *
      * @param e the event to be processed
      */
     @Override
@@ -116,6 +117,7 @@ public class LoginPage extends Page implements ActionListener {
 
     /**
      * Sets the error message for this LoginPage
+     *
      * @param error the String error message that should be displayed on this LoginPage
      */
     public void setErrorMessage(String error) {

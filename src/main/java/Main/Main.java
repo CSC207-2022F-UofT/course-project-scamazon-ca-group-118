@@ -31,6 +31,7 @@ public class Main {
 
     /**
      * Sets the current User logged in to newCurrentUser
+     *
      * @param newCurrentUser the User that should be the currentUser
      */
     public static void setCurrentUser(User newCurrentUser) {
@@ -39,6 +40,7 @@ public class Main {
 
     /**
      * Returns the current User logged in
+     *
      * @return the User stored within the currentUser static variable
      */
     public static User getCurrentUser() {
@@ -47,6 +49,7 @@ public class Main {
 
     /**
      * Sets the current Page to newCurrentPage
+     *
      * @param newCurrentPage the Page that should be the new current Page
      */
     public static void setCurrentPage(Page newCurrentPage) {
@@ -59,6 +62,7 @@ public class Main {
 
     /**
      * Returns the current Page the View is showing
+     *
      * @return the value of the currentPage static variable
      */
     public static Page getCurrentPage() {
