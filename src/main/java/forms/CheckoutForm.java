@@ -1,60 +1,70 @@
 package forms;
-import java.time.*;
+
+import useCase.checkout.CheckoutRequestModel;
+import useCase.checkout.CheckoutResponseModel;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class CheckoutForm extends Form {
-    private final String name;
-    private String number;
-    private String cvv;
-    private LocalDate expiration; //Represents a date (year, month, day (yyyy-MM-dd))
-    private String address;
-
-    public CheckoutForm(String title, String name, String number, String cvv, LocalDate expiration, String address) {
-        super(title);
-        this.name = name;
-        this.number = number;
-        this.cvv = cvv;
-        this.expiration = expiration;
-        this.address = address;
+    private final String USERNAME;
+    private final String NAME;
+    private final String CARD_NUMBER;
+    private final String CVV;
+    private final LocalDate EXPIRATION; //Represents a date (year, month, day (yyyy-MM-dd))
+    private final String ADDRESS;
+    private CheckoutResponseModel responseModel;
+    public CheckoutForm(String username, String name, String card_number, String cvv, LocalDate expiration, String address) {
+        super("Checkout");
+        this.USERNAME = username;
+        this.NAME = name;
+        this.CARD_NUMBER = card_number;
+        this.CVV = cvv;
+        this.EXPIRATION = expiration;
+        this.ADDRESS = address;
     }
 
     @Override
-    boolean validateForm() {
+    protected boolean validateForm() {
+        //current day
+        LocalDate today = LocalDate.now();
+
         //check number length is equal to 16
-        if (!(getNumber().length() == 16)) {
+        if (!(this.CARD_NUMBER.length() == 16)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid card number.");
             return false;
-            //alert UI
         }
         //check cvv length is equal to 3
-        if (!(getCvv().length() == 3)) {
+        else if (!(this.CVV.length() == 3)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid CVV.");
             return false;
-            //alert UI
         }
-        //check expiration is after today's date
-        LocalDate today = LocalDate.now();
-        if (!(getExpiration().isAfter(today))) {
+        //check expiration is after current date
+        else if (!(this.EXPIRATION.isAfter(today))) {
+            JOptionPane.showMessageDialog(this, "Card is expired.");
             return false;
-            //alert UI
+        }
+        //checks to make sure all fields are filled out
+        else if (this.USERNAME.isEmpty() || this.NAME.isEmpty() || this.ADDRESS.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required.");
+            return false;
         }
         return true;
     }
 
     @Override
-    void submitForm() {
-        if (validateForm()) {
-            //redirect to "home" page
-            //call function to remove item from database
+    protected void submitForm() throws IOException {
+        if (this.validateForm()) {
+            CheckoutRequestModel requestModel = new CheckoutRequestModel(USERNAME);
+            responseModel = new CheckoutResponseModel(requestModel);
+            //redirects User back to ListingListPage
+            // return new ListingListPage();
         }
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public LocalDate getExpiration() {
-        return expiration;
+    public CheckoutResponseModel getResponseModel() throws IOException {
+        this.submitForm();
+        return responseModel;
     }
 }

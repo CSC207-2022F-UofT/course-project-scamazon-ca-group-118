@@ -1,7 +1,9 @@
 package forms;
 
-import writeReview.ReviewResponseModel;
-import writeReview.ReviewRequestModel;
+import useCase.writeReview.ReviewResponseModel;
+import useCase.writeReview.ReviewRequestModel;
+
+import java.io.IOException;
 
 public class ReviewForm extends Form {
     private final String REVIEWER_USERNAME;
@@ -22,7 +24,7 @@ public class ReviewForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             ReviewRequestModel requestModel = new ReviewRequestModel(REVIEWER_USERNAME,
                     REVIEWED_USERNAME,
@@ -31,7 +33,7 @@ public class ReviewForm extends Form {
         }
     }
 
-    public String getMessage() {
+    public String getMessage() throws IOException {
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();

@@ -1,10 +1,11 @@
 package forms;
 
-import addToCart.AddToCartRequestModel;
-import addToCart.AddToCartResponseModel;
+import useCase.addToCart.AddToCartRequestModel;
+import useCase.addToCart.AddToCartResponseModel;
 import database.GetUser;
-import entities.User;
-import features.Listing;
+import entities.Listing;
+
+import java.io.IOException;
 
 public class AddToCartForm extends Form {
     private final String BUYER_USERNAME;
@@ -15,7 +16,7 @@ public class AddToCartForm extends Form {
 
     private AddToCartResponseModel responseModel;
 
-    public AddToCartForm(String buyerUsername, Listing listing) {
+    public AddToCartForm(String buyerUsername, Listing listing) throws IOException {
         super("Add to cart");
         this.BUYER_USERNAME = buyerUsername;
         this.LISTING = listing;
@@ -30,7 +31,7 @@ public class AddToCartForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             AddToCartRequestModel requestModel = new AddToCartRequestModel(this.BUYER_USERNAME, this.LISTING, this.CAN_ADD_TO_CART);
             this.responseModel = new AddToCartResponseModel(requestModel);
@@ -38,7 +39,7 @@ public class AddToCartForm extends Form {
         }
     }
 
-    public String getMessage() {
+    public String getMessage() throws IOException {
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();

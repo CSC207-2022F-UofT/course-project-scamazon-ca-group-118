@@ -1,47 +1,44 @@
 package forms;
 
-import entities.User;
-import features.Listing;
+import useCase.createListing.ListingRequestModel;
+import useCase.createListing.ListingResponseModel;
+import database.GetUser;
+import database.UserExists;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public class CreateListingForm extends Form {
 
 
-    private final User seller;
-    private float price;
-    private String description;
-    private List<String> images;
-    private int id;
+    private final String SELLER_USERNAME;
+    private final String LISTING_TITLE;
+    private final float PRICE;
+    private final String DESCRIPTION;
+    private final String IMAGE;
+    //private final int ID;
+    ListingResponseModel responseModel;
 
 
-    public CreateListingForm(String title
-            , float price, User seller, String description, List<String> images, int id) {
-        super(title);
-        this.price = price;
-        this.seller = seller;
-        this.description = description;
-        this.images = images;
-        this.id = id;
+    public CreateListingForm(String listingTitle
+            , float price, String seller, String description, String images) {
+        super("Create a listing");
+        LISTING_TITLE = listingTitle;
+        PRICE = price;
+        SELLER_USERNAME = seller;
+        DESCRIPTION = description;
+        IMAGE = images;
+        //ID = id
     }
 
-
-    public void submitListing() {
-        // TODO: This function will be called on the "submit" button click
-        // This will add a listing to the database using the database interactor method.
-        String title = this.getTitle();
-        Listing L = new Listing(title, id, price, seller, description, images);
-
-        // addListing(L);
-    }
 
     @Override
-    protected boolean validateForm() {
+    protected boolean validateForm() throws IOException {
         /*
         We will have a description limit of 1000 characters
          */
-        if (price >= 0 && description.length() < 1000) {// TODO: Check that the seller exists in the database
+        if (PRICE >= 0 && DESCRIPTION.length() < 1000 && new UserExists(new GetUser().getUserWithUsername(SELLER_USERNAME)).checkExists()) {
             return true;
         } else {
             return false;
@@ -51,6 +48,20 @@ public class CreateListingForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
+        if (this.validateForm()) {
+            ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGE);
+            responseModel = new ListingResponseModel(requestModel);
+        }
+    }
+
+    public String getMessage() throws IOException {
+        this.submitForm();
+        if (this.validateForm()) {
+            return responseModel.getMessage();
+        } else {
+            return "Please ensure all details are correct before submitting the form";
+        }
+
     }
 }
