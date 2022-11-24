@@ -1,7 +1,9 @@
 package UI;
 
+import Main.Main;
 import forms.CheckoutForm;
 import useCase.checkout.CheckoutResponseModel;
+import useCase.login.LoginResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,12 +14,12 @@ import java.time.LocalDate;
 
 public class CheckoutPage extends Page implements ActionListener {
     private final JButton SUBMIT = new JButton("Submit");
-    private JTextField jtUsername = new JTextField();
-    private JTextField jtName = new JTextField();
+    private JTextField jtUsername = new JTextField(16);
+    private JTextField jtName = new JTextField(16);
     private JTextField jtCardNumber = new JTextField(16);
-    private JTextField jtCVV = new JTextField(3);
-    private JTextField jtExpiration = new JTextField();
-    private JTextField jtAddress = new JTextField();
+    private JTextField jtCVV = new JTextField(16);
+    private JTextField jtExpiration = new JTextField(16);
+    private JTextField jtAddress = new JTextField(15);
     private final SpringLayout LAYOUT;
     private LabelTextPanel usernameInfo;
     private LabelTextPanel nameInfo;
@@ -76,7 +78,7 @@ public class CheckoutPage extends Page implements ActionListener {
         LAYOUT.putConstraint(SpringLayout.WEST, addressInfo, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.EAST, SUBMIT, 0, SpringLayout.EAST, addressInfo);
 
-        //Align everything vertically
+        //align everything vertically
         LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 150, SpringLayout.NORTH, this);
         LAYOUT.putConstraint(SpringLayout.NORTH, usernameInfo, 30, SpringLayout.SOUTH, titleLabel);
         LAYOUT.putConstraint(SpringLayout.NORTH, nameInfo, 30, SpringLayout.SOUTH, usernameInfo);
@@ -91,9 +93,14 @@ public class CheckoutPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
-            CheckoutForm form = new CheckoutForm(jtUsername.getText(), jtName.getText(),
-            jtCardNumber.getText(), jtCVV.getText(),
-                    LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
+            try {
+                CheckoutForm form = new CheckoutForm(jtUsername.getText(), jtName.getText(),
+                        jtCardNumber.getText(), jtCVV.getText(),
+                        LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
+                form.getResponseModel();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 package forms;
 
+import Main.Main;
+import UI.ListingListPage;
 import useCase.checkout.CheckoutRequestModel;
 import useCase.checkout.CheckoutResponseModel;
 
@@ -59,7 +61,7 @@ public class CheckoutForm extends Form {
             CheckoutRequestModel requestModel = new CheckoutRequestModel(USERNAME);
             responseModel = new CheckoutResponseModel(requestModel);
             //redirects User back to ListingListPage
-            // return new ListingListPage();
+            Main.setCurrentPage(new ListingListPage());
         }
     }
 
