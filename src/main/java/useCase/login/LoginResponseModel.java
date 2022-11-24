@@ -2,7 +2,6 @@ package useCase.login;
 
 import entities.User;
 
-import java.io.IOException;
 
 /**
  * The loginResponseModel holds data retrieved from the interactor (in this case, LoginInteractor). Namely, a
@@ -17,7 +16,7 @@ public class LoginResponseModel {
      * @param requestModel the request model to be fed into the LoginInteractor that will generate the
      *                     necessary data for this LoginResponseModel
      */
-    public LoginResponseModel(LoginRequestModel requestModel) throws IOException {
+    public LoginResponseModel(LoginRequestModel requestModel) {
         LoginInteractor interactor =
                 new LoginInteractor(requestModel.getUsername(), requestModel.getEnteredPassword());
         if (interactor.shouldLogin()) {
