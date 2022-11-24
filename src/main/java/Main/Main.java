@@ -1,10 +1,16 @@
 package Main;
 
+import UI.ListingDetailPage;
 import UI.LoginPage;
 import UI.Page;
 import database.DatabaseController;
+import entities.Cart;
+import entities.Listing;
 import entities.User;
 import entities.View;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     /**
@@ -24,13 +30,22 @@ public class Main {
         DatabaseController databaseInteractor = new DatabaseController();
 
         //Open the application with the Login Page
-        currentPage = new LoginPage();
-        view = new View();
 
+        // setup test currUser
+        User currUser = new User(0, "currUser", "password", "curr@user.com",
+                new ArrayList<>(), new ArrayList<>(), new Cart());
+        setCurrentUser(currUser);
+
+        // setup test listing
+        Listing listing = new Listing(0, "seller", "very cool listing", LocalDate.now(), 100,
+                "this is a great listing! it has lots of great features! buy now!", "../image.JPG");
+        currentPage = new ListingDetailPage(currUser.getUsername(), listing);
+        view = new View();
     }
 
     /**
      * Sets the current User logged in to newCurrentUser
+     *
      * @param newCurrentUser the User that should be the currentUser
      */
     public static void setCurrentUser(User newCurrentUser) {
@@ -39,6 +54,7 @@ public class Main {
 
     /**
      * Returns the current User logged in
+     *
      * @return the User stored within the currentUser static variable
      */
     public static User getCurrentUser() {
@@ -47,6 +63,7 @@ public class Main {
 
     /**
      * Sets the current Page to newCurrentPage
+     *
      * @param newCurrentPage the Page that should be the new current Page
      */
     public static void setCurrentPage(Page newCurrentPage) {
@@ -59,6 +76,7 @@ public class Main {
 
     /**
      * Returns the current Page the View is showing
+     *
      * @return the value of the currentPage static variable
      */
     public static Page getCurrentPage() {

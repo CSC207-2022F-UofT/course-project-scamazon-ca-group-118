@@ -17,8 +17,9 @@ import java.util.Objects;
  * For all methods, we assume validation was passed
  */
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
-        ListingDatabaseGateway {
-    String table = null;
+        ListingDatabaseGateway, ListingDetailDatabaseGateway {
+    private String USER_TABLE_PATH = "src/main/java/entities/data/Users.csv";
+    private String LISTING_TABLE_PATH = "src/main/java/entities/data/Listings.csv";
 
     public DatabaseController() {
     }
@@ -26,7 +27,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     boolean checkUserWithUsername(String username) throws IOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/User.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             String currLine;
             while ((currLine = reader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
@@ -50,7 +51,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      */
     public ArrayList<Listing> getListingsByUser(String username) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Listings.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
             String currLine;
             ArrayList<Listing> listings = new ArrayList<>();
             while ((currLine = reader.readLine()) != null) {
@@ -76,7 +77,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     @Override
     public User getUserWithUsername(String username) throws IOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Users.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             String currLine;
             while ((currLine = reader.readLine()) != null) {
                 String[] user = currLine.split(";");
@@ -104,7 +105,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      **/
     public void createUser(String username, String password, String email) {
         try {
-            FileWriter outputFile = new FileWriter("../entities/Users.csv");
+            FileWriter outputFile = new FileWriter(USER_TABLE_PATH);
             CSVWriter writer = new CSVWriter(outputFile);
 
             String[] newUser = {String.valueOf(User.getNextID()), username, password, email, "[]", "[]", "[]"};
@@ -130,7 +131,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      **/
     public void createListing(String sellerUsername, String listingTitle, int price, LocalDate dateAdded, String description, String imagePath) {
         try {
-            FileWriter outputFile = new FileWriter("../entities/Listings.csv");
+            FileWriter outputFile = new FileWriter(LISTING_TABLE_PATH);
             CSVWriter writer = new CSVWriter(outputFile);
 
             String[] newListing = {String.valueOf(Listing.getNextID()), sellerUsername, listingTitle,
@@ -148,7 +149,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     @Override
     public ArrayList<Listing> getListingWithSearch(String keyword) throws IOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/Listings.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
             String currLine;
             ArrayList<Listing> listings = new ArrayList<>();
             while ((currLine = reader.readLine()) != null) {
@@ -169,7 +170,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     public ArrayList<Listing> getAllListings() throws IOException {
         ArrayList<Listing> listings = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities.data/Listings.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
             String currLine;
             while ((currLine = reader.readLine()) != null) {
                 Listing listing = createListingObject(currLine);
@@ -196,8 +197,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         float price = Float.parseFloat(listingString[3]);
         LocalDate dateAdded = convertStringDateToLocalDate(listingString[4]);
 
-        String description = listingString[6];
-        String image = listingString[7];
+        String description = listingString[5];
+        String image = listingString[6];
         return new Listing(listingID, sellerUsername, listingTitle, dateAdded, price, description, image);
     }
 
@@ -238,7 +239,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
         ArrayList<Listing> listings = getListingsByUser(username);
         // TODO: get listings in user's cart
-        Cart cart = new Cart(listings);
+        Cart cart = new Cart();
 
         return new User(userID, username, password, email, reviews, listings, cart);
 
@@ -317,6 +318,27 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     private String convertLocalDateToStringDate(LocalDate date) {
         return date.toString();
+    }
+
+    /**
+     * @param currentUser the current user
+     * @param listing     the listing we want to check for
+     * @return true if currentUser already has the listing in their cart, false otherwise
+     */
+
+    @Override
+    public boolean currentUserHasListingInCart(User currentUser, Listing listing) {
+        return false;
+    }
+
+    /**
+     * @param currentUser the current user
+     * @param listing     the listing we want to add to their cart
+     * @throws IOException
+     */
+    @Override
+    public void addListingToUserCart(User currentUser, Listing listing) throws IOException {
+
     }
 }
 
