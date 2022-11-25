@@ -5,6 +5,7 @@ import com.opencsv.CSVWriter;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
+import Main.Main;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -236,7 +237,10 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      */
     @Override
     public void addToCart(int ID) throws IOException {
-
+        User currUser = Main.getCurrentUser();
+        Cart currCart = currUser.getCart();
+        Listing listing = getListingByID(ID);
+        currCart.addItem(listing);
     }
 
     /**
@@ -246,7 +250,10 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      */
     @Override
     public void removeFromCart(int ID) throws IOException {
-
+        User currUser = Main.getCurrentUser();
+        Cart currCart = currUser.getCart();
+        Listing listing = getListingByID(ID);
+        currCart.removeItem(listing);
     }
 
     /**
