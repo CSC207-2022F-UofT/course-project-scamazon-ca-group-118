@@ -18,7 +18,7 @@ import java.util.Objects;
  * For all methods, we assume validation was passed
  */
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
-        ListingDatabaseGateway, DetailDatabaseGateway, CartDatabaseGateway {
+        ListingDatabaseGateway, DetailDatabaseGateway, CartDatabaseGateway, CheckoutDatabaseGateway {
     String table = null;
 
     public DatabaseController() {
@@ -103,6 +103,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
 
+
+
     /**
      * Given an ID, return a listing object corresponding to that ID
      *
@@ -151,6 +153,47 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * removes listing from csv file based on id given
+     * writes to a new file without listing to be removed, and then renamed
+     * helper for checkoutRemoveListings
+     * also used for when user wants to take down a listing
+     *
+     * @param ID id passed to removeListing
+     */
+    public void removeListing(int ID) throws IOException {
+        try {
+            FileWriter listingsWriter = new FileWriter("../entities/Listings.csv");
+            File listings = new File("../entities/Listings.csv");
+            File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
+
+            BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(listingsWriter)));
+            CSVWriter writer = new CSVWriter(new FileWriter(temp));
+
+            String currLine;
+
+            while ((currLine = reader.readLine()) != null) {
+                String[] listing = currLine.split(";");
+                int listingID = Integer.parseInt(listing[0]);
+                if (listingID == ID) {
+                    continue;
+                }
+                writer.writeNext(listing);
+            }
+            reader.close();
+            writer.close();
+            boolean successful = temp.renameTo(listings);
+
+            if (!successful) {
+                // didn't find the listing
+                System.out.printf("Unable to remove listing %s%n", ID);
+            }
+
+        } catch (IOException e) {
+            throw new IOException(e);
         }
     }
 
@@ -268,6 +311,19 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         User reviewedUser = getUserWithUsername(reviewed.getUsername());
         ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
         reviewedUserRatings.add(rating);
+    }
+
+    /**
+     * removes all listings from csv files after checkout
+     */
+    @Override
+    public void checkoutRemoveListings() throws IOException {
+        User currUser = Main.getCurrentUser();
+        Cart currCart = currUser.getCart();
+        for (Listing listing : currCart.getItems()) {
+            removeListing(listing.getId());
+            currCart.removeItem(listing);
+        }
     }
 
     /**
