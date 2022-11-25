@@ -102,6 +102,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         }
     }
 
+
     /**
      * Given an ID, return a listing object corresponding to that ID
      *
@@ -254,6 +255,19 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         Cart currCart = currUser.getCart();
         Listing listing = getListingByID(ID);
         currCart.removeItem(listing);
+    }
+
+    /**
+     * adds a review rating to a given user
+     *
+     * @param reviewed user being reviewed
+     * @param rating number given by the reviewer
+     */
+    @Override
+    public void addReview(User reviewed, int rating) throws IOException {
+        User reviewedUser = getUserWithUsername(reviewed.getUsername());
+        ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
+        reviewedUserRatings.add(rating);
     }
 
     /**
