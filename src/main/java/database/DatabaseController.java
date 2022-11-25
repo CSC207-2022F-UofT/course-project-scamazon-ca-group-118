@@ -17,7 +17,7 @@ import java.util.Objects;
  * For all methods, we assume validation was passed
  */
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
-        ListingDatabaseGateway {
+        ListingDatabaseGateway, DetailDatabaseGateway, CartDatabaseGateway {
     String table = null;
 
     public DatabaseController() {
@@ -230,6 +230,26 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
     /**
+     * adds a listing to the cart based on the ID of the listing passed
+     *
+     * @param ID pass the id of the listing to be removed
+     */
+    @Override
+    public void addToCart(int ID) throws IOException {
+
+    }
+
+    /**
+     * removes a listing from the cart based on the ID of the listing passed
+     *
+     * @param ID pass the id of the listing to be removed
+     */
+    @Override
+    public void removeFromCart(int ID) throws IOException {
+
+    }
+
+    /**
      * Serializer that creates a Listing object based on a String row
      *
      * @param row String row from our csv file
@@ -372,6 +392,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     private String convertLocalDateToStringDate(LocalDate date) {
         return date.toString();
     }
+
+
 }
 
 
