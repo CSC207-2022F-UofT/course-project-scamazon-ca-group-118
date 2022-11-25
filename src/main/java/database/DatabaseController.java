@@ -23,6 +23,13 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     public DatabaseController() {
     }
 
+    /**
+     * Returns whether there is a duplicate of the given username already in database
+     *
+     * @param username username to check
+     * @return true/false value if there is a duplicate
+     * @throws IOException in case of IOException
+     */
 
     boolean checkUserWithUsername(String username) throws IOException {
         try {
@@ -94,6 +101,35 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         }
     }
 
+    /**
+     * Given an ID, return a listing object corresponding to that ID
+     *
+     * @param ID id of the listing
+     * @return listing object corresponding to the ID
+     * @throws IOException thrown in case of exception
+     */
+    public Listing getListingByID(int ID) throws IOException {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Listings.csv"));
+            String currLine;
+
+            while ((currLine = reader.readLine()) != null) {
+                String[] listing = currLine.split(";");
+                int listingID = Integer.parseInt(listing[0]);
+                if (listingID == ID) {
+                    return createListingObject(currLine);
+                }
+            }
+            reader.close();
+
+            // didn't find the listing
+            System.out.printf("Unable to find listing %s%n", ID);
+            return null;
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+    }
+
 
     /**
      * Creates a user given username, password, and email from registration form
@@ -145,6 +181,12 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
 
+    /**
+     * gets a list of listings that match the keyword in the search bar
+     * @param keyword search phrase
+     * @return a list of listings
+     * @throws IOException thrown in case of exception
+     */
     @Override
     public ArrayList<Listing> getListingWithSearch(String keyword) throws IOException {
         try {
@@ -164,7 +206,12 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         }
     }
 
-    // get all listings in the database
+    /**
+     * Method that gets listings with no keyword, the default listings
+     *
+     * @return returns a list of listings
+     * @throws IOException throws an exception in case of an IOException
+     */
     @Override
     public ArrayList<Listing> getAllListings() throws IOException {
         ArrayList<Listing> listings = new ArrayList<>();
@@ -224,7 +271,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param row a row in our csv file
      * @return a User based on a row in our csv file
      */
-    private User createUserObject(String row) {
+    private User createUserObject(String row) throws IOException {
         String[] userString = row.split(";");
         int userID = Integer.parseInt(userString[0]);
         String username = userString[1];
@@ -237,8 +284,15 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         }
 
         ArrayList<Listing> listings = getListingsByUser(username);
-        // TODO: get listings in user's cart
+
+        String[] cart_cleaned = userString[4].substring(1, userString[4].length() - 1).split(",");
         Cart cart = new Cart(listings);
+        for (String listing : cart_cleaned) {
+            int id = Integer.parseInt(listing);
+            Listing listingObject = getListingByID(id);
+            cart.addItem(listingObject);
+        }
+
 
         return new User(userID, username, password, email, reviews, listings, cart);
 
