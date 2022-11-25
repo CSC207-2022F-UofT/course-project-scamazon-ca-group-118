@@ -17,7 +17,7 @@ import java.util.Objects;
  * For all methods, we assume validation was passed
  */
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
-        ListingDatabaseGateway {
+        ListingDatabaseGateway, SearchDatabaseGateway {
     String table = null;
 
     public DatabaseController() {
@@ -317,6 +317,12 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
 
     private String convertLocalDateToStringDate(LocalDate date) {
         return date.toString();
+    }
+
+    //SearchForm
+    @Override
+    public ArrayList<Listing> getListings(String query) {
+        return null;
     }
 }
 

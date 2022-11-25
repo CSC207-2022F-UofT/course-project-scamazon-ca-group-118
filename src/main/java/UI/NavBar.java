@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -102,7 +103,11 @@ public class NavBar extends JPanel implements ActionListener {
         if (e.getSource() == profileButton ||
                 e.getSource() == listingsButton ||
                 e.getSource() == cartButton) {
-            notLogButtonAction((JButton) e.getSource());
+            try {
+                notLogButtonAction((JButton) e.getSource());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
         } else if (e.getSource() == logButton) {
             logButtonAction();
@@ -113,7 +118,7 @@ public class NavBar extends JPanel implements ActionListener {
      * The action that should run when a button other than the logButton is clicked
      * @param source the button that was clicked to invoke the action listener
      */
-    private void notLogButtonAction(JButton source){
+    private void notLogButtonAction(JButton source) throws IOException {
         if (Objects.isNull(Main.getCurrentUser())) {
             userIsNullAction();
         } else {
@@ -150,7 +155,7 @@ public class NavBar extends JPanel implements ActionListener {
      * Switches the currentPage in Main to a different Page, to be displayed in View
      * @param source the button that was clicked to invoke the action listener
      */
-    private void switchScreenAction(JButton source){
+    private void switchScreenAction(JButton source) throws IOException {
         if (source == profileButton) {
             Main.setCurrentPage(new ProfilePage("Profile Page"));
         } else if (source == listingsButton) {
