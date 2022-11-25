@@ -327,6 +327,15 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
     /**
+     * logout method
+     * sets curr user to null after logout
+     */
+    public void logout() {
+        User currUser = Main.getCurrentUser();
+        currUser.setCurrentUser(null);
+    }
+
+    /**
      * Serializer that creates a Listing object based on a String row
      *
      * @param row String row from our csv file

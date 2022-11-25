@@ -26,7 +26,6 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
-        this.setCurrentUser();
     }
 
     public static int getNextID() {
@@ -34,8 +33,14 @@ public class User {
     }
 
     //Precondition: new User instances will always be the current User logged in.
-    public void setCurrentUser() {
-        currentUser = this;
+    public void setCurrentUser(User newCurrentUser) {
+        if (newCurrentUser == null) {
+            currentUser = null;
+        }
+        else {
+            currentUser = newCurrentUser;
+        }
+
     }
 
     public static User getCurrentUser() {
