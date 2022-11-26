@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class MyForm
+public class MyForm
         extends JPanel
         implements ActionListener {
 
@@ -145,11 +145,16 @@ public class RegisterForm extends Form{
     private String password;
     private String confirmPassword;
     private RegisterResponseModel responseModel;
+    private MyForm form;
 
     public RegisterForm(String title) {
         super(title);
+        this.form = new MyForm();
     }
 
+    public MyForm getForm(){
+        return this.form;
+    }
     @Override
     protected boolean validateForm() {
         //password and confirm password
