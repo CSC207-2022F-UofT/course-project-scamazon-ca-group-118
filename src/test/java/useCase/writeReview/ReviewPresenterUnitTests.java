@@ -1,9 +1,7 @@
-package writeReview;
+package useCase.writeReview;
 
-import forms.ReviewForm;
-import org.junit.jupiter.api.Test;
-import useCase.writeReview.ReviewPresenter;
-
+/**
+ * TODO uncomment and implement these tests once Database implemented
 public class ReviewPresenterUnitTests {
     @Test
     void testReviewPresenterUserExists() {
@@ -24,3 +22,4 @@ public class ReviewPresenterUnitTests {
                 .equals("Please enter the username of the User you wish to review");
     }
 }
+*/

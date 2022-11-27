@@ -6,6 +6,7 @@ import database.GetUser;
 import database.UserExists;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public class CreateListingForm extends Form {
@@ -15,25 +16,25 @@ public class CreateListingForm extends Form {
     private final String LISTING_TITLE;
     private final float PRICE;
     private final String DESCRIPTION;
-    private final List<String> IMAGES;
-    private final int ID;
+    private final String IMAGE;
+    //private final int ID;
     ListingResponseModel responseModel;
 
 
     public CreateListingForm(String listingTitle
-            , float price, String seller, String description, List<String> images, int id) {
+            , float price, String seller, String description, String images) {
         super("Create a listing");
         LISTING_TITLE = listingTitle;
         PRICE = price;
         SELLER_USERNAME = seller;
         DESCRIPTION = description;
-        IMAGES = images;
-        ID = id;
+        IMAGE = images;
+        //ID = id
     }
 
 
     @Override
-    protected boolean validateForm() {
+    protected boolean validateForm() throws IOException {
         /*
         We will have a description limit of 1000 characters
          */
@@ -47,14 +48,14 @@ public class CreateListingForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
-            ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGES);
+            ListingRequestModel requestModel = new ListingRequestModel(SELLER_USERNAME, LISTING_TITLE, PRICE, DESCRIPTION, IMAGE);
             responseModel = new ListingResponseModel(requestModel);
         }
     }
 
-    public String getMessage() {
+    public String getMessage() throws IOException {
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();

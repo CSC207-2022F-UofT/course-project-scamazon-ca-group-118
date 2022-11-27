@@ -1,5 +1,7 @@
 package useCase.createListing;
 
+import java.io.IOException;
+
 /**
  * Represents a ListingResponseModel object that stores data retrieved from the ReviewInteractor that must
  * be passed to the ListingPresenter
@@ -13,7 +15,7 @@ public class ListingResponseModel {
      * @param requestModel the ReviewRequestModel that will be used as an argument for the ReviewInteractor
      *                     that this ReviewResponseModel retrieves data from
      */
-    public ListingResponseModel(ListingRequestModel requestModel) {
+    public ListingResponseModel(ListingRequestModel requestModel) throws IOException {
         ListingInteractor interactor = new ListingInteractor(requestModel);
         this.message = interactor.getMessage();
     }

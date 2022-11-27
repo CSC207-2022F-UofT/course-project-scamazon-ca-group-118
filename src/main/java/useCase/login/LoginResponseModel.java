@@ -2,6 +2,7 @@ package useCase.login;
 
 import entities.User;
 
+
 /**
  * The loginResponseModel holds data retrieved from the interactor (in this case, LoginInteractor). Namely, a
  * username, password, id, email, reviews, listings, and cart

@@ -1,9 +1,11 @@
 package useCase.addToCart;
 
+import java.io.IOException;
+
 public class AddToCartResponseModel {
     private String message;
 
-    public AddToCartResponseModel(AddToCartRequestModel requestModel) {
+    public AddToCartResponseModel(AddToCartRequestModel requestModel) throws IOException {
         AddToCartInteractor interactor = new AddToCartInteractor(requestModel);
         this.message = interactor.getMessage();
 

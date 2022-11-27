@@ -1,9 +1,7 @@
-package writeReview;
+package useCase.writeReview;
 
-import org.junit.jupiter.api.Test;
-import useCase.writeReview.ReviewInteractor;
-import useCase.writeReview.ReviewRequestModel;
-
+/**
+ * TODO uncomment and implement these tests once Database implemented
 public class ReviewInteractorUnitTests {
     ReviewRequestModel userExistsRequestModel = new ReviewRequestModel("user1",
             "user2",
@@ -23,3 +21,4 @@ public class ReviewInteractorUnitTests {
                 .equals("Review Unsuccessful: No User exists with this username");
     }
 }
+ */

@@ -24,6 +24,6 @@ public class ReviewCreator {
      */
     public void createReview(User reviewer, User reviewed, int rating) {
         Review review = new Review(reviewer, reviewed, rating);
-        reviewed.addReview(review);
+        //reviewed.addReview(review);
     }
 }

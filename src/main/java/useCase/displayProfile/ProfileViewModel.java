@@ -5,6 +5,7 @@ public class ProfileViewModel {
 
     /**
      * The constructor for the ProfileViewModel which sets the given response model to the view model object.
+     *
      * @param output The ProfileResponseModel created by the profile interactor.
      */
     public ProfileViewModel(ProfileResponseModel output) {

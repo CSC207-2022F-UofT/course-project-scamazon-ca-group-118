@@ -1,7 +1,5 @@
 package useCase.createListing;
 
-import entities.User;
-
 import java.util.List;
 
 /**
@@ -12,7 +10,7 @@ public class ListingRequestModel {
     private String listingTitle;
     private float price;
     private String description;
-    private List<String> images;
+    private String image;
 
     /**
      * Constructor for a ListingRequestModel
@@ -21,14 +19,14 @@ public class ListingRequestModel {
      * @param listingTitle   the title of the listing
      * @param price          the price of the listing
      * @param description    the description of the listing
-     * @param images         a list of all the file paths to the images
+     * @param image          the file path to the listing image
      */
-    public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, List<String> images) {
+    public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, String image) {
         this.sellerUsername = sellerUsername;
         this.listingTitle = listingTitle;
         this.price = price;
         this.description = description;
-        this.images = images;
+        this.image = image;
     }
 
     public String getSellerUsername() {
@@ -47,8 +45,8 @@ public class ListingRequestModel {
         return description;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
     public void setSellerUsername(String sellerUsername) {
@@ -66,5 +64,4 @@ public class ListingRequestModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    // TODO: Implement set images
 }

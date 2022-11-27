@@ -11,4 +11,5 @@ public interface ProfileGateway {
         /* TODO Go into the database and look for user with username and return that user,
             if no user with username exists throw a NoSuchUser Exception which is yet to be defined. */
 
+
 }
