@@ -7,7 +7,6 @@ import useCase.createListing.ListingCreator;
 import useCase.writeReview.ReviewCreator;
 
 public class User {
-    public static User currentUser;
     private String username;
     private String password;
     private int id;
@@ -26,20 +25,10 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
-        this.setCurrentUser();
     }
 
     public static int getNextID() {
         return nextID++;
-    }
-
-    //Precondition: new User instances will always be the current User logged in.
-    public void setCurrentUser() {
-        currentUser = this;
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
     }
 
     public String getUsername() {
@@ -155,6 +144,7 @@ public class User {
 //    public void removeReview() {
 //    }
 //
+
     /**
      * calculates the average integer rating earned by this User
      *
