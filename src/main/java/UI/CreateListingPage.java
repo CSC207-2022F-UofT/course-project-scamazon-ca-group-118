@@ -3,6 +3,7 @@ import Main.Main;
 import forms.CreateListingForm;
 import forms.LoginForm;
 import useCase.createListing.ListingInteractor;
+import useCase.createListing.ListingResponseModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -31,6 +32,9 @@ public class CreateListingPage extends Page{
         private JButton submit = new JButton("Submit Listing");
 
         private BufferedImage myPicture = null;
+        private String fileName;
+        private String filePath;
+        private String responseModel;
         public CreateListingPage() {
             super("Create Listing Page");
 
@@ -98,15 +102,12 @@ public class CreateListingPage extends Page{
             upload.setLocation(850, 425);
 
             upload.addActionListener(e -> {
-                String fileName;
-                String filePath;
+
                 final JFileChooser imgFiles = new JFileChooser();
                 int returnVal = imgFiles.showOpenDialog(CreateListingPage.this);
                 if (returnVal == imgFiles.APPROVE_OPTION){
                     fileName = imgFiles.getSelectedFile().getName();
                     filePath = imgFiles.getCurrentDirectory().toString();
-                    System.out.println("File Name: " + fileName);
-                    System.out.println("File Path: " + filePath);
                     img.setText("<html>" + filePath + "/" + fileName + "</html>");
 
 
@@ -144,6 +145,15 @@ public class CreateListingPage extends Page{
                 DecimalFormat df = new DecimalFormat("0.00");
                 float listingPrice = Float.parseFloat(df.format(Float.parseFloat(price_text.getText())));
                 String listingDesc = desc_text.getText();
+                CreateListingForm form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, filePath + "/" + fileName);
+                try {
+                     responseModel = form.getMessage();
+                } catch (IOException ex) {
+                    responseModel = "There an error (are you logged in?)"
+                    throw new RuntimeException(ex);
+                }
+                submit.setText(responseModel);
+
                 //use Class to submit information
 
                 //String sellerUsername = "temp"; //temp variable while we figure out current user

@@ -16,15 +16,6 @@ public class ListingInteractor {
     private String image;
 
 
-    /**
-     * Returns the user from the database with the given username
-     *
-     * @param username the username being searched for
-     * @return the user with the given username
-     */
-    private User getUserWithUsername(String username) throws IOException {
-        return new GetUser().getUserWithUsername(username);
-    }
 
     private boolean userExists(User user) {
         return new UserExists(user).checkExists();
@@ -36,7 +27,7 @@ public class ListingInteractor {
      * @param requestModel the request model that's data will be manipulated
      */
     public ListingInteractor(ListingRequestModel requestModel) throws IOException {
-        this.seller = getUserWithUsername(requestModel.getSellerUsername());
+        this.seller = requestModel.getSeller();
         this.listingTitle = requestModel.getTitle();
         this.price = requestModel.getPrice();
         this.description = requestModel.getDescription();
