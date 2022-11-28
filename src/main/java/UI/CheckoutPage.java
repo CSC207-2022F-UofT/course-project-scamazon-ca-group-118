@@ -11,17 +11,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class CheckoutPage extends Page implements ActionListener {
     private final JButton SUBMIT = new JButton("Submit");
-    private JTextField jtUsername = new JTextField(16);
     private JTextField jtName = new JTextField(16);
     private JTextField jtCardNumber = new JTextField(16);
     private JTextField jtCVV = new JTextField(16);
     private JTextField jtExpiration = new JTextField(16);
     private JTextField jtAddress = new JTextField(15);
     private final SpringLayout LAYOUT;
-    private LabelTextPanel usernameInfo;
     private LabelTextPanel nameInfo;
     private LabelTextPanel cardNumberInfo;
     private LabelTextPanel cvvInfo;
@@ -41,9 +40,10 @@ public class CheckoutPage extends Page implements ActionListener {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setLayout(LAYOUT);
 
+        //listener for SUBMIT button
         SUBMIT.addActionListener(this);
 
-        JLabel usernameLabel = new JLabel("Username: ");
+        //JLabels
         JLabel nameLabel = new JLabel("Name: ");
         JLabel cardNumberLabel = new JLabel("Card Number: ");
         JLabel cvvLabel = new JLabel("CVV: ");
@@ -51,15 +51,15 @@ public class CheckoutPage extends Page implements ActionListener {
         JLabel addressLabel = new JLabel("Address: ");
         titleLabel = new JLabel("Checkout");
 
-        usernameInfo = new LabelTextPanel(usernameLabel, jtUsername);
+        //LabelTextPanels
         nameInfo = new LabelTextPanel(nameLabel, jtName);
         cardNumberInfo = new LabelTextPanel(cardNumberLabel, jtCardNumber);
-        cvvInfo = new LabelTextPanel(cvvLabel, jtUsername);
+        cvvInfo = new LabelTextPanel(cvvLabel, jtCVV);
         expirationInfo = new LabelTextPanel(expirationLabel, jtExpiration);
         addressInfo = new LabelTextPanel(addressLabel, jtAddress);
 
+        //add all elements to the panel
         this.add(titleLabel);
-        this.add(usernameInfo);
         this.add(nameInfo);
         this.add(cardNumberInfo);
         this.add(cvvInfo);
@@ -69,8 +69,8 @@ public class CheckoutPage extends Page implements ActionListener {
     }
 
     private void setUpLayout() {
+        //align everything near the middle
         LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 500, SpringLayout.WEST, this);
-        LAYOUT.putConstraint(SpringLayout.WEST, usernameInfo, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.WEST, nameInfo, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.WEST, cardNumberInfo, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.WEST, cvvInfo, 0, SpringLayout.WEST, titleLabel);
@@ -80,8 +80,7 @@ public class CheckoutPage extends Page implements ActionListener {
 
         //align everything vertically
         LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 150, SpringLayout.NORTH, this);
-        LAYOUT.putConstraint(SpringLayout.NORTH, usernameInfo, 30, SpringLayout.SOUTH, titleLabel);
-        LAYOUT.putConstraint(SpringLayout.NORTH, nameInfo, 30, SpringLayout.SOUTH, usernameInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, nameInfo, 30, SpringLayout.SOUTH, titleLabel);
         LAYOUT.putConstraint(SpringLayout.NORTH, cardNumberInfo, 30, SpringLayout.SOUTH, nameInfo);
         LAYOUT.putConstraint(SpringLayout.NORTH, cvvInfo, 30, SpringLayout.SOUTH, cardNumberInfo);
         LAYOUT.putConstraint(SpringLayout.NORTH, expirationInfo, 30, SpringLayout.SOUTH, cvvInfo);
@@ -93,9 +92,12 @@ public class CheckoutPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
+            //checks expiration in correct format
+            if (Objects.equals(jtExpiration.getText(), "")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
+            }
             try {
-                CheckoutForm form = new CheckoutForm(jtUsername.getText(), jtName.getText(),
-                        jtCardNumber.getText(), jtCVV.getText(),
+                CheckoutForm form = new CheckoutForm(jtName.getText(), jtCardNumber.getText(), jtCVV.getText(),
                         LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
                 form.getResponseModel();
             } catch (IOException ex) {
