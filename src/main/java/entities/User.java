@@ -108,14 +108,6 @@ public class User {
     public void removeFromCart() {
     }
 
-
-    /**
-     * Creates a new review with this User as the reviewer, and the specified reviewer and rating
-     * then adds it to the reviewed User's reviews
-     *
-     * @param reviewed the User being reviewed/the User whose reviews the new Review will be added to
-     * @param rating   the rating given to the User being reviewed
-     */
     // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
 //    public void writeReview(User reviewed, int rating) {
 //        new ReviewCreator().createReview(this, reviewed, rating);
