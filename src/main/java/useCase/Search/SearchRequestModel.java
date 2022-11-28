@@ -1,13 +1,13 @@
 package useCase.Search;
 
-import database.SearchDatabaseGateway;
+import database.ListingDatabaseGateway;
 
 public class SearchRequestModel {
     private String query;
 
-    private SearchDatabaseGateway databaseGateway;
+    private ListingDatabaseGateway databaseGateway;
 
-    public SearchRequestModel(String query, SearchDatabaseGateway databaseGateway) {
+    public SearchRequestModel(String query, ListingDatabaseGateway databaseGateway) {
         this.query = query;
         this.databaseGateway = databaseGateway;
     }
@@ -20,11 +20,11 @@ public class SearchRequestModel {
         this.query = query;
     }
 
-    public SearchDatabaseGateway getDatabaseGateway() {
+    public ListingDatabaseGateway getDatabaseGateway() {
         return databaseGateway;
     }
 
-    public void setDatabaseGateway(SearchDatabaseGateway databaseGateway) {
+    public void setDatabaseGateway(ListingDatabaseGateway databaseGateway) {
         this.databaseGateway = databaseGateway;
     }
 }
