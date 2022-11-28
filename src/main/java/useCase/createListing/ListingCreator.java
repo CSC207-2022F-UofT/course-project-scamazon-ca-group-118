@@ -30,7 +30,7 @@ public class ListingCreator {
     public void createListing(User seller, String listingTitle, float price, String description, String image) {
         Listing listing = new Listing(seller, listingTitle, price, description, image);
         seller.addListing(listing);
-
+        // TODO: Call database method
     }
 
 }
