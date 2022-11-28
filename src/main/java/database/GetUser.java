@@ -27,5 +27,6 @@ public class GetUser implements ReviewDatabaseGateway {
     public User getUserWithUsername(String username) throws IOException {
         return new DatabaseController().getUserWithUsername(username);
 
+
     }
 }
