@@ -3,12 +3,15 @@ package Main;
 import UI.ListingDetailPage;
 import UI.LoginPage;
 import UI.Page;
+import UI.RegisterPage;
 import database.DatabaseController;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
 import entities.View;
 
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -20,7 +23,7 @@ public class Main {
     /**
      * The current Page that should be open in the View
      */
-    static Page currentPage;
+    static Page currentPage = new LoginPage();
     /**
      * The application's view that will display all pages
      */
@@ -39,8 +42,12 @@ public class Main {
         // setup test listing
         Listing listing = new Listing(0, "seller", "very cool listing", LocalDate.now(), 100,
                 "this is a great listing! it has lots of great features! buy now!", "../image.JPG");
-        currentPage = new ListingDetailPage(currUser.getUsername(), listing);
+
+//         do page
         view = new View();
+        setCurrentPage(new ListingDetailPage(listing));
+
+
     }
 
     /**
