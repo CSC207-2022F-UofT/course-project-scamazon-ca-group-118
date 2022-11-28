@@ -2,9 +2,12 @@ package Main;
 
 import UI.LoginPage;
 import UI.Page;
+import UI.RegisterPage;
 import database.DatabaseController;
 import entities.User;
 import entities.View;
+
+import javax.swing.*;
 
 public class Main {
     /**
@@ -26,6 +29,7 @@ public class Main {
         //Open the application with the Login Page
         currentPage = new LoginPage();
         view = new View();
+        setCurrentPage(new RegisterPage("register"));
 
     }
 

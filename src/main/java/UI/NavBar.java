@@ -144,7 +144,7 @@ public class NavBar extends JPanel implements ActionListener {
         if (logButton.getText().equals("Log In")) {
             Main.setCurrentPage(new LoginPage());
         } else if (logButton.getText().equals("Register")) {
-            Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
+            Main.setCurrentPage(new RegisterPage("Register"));
         } else if (logButton.getText().equals("Log Out")) {
             Main.setCurrentUser(null);
             Main.setCurrentPage(new LoginPage());
