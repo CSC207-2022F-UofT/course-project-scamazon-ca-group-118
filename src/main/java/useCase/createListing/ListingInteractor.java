@@ -16,19 +16,8 @@ public class ListingInteractor {
     private String image;
 
 
-    /**
-     * Returns the user from the database with the given username
-     *
-     * @param username the username being searched for
-     * @return the user with the given username
-     */
-    private User getUserWithUsername(String username) throws IOException {
-        return new GetUser().getUserWithUsername(username);
-    }
 
-    private boolean userExists(User user) {
-        return new UserExists(user).checkExists();
-    }
+
 
     /**
      * The constructor for the ListingInteractor class
@@ -36,7 +25,7 @@ public class ListingInteractor {
      * @param requestModel the request model that's data will be manipulated
      */
     public ListingInteractor(ListingRequestModel requestModel) throws IOException {
-        this.seller = getUserWithUsername(requestModel.getSellerUsername());
+        this.seller = requestModel.getSeller();
         this.listingTitle = requestModel.getTitle();
         this.price = requestModel.getPrice();
         this.description = requestModel.getDescription();
@@ -54,12 +43,16 @@ public class ListingInteractor {
      * @return a string indicating whether the listing was created
      */
     public String getMessage() {
-        if (userExists(seller)) {
+        try{
             this.createListing();
-            return "Listing created";
-        } else {
-            return "Unable to create listing";
+            return "Listing Created";
         }
+        catch(Exception e){
+            System.out.println(e);
+            System.out.println(this);
+            return "There was an error";
+        }
+
     }
 
     public User getSeller() {

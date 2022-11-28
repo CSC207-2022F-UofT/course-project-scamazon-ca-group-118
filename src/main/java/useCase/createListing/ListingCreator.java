@@ -5,8 +5,10 @@ import entities.User;
 import java.util.List;
 
 import entities.Listing;
+import database.DatabaseController;
 
-
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
 /**
  * Represents a listingCreator object, to create listings
  */
@@ -30,6 +32,7 @@ public class ListingCreator {
     public void createListing(User seller, String listingTitle, float price, String description, String image) {
         Listing listing = new Listing(seller, listingTitle, price, description, image);
         seller.addListing(listing);
+        //DatabaseController.createListing(seller.getUsername(), listingTitle, price, LocalDate.now(), description, image);
 
     }
 
