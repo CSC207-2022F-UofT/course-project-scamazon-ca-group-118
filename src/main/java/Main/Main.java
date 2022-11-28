@@ -1,10 +1,19 @@
 package Main;
 
+import UI.ListingDetailPage;
 import UI.LoginPage;
 import UI.Page;
+import UI.RegisterPage;
 import database.DatabaseController;
+import entities.Cart;
+import entities.Listing;
 import entities.User;
 import entities.View;
+
+import javax.swing.*;
+import java.awt.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     /**
@@ -14,7 +23,7 @@ public class Main {
     /**
      * The current Page that should be open in the View
      */
-    static Page currentPage;
+    static Page currentPage = new LoginPage();
     /**
      * The application's view that will display all pages
      */
@@ -24,8 +33,20 @@ public class Main {
         DatabaseController databaseInteractor = new DatabaseController();
 
         //Open the application with the Login Page
-        currentPage = new LoginPage();
+
+        // setup test currUser
+        User currUser = new User(0, "currUser", "password", "curr@user.com",
+                new ArrayList<>(), new ArrayList<>(), new Cart());
+        setCurrentUser(currUser);
+
+        // setup test listing
+        Listing listing = new Listing(0, "seller", "very cool listing", LocalDate.now(), 100,
+                "this is a great listing! it has lots of great features! buy now!", "../image.JPG");
+
+//         do page
         view = new View();
+        setCurrentPage(new ListingDetailPage(listing));
+
 
     }
 
