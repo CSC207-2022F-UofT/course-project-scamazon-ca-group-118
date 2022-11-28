@@ -1,35 +1,30 @@
 package UI;
 import Main.Main;
 import forms.CreateListingForm;
-import forms.LoginForm;
-import useCase.createListing.ListingInteractor;
-import useCase.createListing.ListingResponseModel;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.ArrayList;
+
 public class CreateListingPage extends Page{
-        //private final GridLayout LAYOUT;
-        private JLabel add_your_listing = new JLabel("Add your listing!");;
-        private JLabel listing_title_label = new JLabel("Listing Title:");;
-        private JTextField listing_text = new JTextField();
-        private JLabel price_label = new JLabel("Listing Price:");
-        private JTextField price_text = new JTextField();
-        private JLabel desc_label = new JLabel("Listing Description:");
-        private JTextField desc_text = new JTextField();
-        private JLabel img_label = new JLabel("Images: ");
-        private JLabel img = new JLabel("No image selected");
-        private JButton upload = new JButton("Upload Images");
+
+        private final JLabel add_your_listing = new JLabel("Add your listing!");
+        private final JLabel listing_title_label = new JLabel("Listing Title:");
+        private final JTextField listing_text = new JTextField();
+        private final JLabel price_label = new JLabel("Listing Price:");
+        private final JTextField price_text = new JTextField();
+        private final JLabel desc_label = new JLabel("Listing Description:");
+        private final JTextField desc_text = new JTextField();
+        private final JLabel img_label = new JLabel("Images: ");
+        private final JLabel img = new JLabel("No image selected");
+        private final JButton upload = new JButton("Upload Images");
         JLabel picLabel = new JLabel();
-        private JButton submit = new JButton("Submit Listing");
+        private final JButton submit = new JButton("Submit Listing");
 
         private BufferedImage myPicture = null;
         private String fileName;
@@ -44,10 +39,10 @@ public class CreateListingPage extends Page{
         }
         public void setUpPanel(){
 
-            NavBar nb = new NavBar();
-            nb.setLocation(0, 0);
-            nb.setSize(1280, 100);
-            this.add(nb);
+//            NavBar nb = new NavBar();
+//            nb.setLocation(0, 0);
+//            nb.setSize(1280, 100);
+//            this.add(nb);
             add_your_listing.setFont(new Font("Arial", Font.PLAIN, 30));
             add_your_listing.setSize(300, 30);
             add_your_listing.setLocation(550, 150);
@@ -105,7 +100,7 @@ public class CreateListingPage extends Page{
 
                 final JFileChooser imgFiles = new JFileChooser();
                 int returnVal = imgFiles.showOpenDialog(CreateListingPage.this);
-                if (returnVal == imgFiles.APPROVE_OPTION){
+                if (returnVal == JFileChooser.APPROVE_OPTION){
                     fileName = imgFiles.getSelectedFile().getName();
                     filePath = imgFiles.getCurrentDirectory().toString();
                     img.setText("<html>" + filePath + "/" + fileName + "</html>");
