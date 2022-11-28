@@ -17,9 +17,7 @@ public class ListingInteractor {
 
 
 
-    private boolean userExists(User user) {
-        return new UserExists(user).checkExists();
-    }
+
 
     /**
      * The constructor for the ListingInteractor class
@@ -45,12 +43,14 @@ public class ListingInteractor {
      * @return a string indicating whether the listing was created
      */
     public String getMessage() {
-        if (userExists(seller)) {
+        try{
             this.createListing();
-            return "Listing created";
-        } else {
-            return "Unable to create listing";
+            return "Listing Created";
         }
+        catch(Exception e){
+            return "There was an error";
+        }
+
     }
 
     public User getSeller() {
