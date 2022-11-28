@@ -48,6 +48,8 @@ public class ListingInteractor {
             return "Listing Created";
         }
         catch(Exception e){
+            System.out.println(e);
+            System.out.println(this);
             return "There was an error";
         }
 

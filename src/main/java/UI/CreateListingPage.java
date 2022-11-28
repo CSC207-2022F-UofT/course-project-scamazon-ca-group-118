@@ -142,16 +142,20 @@ public class CreateListingPage extends Page{
 
             submit.addActionListener(e -> {
                 String listingTitle = listing_text.getText();
-                DecimalFormat df = new DecimalFormat("0.00");
-                float listingPrice = Float.parseFloat(df.format(Float.parseFloat(price_text.getText())));
+
+                String listingPrice = price_text.getText();
+
+
                 String listingDesc = desc_text.getText();
                 CreateListingForm form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, filePath + "/" + fileName);
+
                 try {
-                     responseModel = form.getMessage();
+                    responseModel = form.getMessage();
                 } catch (IOException ex) {
-                    responseModel = "There an error (are you logged in?)"
+                    responseModel = "Response model error";
                     throw new RuntimeException(ex);
                 }
+
                 submit.setText(responseModel);
 
                 //use Class to submit information
