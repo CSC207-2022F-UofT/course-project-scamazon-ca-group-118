@@ -1,4 +1,5 @@
 package UI;
+import Main.Main;
 import entities.Listing;
 import database.DatabaseController;
 import forms.SearchForm;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.*;
 
 public class ListingListPage extends Page implements ActionListener {
@@ -19,6 +21,8 @@ public class ListingListPage extends Page implements ActionListener {
     private JTextField jtSearch = new JTextField(20);
     private final JButton SEARCH = new JButton("Search");
     private DatabaseController controller = new DatabaseController();
+    private ArrayList<JButton> buttons = new ArrayList<>();
+    private List<Listing> displayedListings;
 
     public ListingListPage() throws IOException {
         super("Scamazon.ca");
@@ -33,6 +37,7 @@ public class ListingListPage extends Page implements ActionListener {
     private void setUpPanel(List<Listing> listings) {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setLayout(LAYOUT);
+        this.displayedListings = listings;
 
         //SearchBar with TextField and SEARCH Button
         SEARCH.addActionListener(this);
@@ -60,6 +65,8 @@ public class ListingListPage extends Page implements ActionListener {
         for (Listing listing: listings) {
             //info needed to create a ListingPanel for each listing
             JButton listingDetails = new JButton(listing.getTitle());
+            listingDetails.addActionListener(this);
+            buttons.add(listingDetails);
             JLabel resultPrice = new JLabel("Price: " + listing.getPrice());
             JLabel resultImage = new JLabel(listing.getImagePath());
             JLabel resultDescription = new JLabel(listing.getDescription());
@@ -95,6 +102,23 @@ public class ListingListPage extends Page implements ActionListener {
             SearchResponseModel responseModel = form.getResponseModel();
             ArrayList<Listing> searchListings = responseModel.getListings();
             setUpPanel(searchListings);
+            //Main.setCurrentPage(new ListingDetailPage(listing.getTitle(), Listing listing));
+        } else if (buttons.contains(e.getSource())) {
+            String title = "";
+            for (JButton button : buttons) {
+                if (button == e.getSource()) {
+                    title = button.getText();
+                    break;
+                }
+            }
+            for (Listing listing : displayedListings) {
+                if (Objects.equals(listing.getTitle(), title)) {
+                    Main.setCurrentPage(new ListingDetailPage(listing));
+                    break;
+                }
+            }
+
+
         }
     }
 }
