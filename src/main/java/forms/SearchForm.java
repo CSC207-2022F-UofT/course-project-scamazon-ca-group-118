@@ -1,19 +1,21 @@
 package forms;
 
-import database.SearchDatabaseGateway;
+import database.ListingDatabaseGateway;
 import useCase.Search.SearchRequestModel;
 import useCase.Search.SearchResponseModel;
+
+import java.io.IOException;
 
 public class SearchForm extends Form {
     //TODO Make after database interactor is there
 
     public String query;
 
-    private SearchDatabaseGateway databaseGateway;
+    private ListingDatabaseGateway databaseGateway;
 
     private SearchResponseModel responseModel;
 
-    public SearchForm(String query, SearchDatabaseGateway databaseGateway) {
+    public SearchForm(String query, ListingDatabaseGateway databaseGateway) {
         super("Search");
         this.query = query;
         this.databaseGateway = databaseGateway;
@@ -26,7 +28,7 @@ public class SearchForm extends Form {
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()) {
             SearchRequestModel requestModel = new SearchRequestModel(query, databaseGateway);
             this.responseModel = new SearchResponseModel(requestModel);
@@ -35,7 +37,7 @@ public class SearchForm extends Form {
 
     }
 
-    public SearchResponseModel getResponseModel() {
+    public SearchResponseModel getResponseModel() throws IOException {
         this.submitForm();
         return responseModel;
     }
