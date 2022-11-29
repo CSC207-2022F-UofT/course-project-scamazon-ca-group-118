@@ -10,7 +10,7 @@ public class RegisterForm extends Form{
     private String password;
     private String confirmPassword;
     private RegisterResponseModel responseModel;
-
+    private String message;
     public RegisterForm(String title) {
         super(title);
         this.username = "";
@@ -30,19 +30,21 @@ public class RegisterForm extends Form{
     @Override
     protected boolean validateForm() {
         //password and confirm password
-        if (!((this.password.equals(this.confirmPassword)) && (password.length() >= 8))) {
-            //output error msg
+        if (!(this.password.equals(this.confirmPassword))) {
+            this.message = "Passwords are not the same!";
+            return false;
+        }else if (password.length() < 8){
+            this.message = "Password must be at least 8 characters long!";
             return false;
         }
 
         //email validation
         if (!this.email.contains("@")) {
-            //error msg
+            this.message = "Email must contain '@'";
             return false;
         }
 
         return true;
-
     }
 
     @Override
@@ -50,7 +52,14 @@ public class RegisterForm extends Form{
         if (this.validateForm()){
             RegisterRequestModel requestModel = new RegisterRequestModel(username, email, password);
             this.responseModel = new RegisterResponseModel(requestModel);
+        }else{
+            this.responseModel = new RegisterResponseModel(this.message);
         }
+    }
+
+    public RegisterResponseModel getResponseModel(){
+        this.submitForm();
+        return this.responseModel;
     }
 
 }

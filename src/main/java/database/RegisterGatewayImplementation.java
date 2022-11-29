@@ -23,5 +23,4 @@ public class RegisterGatewayImplementation implements RegisterDatabaseGateway {
         //TODO: implement this
         return false;
     }
-
 }

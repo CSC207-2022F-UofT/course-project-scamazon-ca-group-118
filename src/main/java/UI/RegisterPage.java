@@ -1,146 +1,134 @@
 package UI;
 
 import forms.RegisterForm;
+import useCase.Register.RegisterFailed;
+import useCase.Register.RegisterResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RegisterPage extends Page implements ActionListener{
     //Components of the form
     private JLabel title;
     private JLabel name;
-    private JTextField tname;
-    private JLabel mno;
-    private JTextField email;
-    private JLabel add;
-    private JTextField tadd;
-    private JLabel confirm;
-    private JTextField confirmPass;
+    private JTextField input_name;
+    private JLabel email;
+    private JTextField input_email;
+    private JLabel password;
+    private JTextField input_password;
+    private JLabel confirmPass;
+    private JTextField input_confirmPass;
     private JButton sub;
     private JButton reset;
     private JLabel res;
-    private JPanel form;
-    //Register form will be embedded inside
-    private RegisterForm forms;
+    private RegisterForm form;
 
     public RegisterPage(String title) {
         super(title);
-        this.forms = new RegisterForm(title);
+        this.setLayout(null);
         setUpPage();
     }
 
-    public RegisterPage(String title, RegisterForm form) {
-        super(title);
-        this.forms = form;
-        //TODO implement this so that I can somehow get a JPanel with graphics from View
-    }
-    // Components of the Form
-
     private void setUpPage() {
-
-        this.form = new JPanel();
-//        setBounds(300, 90, 1280, 720);
-
-
         title = new JLabel("Registration Form");
         title.setFont(new Font("Arial", Font.PLAIN, 30));
         title.setSize(300, 30);
-        title.setLocation(175, 100);
+        title.setLocation(550, 150);
         this.add(title);
 
         name = new JLabel("Name");
         name.setFont(new Font("Arial", Font.PLAIN, 20));
         name.setSize(100, 20);
-        name.setLocation(100, 200);
+        name.setLocation(500, 250);
         this.add(name);
 
-        tname = new JTextField();
-        tname.setFont(new Font("Arial", Font.PLAIN, 15));
-        tname.setSize(190, 20);
-        tname.setLocation(250, 200);
-        this.add(tname);
+        input_name = new JTextField();
+        input_name.setFont(new Font("Arial", Font.PLAIN, 15));
+        input_name.setSize(190, 20);
+        input_name.setLocation(650, 250);
+        this.add(input_name);
 
-        mno = new JLabel("Email");
-        mno.setFont(new Font("Arial", Font.PLAIN, 20));
-        mno.setSize(100, 20);
-        mno.setLocation(100, 250);
-        this.add(mno);
-
-        email = new JTextField();
-        email.setFont(new Font("Arial", Font.PLAIN, 15));
-        email.setSize(190, 20);
-        email.setLocation(250, 250);
+        email = new JLabel("Email");
+        email.setFont(new Font("Arial", Font.PLAIN, 20));
+        email.setSize(100, 20);
+        email.setLocation(500, 300);
         this.add(email);
 
+        input_email = new JTextField();
+        input_email.setFont(new Font("Arial", Font.PLAIN, 15));
+        input_email.setSize(190, 20);
+        input_email.setLocation(650, 300);
+        this.add(input_email);
 
-        add = new JLabel("Password");
-        add.setFont(new Font("Arial", Font.PLAIN, 20));
-        add.setSize(100, 20);
-        add.setLocation(100, 300);
-        this.add(add);
+        password = new JLabel("Password");
+        password.setFont(new Font("Arial", Font.PLAIN, 20));
+        password.setSize(100, 20);
+        password.setLocation(500, 350);
+        this.add(password);
 
-        tadd = new JTextField();
-        tadd.setFont(new Font("Arial", Font.PLAIN, 15));
-        tadd.setSize(190, 20);
-        tadd.setLocation(250, 300);
-        this.add(tadd);
+        input_password = new JTextField();
+        input_password.setFont(new Font("Arial", Font.PLAIN, 15));
+        input_password.setSize(190, 20);
+        input_password.setLocation(650, 350);
+        this.add(input_password);
 
-        confirm = new JLabel("Confirm Password");
-        confirm.setFont(new Font("Arial", Font.PLAIN, 17));
-        confirm.setSize(150, 20);
-        confirm.setLocation(100, 350);
-        this.add(confirm);
-
-        confirmPass = new JTextField();
-        confirmPass.setFont(new Font("Arial", Font.PLAIN, 15));
-        confirmPass.setSize(190, 20);
-        confirmPass.setLocation(250, 350);
+        confirmPass = new JLabel("Confirm Password");
+        confirmPass.setFont(new Font("Arial", Font.PLAIN, 17));
+        confirmPass.setSize(150, 20);
+        confirmPass.setLocation(500, 400);
         this.add(confirmPass);
 
+        input_confirmPass = new JTextField();
+        input_confirmPass.setFont(new Font("Arial", Font.PLAIN, 15));
+        input_confirmPass.setSize(190, 20);
+        input_confirmPass.setLocation(650, 400);
+        this.add(input_confirmPass);
 
         sub = new JButton("Submit");
         sub.setFont(new Font("Arial", Font.PLAIN, 15));
         sub.setSize(100, 20);
-        sub.setLocation(100, 450);
+        sub.setLocation(550, 500);
         sub.addActionListener(this);
         this.add(sub);
 
         reset = new JButton("Reset");
         reset.setFont(new Font("Arial", Font.PLAIN, 15));
         reset.setSize(100, 20);
-        reset.setLocation(300, 450);
+        reset.setLocation(675, 500);
         reset.addActionListener(this);
         this.add(reset);
 
         res = new JLabel("");
         res.setFont(new Font("Arial", Font.PLAIN, 20));
-        res.setSize(500, 25);
-        res.setLocation(100, 400);
+        res.setSize(475, 25);
+        res.setLocation(550, 450);
         this.add(res);
 
-    }
+        this.setPreferredSize(new Dimension(1280, 720)); //570
+        this.setMaximumSize(new Dimension(1280, 720));
 
-    public JPanel getForm() {
-        return this.form;
+        this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sub) {
-            String data
-                    = "Name : "
-                    + tname.getText() + "\n"
-                    + "Email : "
-                    + email.getText() + "\n";
-            String data1 = "Password : " + tadd.getText();
-            res.setText("Account Created!");
+            try{
+                this.form = new RegisterForm(this.getTitle(), input_email.getText(), input_name.getText(),
+                        input_password.getText(), input_confirmPass.getText());
+                RegisterResponseModel response = this.form.getResponseModel();
+                res.setText(response.getMessage());
+            }catch (RegisterFailed error){
+                res.setText(error.getMessage());
+            }
         } else if (e.getSource() == reset) {
             String def = "";
-            tname.setText(def);
-            tadd.setText(def);
-            email.setText(def);
-            confirmPass.setText(def);
+            input_name.setText(def);
+            input_password.setText(def);
+            input_email.setText(def);
+            input_confirmPass.setText(def);
             res.setText(def);
         }
     }
