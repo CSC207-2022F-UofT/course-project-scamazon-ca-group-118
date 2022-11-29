@@ -9,6 +9,7 @@ import Main.Main;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.nio.Buffer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ import java.util.Objects;
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
         ListingDatabaseGateway, ListingDetailDatabaseGateway, CartDatabaseGateway, CheckoutDatabaseGateway {
 
-    private String USER_TABLE_PATH = "src/main/java/entities/data/Users.csv";
-    private String LISTING_TABLE_PATH = "src/main/java/entities/data/Listings.csv";
+    private final String USER_TABLE_PATH = "src/main/java/entities/data/Users.csv";
+    private final String LISTING_TABLE_PATH = "src/main/java/entities/data/Listings.csv";
 
     public DatabaseController() {
     }
@@ -164,6 +165,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      *
      * @param ID id passed to removeListing
      */
+    // TODO: remove listing from every user if it's in their cart
     public void removeListing(int ID) throws IOException {
         try {
             FileWriter listingsWriter = new FileWriter("../entities/Listings.csv");
@@ -185,7 +187,9 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             }
             reader.close();
             writer.close();
-            boolean successful = temp.renameTo(listings);
+            String path = listings.getAbsolutePath();
+            listings.delete();
+            boolean successful = temp.renameTo(new File(path));
 
             if (!successful) {
                 // didn't find the listing
@@ -195,6 +199,42 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         } catch (IOException e) {
             throw new IOException(e);
         }
+    }
+
+    // TODO test
+    private void removeListingFromAllCarts(int listingID) {
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(USER_TABLE_PATH));
+            StringBuffer inputBuffer = new StringBuffer();
+            String line;
+
+            while ((line = file.readLine()) != null) {
+                User user = createUserObject(line);
+                ArrayList<Listing> listingsInCart = user.getCart().getItems();
+                // true if removed, false if not there
+                boolean foundListing = user.removeFromCartByID(listingID);
+                if (foundListing) {
+                    String newUserString = createUserString(user);
+                    inputBuffer.append(newUserString);
+                    inputBuffer.append("/n");
+                } else {
+                    inputBuffer.append(line);
+                    inputBuffer.append("/n");
+                }
+            }
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream(USER_TABLE_PATH);
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+
+        // if we find the id in their cart, remove it, replace with updated cart
+        // save file
+
     }
 
 
@@ -209,7 +249,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param description    description of item
      * @param imagePath      image of item
      **/
-    public void createListing(String sellerUsername, String listingTitle, int price, LocalDate dateAdded, String description, String imagePath) {
+    public void createListing(String sellerUsername, String listingTitle, float price, LocalDate dateAdded, String description, String imagePath) {
         try {
             FileWriter outputFile = new FileWriter(LISTING_TABLE_PATH);
             CSVWriter writer = new CSVWriter(outputFile);
@@ -279,14 +319,26 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     /**
      * removes a listing from the cart based on the ID of the listing passed
      *
-     * @param ID pass the id of the listing to be removed
+     * @param listingID pass the id of the listing to be removed
      */
+    // TODO: test
     @Override
-    public void removeFromCart(int ID) throws IOException {
+    public void removeFromCartByID(int listingID) throws IOException {
         User currUser = Main.getCurrentUser();
-        Cart currCart = currUser.getCart();
-        Listing listing = getListingByID(ID);
-        currCart.removeItem(listing);
+        Listing listing = getListingByID(listingID);
+        currUser.removeFromCart(listing);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
+            String currLine;
+            while ((currLine = reader.readLine()) != null) {
+                User userObject = createUserObject(currLine);
+                userObject.removeFromCartByID(listingID);
+            }
+            reader.close();
+        } catch (IOException ex) {
+            throw new IOException(ex.getMessage());
+        }
+
     }
 
     /**
@@ -295,6 +347,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param reviewed user being reviewed
      * @param rating   number given by the reviewer
      */
+    // TODO: Persistence
     @Override
     public void addReview(User reviewed, int rating) throws IOException {
         User reviewedUser = getUserWithUsername(reviewed.getUsername());
@@ -305,6 +358,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     /**
      * removes all listings from csv files after checkout
      */
+    // TODO: persistence
     @Override
     public void checkoutRemoveListings() throws IOException {
         User currUser = Main.getCurrentUser();
@@ -313,6 +367,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
             removeListing(listing.getId());
             currCart.removeItem(listing);
         }
+
     }
 
     /**
@@ -320,8 +375,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * sets curr user to null after logout
      */
     public void logout() {
-        User currUser = Main.getCurrentUser();
-        currUser.setCurrentUser(null);
+        Main.setCurrentUser(null);
     }
 
     /**
@@ -471,8 +525,15 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @return true if currentUser already has the listing in their cart, false otherwise
      */
 
+    // TODO implement
     @Override
-    public boolean currentUserHasListingInCart(User currentUser, Listing listing) {
+    public boolean currentUserHasListingInCart(User currentUser, Listing listing) throws IOException {
+        ArrayList<Listing> currCart = currentUser.getCart().getItems();
+        for (Listing listingInCurrCart : currCart) {
+            if (listingInCurrCart == listing) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -483,7 +544,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      */
     @Override
     public void addListingToUserCart(User currentUser, Listing listing) throws IOException {
-        // TODO
+        // TODO implement
     }
 }
 

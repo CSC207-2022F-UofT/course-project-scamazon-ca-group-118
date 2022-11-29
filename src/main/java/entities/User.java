@@ -105,7 +105,8 @@ public class User {
         this.getCart().addItem(listing);
     }
 
-    public void removeFromCart() {
+    public void removeFromCart(Listing listing) {
+        this.getCart().removeItem(listing);
     }
 
     // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
@@ -139,7 +140,7 @@ public class User {
 
     /**
      * calculates the average integer rating earned by this User
-     *
+     *0
      * @return the average rating of all this User's reviews
      */
     public int calculateRating() {
@@ -151,6 +152,17 @@ public class User {
         return (int) rating;
     }
 
-
+    // TODO test
+    public boolean removeFromCartByID(int listingID) {
+        ArrayList<Listing> listings = this.getCart().getItems();
+        for (Listing listing : listings) {
+            if (listing.getId() == listingID) {
+                listings.remove(listing);
+                this.setCart(new Cart(listings));
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
