@@ -57,7 +57,7 @@ public class CheckoutForm extends Form {
     @Override
     protected void submitForm() throws IOException {
         if (this.validateForm()) {
-            User user = User.getCurrentUser();
+            User user = Main.getCurrentUser();
             CheckoutRequestModel requestModel = new CheckoutRequestModel(user.getUsername());
             responseModel = new CheckoutResponseModel(requestModel);
             //redirects User back to ListingListPage

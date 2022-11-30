@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 public class CheckoutPage extends Page implements ActionListener {
@@ -92,15 +93,15 @@ public class CheckoutPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
-            //checks expiration in correct format
-            if (Objects.equals(jtExpiration.getText(), "")) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
-            }
             try {
                 CheckoutForm form = new CheckoutForm(jtName.getText(), jtCardNumber.getText(), jtCVV.getText(),
                         LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
                 form.getResponseModel();
-            } catch (IOException ex) {
+            }
+            catch (DateTimeParseException error) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
+            }
+            catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
