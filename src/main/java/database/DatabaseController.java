@@ -21,8 +21,8 @@ import java.util.Objects;
 public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
         ListingDatabaseGateway, ListingDetailDatabaseGateway, CartDatabaseGateway, CheckoutDatabaseGateway {
 
-    private final String USER_TABLE_PATH = "src/main/java/entities/data/Users.csv";
-    private final String LISTING_TABLE_PATH = "src/main/java/entities/data/Listings.csv";
+    private String USER_TABLE_PATH = "src/main/java/entities/data/Users.csv";
+    private String LISTING_TABLE_PATH = "src/main/java/entities/data/Listings.csv";
 
     public DatabaseController() {
     }
@@ -115,7 +115,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      */
     public Listing getListingByID(int ID) throws IOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("../entities/data/Listings.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
             String currLine;
 
             while ((currLine = reader.readLine()) != null) {
@@ -168,8 +168,8 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     // TODO: remove listing from every user if it's in their cart
     public void removeListing(int ID) throws IOException {
         try {
-            FileWriter listingsWriter = new FileWriter("../entities/Listings.csv");
-            File listings = new File("../entities/Listings.csv");
+            FileWriter listingsWriter = new FileWriter(LISTING_TABLE_PATH);
+            File listings = new File(LISTING_TABLE_PATH);
             File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
 
             BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(listingsWriter)));
@@ -545,6 +545,15 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     @Override
     public void addListingToUserCart(User currentUser, Listing listing) throws IOException {
         // TODO implement
+    }
+
+    // we need these methods for testing
+    private void setUserTablePath(String path) {
+        this.USER_TABLE_PATH = path;
+    }
+
+    private void setListingTablePath(String path) {
+        this.LISTING_TABLE_PATH = path;
     }
 }
 
