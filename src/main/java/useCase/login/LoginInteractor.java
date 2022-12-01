@@ -11,20 +11,19 @@ import java.io.IOException;
  */
 public class LoginInteractor {
     private String username;
-    private String enteredPassword;
+    private final String ENTERED_PASSWORD;
     private boolean userExists;
     private User user;
 
     /**
-     * constructor for the LoginInteractor class with the specified username and enteredPassword, the User user
-     * that has the specified username or an empty user, and a boolean value of whether user exists.
-     *
+     * constructor for the LoginInteractor class with the specified username and enteredPassword, the User (user)
+     * with username, and a boolean value of whether user exists
      * @param username        the username the user entered
-     * @param enteredPassword the password the user entered
+     * @param ENTERED_PASSWORD the password the user entered
      */
-    public LoginInteractor(String username, String enteredPassword) {
+    public LoginInteractor(String username, String ENTERED_PASSWORD) {
         this.username = username;
-        this.enteredPassword = enteredPassword;
+        this.ENTERED_PASSWORD = ENTERED_PASSWORD;
         try {
             this.user = new GetUser().getUserWithUsername(this.username);
             this.user.getPassword();
@@ -43,7 +42,7 @@ public class LoginInteractor {
     public boolean shouldLogin() {
         if (userExists) {
             CheckPassword passwordChecker =
-                    new CheckPassword(this.enteredPassword, this.user.getPassword());
+                    new CheckPassword(this.ENTERED_PASSWORD, this.user.getPassword());
             if (passwordChecker.passwordsMatch()) {
                 return true;
             } else {
@@ -78,8 +77,8 @@ public class LoginInteractor {
         return username;
     }
 
-    public String getEnteredPassword() {
-        return enteredPassword;
+    public String getENTERED_PASSWORD() {
+        return ENTERED_PASSWORD;
     }
 
     public User getUser() {
