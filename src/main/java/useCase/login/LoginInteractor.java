@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class LoginInteractor {
     private String username;
-    private final String ENTERED_PASSWORD;
+    private String enteredPassword;
     private boolean userExists;
     private User user;
 
@@ -24,11 +24,12 @@ public class LoginInteractor {
      */
     public LoginInteractor(String username, String enteredPassword) {
         this.username = username;
-        this.ENTERED_PASSWORD = enteredPassword;
+        this.enteredPassword = enteredPassword;
         try {
             this.user = new GetUser().getUserWithUsername(this.username);
+            this.user.getPassword();
             this.userExists = true;
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             this.userExists = false;
         }
     }
@@ -42,13 +43,13 @@ public class LoginInteractor {
     public boolean shouldLogin() {
         if (userExists) {
             CheckPassword passwordChecker =
-                    new CheckPassword(this.ENTERED_PASSWORD, this.user.getPassword());
+                    new CheckPassword(this.enteredPassword, this.user.getPassword());
             if (passwordChecker.passwordsMatch()) {
                 return true;
             } else {
-                throw new LoginFailed("The password you entered is incorrect");
+                throw(new LoginFailed("The password you entered is incorrect"));
             }
-        } else throw new LoginFailed("No user exists with this username");
+        } else throw(new LoginFailed("No user exists with this username"));
     }
 
     public void setUserExists(boolean userExists) {
@@ -78,7 +79,7 @@ public class LoginInteractor {
     }
 
     public String getEnteredPassword() {
-        return ENTERED_PASSWORD;
+        return enteredPassword;
     }
 
     public User getUser() {
