@@ -45,12 +45,11 @@ public class ListingInteractor {
     public String getMessage() {
         try{
             this.createListing();
-            return "Listing Created";
+            return "Listing Created!";
         }
         catch(Exception e){
-            System.out.println(e);
-            System.out.println(this);
-            return "There was an error";
+
+            return "There was an error (are you logged in?)";
         }
 
     }
