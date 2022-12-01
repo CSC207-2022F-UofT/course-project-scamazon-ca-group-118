@@ -475,7 +475,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         String dateAdded = convertLocalDateToStringDate(listing.getDate());
         String description = listing.getDescription();
         String imagePath = listing.getImagePath();
-        return id + username + title + price + dateAdded + description + imagePath;
+        return id + ";" + username + ";" + title + ";" + price + ";" + dateAdded + ";" + description + ";" + imagePath;
     }
 
     /**
@@ -541,10 +541,10 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         String listings = "[";
         for (int i = 0; i < rawListings.size(); i++) {
             // don't add comma on last iteration
-            if (i == rawReviews.size() - 1) {
-                listings += String.valueOf(rawListings.get(i));
+            if (i == rawListings.size() - 1) {
+                listings += String.valueOf(rawListings.get(i).getId());
             } else {
-                listings += String.valueOf(rawListings.get(i));
+                listings += String.valueOf(rawListings.get(i).getId());
                 listings += ",";
             }
         }
@@ -555,15 +555,15 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         for (int i = 0; i < rawCart.size(); i++) {
             // don't add comma on last iteration
             if (i == rawCart.size() - 1) {
-                cart += String.valueOf(rawCart.get(i));
+                cart += String.valueOf(rawCart.get(i).getId());
             } else {
-                cart += String.valueOf(rawCart.get(i));
+                cart += String.valueOf(rawCart.get(i).getId());
                 cart += ",";
             }
         }
         cart += "]";
 
-        return id + username + password + email + reviews + listings + cart;
+        return id + ";" + username + ";" + password + ";" + email + ";" + reviews + ";" + listings + ";" + cart;
     }
 
     /**
