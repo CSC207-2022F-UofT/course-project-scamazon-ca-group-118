@@ -173,7 +173,7 @@ public class User {
                 this.getEmail().equals(user.getEmail()) &&
                 this.getReviews().equals(user.getReviews())
         ) {
-            // check listings are equal
+            // check listings are equal, ORDER MATTERS
             if (this.getListings().size() != user.getListings().size()) {
                 return false;
             }
@@ -182,7 +182,7 @@ public class User {
                     return false;
                 }
             }
-            // check carts are equal
+            // check carts are equal, ORDER MATTERS
             if (this.getCart().getItems().size() != user.getCart().getItems().size()) {
                 return false;
             }
