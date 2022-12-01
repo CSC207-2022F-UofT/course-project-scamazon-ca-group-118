@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.nio.Buffer;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -165,14 +166,13 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @param ID id passed to removeListing
      */
-    // TODO: remove listing from every user if it's in their cart
+    // TODO: test
     public void removeListing(int ID) throws IOException {
         try {
-            FileWriter listingsWriter = new FileWriter(LISTING_TABLE_PATH);
             File listings = new File(LISTING_TABLE_PATH);
             File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
 
-            BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(listingsWriter)));
+            BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(listings)));
             CSVWriter writer = new CSVWriter(new FileWriter(temp));
 
             String currLine;
@@ -317,7 +317,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
 
     /**
-     * removes a listing from the cart based on the ID of the listing passed
+     * method called when a user deletes a listing from their cart
      *
      * @param listingID pass the id of the listing to be removed
      */
@@ -325,17 +325,46 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     @Override
     public void removeFromCartByID(int listingID) throws IOException {
         User currUser = Main.getCurrentUser();
-        Listing listing = getListingByID(listingID);
-        currUser.removeFromCart(listing);
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
+            File users = new File(USER_TABLE_PATH);
+            File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
+
+            BufferedReader userReader = new BufferedReader(new FileReader(USER_TABLE_PATH));
+            BufferedReader listingReader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
+            CSVWriter writer = new CSVWriter(new FileWriter(temp));
+
             String currLine;
-            while ((currLine = reader.readLine()) != null) {
+            while ((currLine = userReader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
-                userObject.removeFromCartByID(listingID);
+                if (userObject.getID() == currUser.getID()) {
+                    String currLine2;
+                    while ((currLine2 = listingReader.readLine()) != null) {
+                        Listing listingObject = createListingObject(currLine2);
+                        if (listingObject.getId() == listingID) {
+                            userObject.removeFromCart(listingObject);
+                            break;
+                        }
+                    }
+                    String userString = createUserString(userObject);
+                    writer.writeNext(userString.split(";"));
+                    continue;
+                }
+                writer.writeNext(currLine.split(";"));
             }
-            reader.close();
-        } catch (IOException ex) {
+            userReader.close();
+            listingReader.close();
+            writer.close();
+            String path = users.getAbsolutePath();
+            users.delete();
+            boolean successful = temp.renameTo(new File(path));
+
+            if (!successful) {
+                System.out.printf("Unable to remove listing %s%n from cart", listingID);
+            }
+        }
+
+
+         catch (IOException ex) {
             throw new IOException(ex.getMessage());
         }
 
@@ -347,27 +376,62 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @param reviewed user being reviewed
      * @param rating   number given by the reviewer
      */
-    // TODO: Persistence
+    // TODO: test
     @Override
     public void addReview(User reviewed, int rating) throws IOException {
         User reviewedUser = getUserWithUsername(reviewed.getUsername());
         ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
         reviewedUserRatings.add(rating);
+        try {
+            File users = new File(USER_TABLE_PATH);
+            File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
+
+            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
+            CSVWriter writer = new CSVWriter(new FileWriter(temp));
+
+            String currLine;
+            while ((currLine = reader.readLine()) != null) {
+                User userObject = createUserObject(currLine);
+                if (userObject == reviewed) {
+                    userObject.addReview(rating); // need to fix reviews
+                    String userString = createUserString(userObject);
+                    writer.writeNext(userString.split(";"));
+                    continue;
+                }
+                writer.writeNext(currLine.split(";"));
+            }
+
+            reader.close();
+            writer.close();
+            String path = users.getAbsolutePath();
+            users.delete();
+            boolean successful = temp.renameTo(new File(path));
+
+            if (!successful) {
+                System.out.print("Unable to add review");
+            }
+
+        } catch (IOException ex) {
+            throw new IOException(ex.getMessage());
+        }
     }
 
     /**
-     * removes all listings from csv files after checkout
+     * removes all listings from user's cart
+     * calls removeListing to also remove each listing from csv file
+     * also calls removeListingFromAllCarts to remove all listings that were
+     * checked out from everyone else's cart
      */
-    // TODO: persistence
+    // TODO: test
     @Override
     public void checkoutRemoveListings() throws IOException {
-        User currUser = Main.getCurrentUser();
-        Cart currCart = currUser.getCart();
-        for (Listing listing : currCart.getItems()) {
-            removeListing(listing.getId());
-            currCart.removeItem(listing);
-        }
 
+        User currUser = Main.getCurrentUser();
+        for (Listing listing : currUser.getCart().getItems()) {
+            removeListing(listing.getId());
+            currUser.getCart().removeItem(listing);
+            removeListingFromAllCarts(listing.getId());
+        }
     }
 
     /**
