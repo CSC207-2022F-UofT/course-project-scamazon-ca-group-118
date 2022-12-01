@@ -29,7 +29,6 @@ public class Main {
         //Open the application with the Login Page
         currentPage = new LoginPage();
         view = new View();
-        setCurrentPage(new RegisterPage("register"));
 
     }
 
