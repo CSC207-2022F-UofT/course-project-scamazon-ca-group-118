@@ -21,7 +21,7 @@ public class ListingDetailPage extends Page implements ActionListener {
     final int WIDTH = 1280;
     final int HEIGHT = 570;
 
-    private final DatabaseController db = new DatabaseController<>();
+    private final DatabaseController db = new DatabaseController();
     private final Listing listing;
 
     private JLabel message;

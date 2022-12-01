@@ -18,7 +18,7 @@ import java.util.Objects;
 /**
  * For all methods, we assume validation was passed
  */
-public class DatabaseController<T> implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
+public class DatabaseController implements CreateListingDatabaseGateway, ReviewDatabaseGateway,
         ListingDatabaseGateway, ListingDetailDatabaseGateway, CartDatabaseGateway, CheckoutDatabaseGateway {
 
     private String USER_TABLE_PATH = "src/main/java/entities/data/Users.csv";
@@ -384,7 +384,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param row String row from our csv file
      * @return returns a listing object
      */
-    private Listing createListingObject(String row) {
+    protected Listing createListingObject(String row) {
         String[] listingString = row.split(";");
         int listingID = Integer.parseInt(listingString[0]);
         String sellerUsername = listingString[1];
@@ -403,7 +403,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param listing Listing object of a listing
      * @return returns a string version of our listing
      */
-    private String createListingString(Listing listing) {
+    protected String createListingString(Listing listing) {
         String id = String.valueOf(listing.getId());
         String username = listing.getSellerUsername();
         String title = listing.getTitle();
@@ -420,7 +420,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param row a row in our csv file
      * @return a User based on a row in our csv file
      */
-    private User createUserObject(String row) throws IOException {
+    protected User createUserObject(String row) throws IOException {
         String[] userString = row.split(";");
         int userID = Integer.parseInt(userString[0]);
         String username = userString[1];
@@ -428,19 +428,23 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
         String email = userString[3];
         String[] reviews_cleaned = userString[4].substring(1, userString[4].length() - 1).split(",");
         ArrayList<Integer> reviews = new ArrayList<>();
-        for (String review : reviews_cleaned) {
-            reviews.add(Integer.parseInt(review));
+        // if there is at least one review, add to reviews arraylist
+        if (!reviews_cleaned[0].equals("")) {
+            for (String review : reviews_cleaned) {
+                reviews.add(Integer.parseInt(review));
+            }
         }
-
         ArrayList<Listing> listings = getListingsByUser(username);
 
-        String[] cart_cleaned = userString[4].substring(1, userString[4].length() - 1).split(",");
-        Cart cart = new Cart(listings);
-        for (String listing : cart_cleaned) {
-            int id = Integer.parseInt(listing);
-            Listing listingObject = getListingByID(id);
-            cart.addItem(listingObject);
-        }
+        String[] cart_cleaned = userString[6].substring(1, userString[6].length() - 1).split(",");
+        Cart cart = new Cart();
+        // if there is at least one listing, add to cart
+        if (!cart_cleaned[0].equals(""))
+            for (String listing : cart_cleaned) {
+                int id = Integer.parseInt(listing);
+                Listing listingObject = getListingByID(id);
+                cart.addItem(listingObject);
+            }
         return new User(userID, username, password, email, reviews, listings, cart);
     }
 
@@ -450,7 +454,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param user Object of a user
      * @return a string representation of the User
      */
-    private String createUserString(User user) {
+    protected String createUserString(User user) {
         String id = String.valueOf(user.getID());
         String username = user.getUsername();
         String password = user.getPassword();
@@ -504,7 +508,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @param date date we want to convert
      * @return LocalDate version of date
      */
-    private LocalDate convertStringDateToLocalDate(String date) {
+    protected LocalDate convertStringDateToLocalDate(String date) {
         return LocalDate.parse(date);
     }
 
@@ -515,7 +519,7 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
      * @return String version of date
      */
 
-    private String convertLocalDateToStringDate(LocalDate date) {
+    protected String convertLocalDateToStringDate(LocalDate date) {
         return date.toString();
     }
 
@@ -548,12 +552,20 @@ public class DatabaseController<T> implements CreateListingDatabaseGateway, Revi
     }
 
     // we need these methods for testing
-    private void setUserTablePath(String path) {
+    protected void setUserTablePath(String path) {
         this.USER_TABLE_PATH = path;
     }
 
-    private void setListingTablePath(String path) {
+    protected String getUserTablePath() {
+        return this.USER_TABLE_PATH;
+    }
+
+    protected void setListingTablePath(String path) {
         this.LISTING_TABLE_PATH = path;
+    }
+
+    protected String getListingTablePath() {
+        return this.LISTING_TABLE_PATH;
     }
 }
 
