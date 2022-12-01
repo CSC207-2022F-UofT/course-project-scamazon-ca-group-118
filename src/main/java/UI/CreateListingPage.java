@@ -108,13 +108,9 @@ public class CreateListingPage extends Page{
 
                     try {
                         myPicture = ImageIO.read(new File(filePath + "/" + fileName));
-                        BufferedImage scaled_pic = new BufferedImage(150, 150, BufferedImage.TYPE_INT_RGB);
-                        Graphics g = scaled_pic.createGraphics();
-                        g.drawImage(myPicture, 0, 0, 300, 150, null);
-                        g.dispose();
-                        picLabel.setIcon(new ImageIcon(scaled_pic));
+                        Image scaled_img = myPicture.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+                        picLabel.setIcon(new ImageIcon(scaled_img));
 
-                        // TODO Work on resizing
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
