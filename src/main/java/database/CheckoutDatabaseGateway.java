@@ -1,14 +1,14 @@
 package database;
 
+import entities.Cart;
 import entities.User;
 
+import java.io.IOException;
+
 public interface CheckoutDatabaseGateway {
+
     /**
-     * should retrieve the User with the specified username from the database, or an empty User if no user has
-     * this username
-     *
-     * @param username the username that will be searched for in the database
-     * @return User whose username is username, or an empty User
+     * given the current user, remove all the listings after someone checks out
      */
-    User getUserWithUsername(String username);
+    void checkoutRemoveListings() throws IOException;
 }

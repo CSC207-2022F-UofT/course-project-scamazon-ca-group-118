@@ -1,2 +1,3 @@
-0;first_user;password;first@user.com;[1,2,3];[0];[];
-id;username;password;email;reviews;listings;cart
+0;currUser;password;curr@user.com;[];[];[]
+// id, user, pass, email, reviews, listings, cart
+1;seller;seller;seller@seller.com;[4];[0];[]

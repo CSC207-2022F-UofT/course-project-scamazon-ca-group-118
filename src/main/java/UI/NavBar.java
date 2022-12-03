@@ -19,6 +19,8 @@ public class NavBar extends JPanel implements ActionListener {
     private JButton listingsButton;
     private JButton cartButton;
     private JButton logButton;
+    private JButton logoButton;
+    private JButton createListingButton;
     private final SpringLayout LAYOUT;
 
     /**
@@ -44,7 +46,9 @@ public class NavBar extends JPanel implements ActionListener {
         this.add(profileButton);
         this.add(listingsButton);
         this.add(cartButton);
+        this.add(createListingButton);
         this.add(logButton);
+        this.add(logoButton);
     }
 
     /**
@@ -55,11 +59,17 @@ public class NavBar extends JPanel implements ActionListener {
         listingsButton = new JButton("Listings");
         cartButton = new JButton("Cart");
         logButton = new JButton("Register");
+        createListingButton = new JButton("Create Listing");
+        ImageIcon logo = new ImageIcon("images/scamazonLogo.png");
+        logoButton = new JButton(logo);
+
 
         profileButton.addActionListener(this);
         listingsButton.addActionListener(this);
         cartButton.addActionListener(this);
         logButton.addActionListener(this);
+        createListingButton.addActionListener(this);
+        logoButton.addActionListener(this);
     }
 
     /**
@@ -70,13 +80,17 @@ public class NavBar extends JPanel implements ActionListener {
         LAYOUT.putConstraint(SpringLayout.NORTH, logButton, 40, SpringLayout.NORTH, this);
         LAYOUT.putConstraint(SpringLayout.NORTH, cartButton, 0, SpringLayout.NORTH, logButton);
         LAYOUT.putConstraint(SpringLayout.NORTH, listingsButton, 0, SpringLayout.NORTH, logButton);
+        LAYOUT.putConstraint(SpringLayout.NORTH, createListingButton, 0, SpringLayout.NORTH, logButton);
         LAYOUT.putConstraint(SpringLayout.NORTH, profileButton, 0, SpringLayout.NORTH, logButton);
+        LAYOUT.putConstraint(SpringLayout.NORTH, logoButton, 5, SpringLayout.NORTH, this);
 
         //horizontal alignment
-        LAYOUT.putConstraint(SpringLayout.EAST, logButton, -60, SpringLayout.EAST, this);
-        LAYOUT.putConstraint(SpringLayout.EAST, cartButton, -120, SpringLayout.WEST, logButton);
-        LAYOUT.putConstraint(SpringLayout.EAST, listingsButton, -120, SpringLayout.WEST, cartButton);
-        LAYOUT.putConstraint(SpringLayout.EAST, profileButton, -120, SpringLayout.WEST, listingsButton);
+        LAYOUT.putConstraint(SpringLayout.EAST, logButton, -50, SpringLayout.EAST, this);
+        LAYOUT.putConstraint(SpringLayout.EAST, cartButton, -100, SpringLayout.WEST, logButton);
+        LAYOUT.putConstraint(SpringLayout.EAST, listingsButton, -100, SpringLayout.WEST, cartButton);
+        LAYOUT.putConstraint(SpringLayout.EAST, createListingButton, -100, SpringLayout.WEST, listingsButton);
+        LAYOUT.putConstraint(SpringLayout.EAST, profileButton, -100, SpringLayout.WEST, createListingButton);
+        LAYOUT.putConstraint(SpringLayout.WEST, logoButton, 25, SpringLayout.WEST, this);
     }
 
     /**
@@ -102,13 +116,14 @@ public class NavBar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == profileButton ||
                 e.getSource() == listingsButton ||
-                e.getSource() == cartButton) {
+                e.getSource() == cartButton ||
+                e.getSource() == createListingButton ||
+                e.getSource() == logoButton) {
             try {
                 notLogButtonAction((JButton) e.getSource());
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-
         } else if (e.getSource() == logButton) {
             logButtonAction();
         }
@@ -158,10 +173,12 @@ public class NavBar extends JPanel implements ActionListener {
     private void switchScreenAction(JButton source) throws IOException {
         if (source == profileButton) {
             Main.setCurrentPage(new ProfilePage("Profile Page"));
-        } else if (source == listingsButton) {
+        } else if (source == listingsButton || source == logoButton) {
             Main.setCurrentPage(new ListingListPage());
         } else if (source == cartButton) {
             Main.setCurrentPage(new CartPage());
+        } else if (source == createListingButton){
+            Main.setCurrentPage(new CreateListingPage());
         }
     }
 }

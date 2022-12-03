@@ -7,7 +7,6 @@ import useCase.createListing.ListingCreator;
 import useCase.writeReview.ReviewCreator;
 
 public class User {
-    public static User currentUser;
     private String username;
     private String password;
     private int id;
@@ -26,20 +25,10 @@ public class User {
         this.reviews = reviews;
         this.listings = listings;
         this.cart = cart;
-        this.setCurrentUser();
     }
 
     public static int getNextID() {
         return nextID++;
-    }
-
-    //Precondition: new User instances will always be the current User logged in.
-    public void setCurrentUser() {
-        currentUser = this;
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
     }
 
     public String getUsername() {
@@ -116,17 +105,10 @@ public class User {
         this.getCart().addItem(listing);
     }
 
-    public void removeFromCart() {
+    public void removeFromCart(Listing listing) {
+        this.getCart().removeItem(listing);
     }
 
-
-    /**
-     * Creates a new review with this User as the reviewer, and the specified reviewer and rating
-     * then adds it to the reviewed User's reviews
-     *
-     * @param reviewed the User being reviewed/the User whose reviews the new Review will be added to
-     * @param rating   the rating given to the User being reviewed
-     */
     // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
 //    public void writeReview(User reviewed, int rating) {
 //        new ReviewCreator().createReview(this, reviewed, rating);
@@ -155,8 +137,10 @@ public class User {
 //    public void removeReview() {
 //    }
 //
+
     /**
      * calculates the average integer rating earned by this User
+     * 0
      *
      * @return the average rating of all this User's reviews
      */
@@ -169,6 +153,47 @@ public class User {
         return (int) rating;
     }
 
+    // TODO test
+    public boolean removeFromCartByID(int listingID) {
+        ArrayList<Listing> listings = this.getCart().getItems();
+        for (Listing listing : listings) {
+            if (listing.getId() == listingID) {
+                listings.remove(listing);
+                this.setCart(new Cart(listings));
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean equals(User user) {
+        if (this.getID() == user.getID() &&
+                this.getUsername().equals(user.getUsername()) &&
+                this.getPassword().equals(user.getPassword()) &&
+                this.getEmail().equals(user.getEmail()) &&
+                this.getReviews().equals(user.getReviews())
+        ) {
+            // check listings are equal, ORDER MATTERS
+            if (this.getListings().size() != user.getListings().size()) {
+                return false;
+            }
+            for (int i = 0; i < this.getListings().size(); i++) {
+                if (!this.getListings().get(i).equals(user.getListings().get(i))) {
+                    return false;
+                }
+            }
+            // check carts are equal, ORDER MATTERS
+            if (this.getCart().getItems().size() != user.getCart().getItems().size()) {
+                return false;
+            }
+            for (int i = 0; i < this.getCart().getItems().size(); i++) {
+                if (!this.getCart().getItems().get(i).equals(user.getCart().getItems().get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }
 
