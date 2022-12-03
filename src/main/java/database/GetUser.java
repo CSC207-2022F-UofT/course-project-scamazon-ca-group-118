@@ -29,4 +29,9 @@ public class GetUser implements ReviewDatabaseGateway {
 
 
     }
+    // idk what this class really does, had to implement addreview it implements reviewgateway
+    @Override
+    public void addReview(User reviewed, int rating) throws IOException {
+
+    }
 }
