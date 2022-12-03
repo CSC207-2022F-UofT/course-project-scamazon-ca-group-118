@@ -102,7 +102,7 @@ public class ListingListPage extends Page implements ActionListener {
             SearchResponseModel responseModel = form.getResponseModel();
             ArrayList<Listing> searchListings = responseModel.getListings();
             setUpPanel(searchListings);
-            //Main.setCurrentPage(new ListingDetailPage(listing.getTitle(), Listing listing));
+
         } else if (buttons.contains(e.getSource())) {
             String title = "";
             for (JButton button : buttons) {
@@ -117,8 +117,6 @@ public class ListingListPage extends Page implements ActionListener {
                     break;
                 }
             }
-
-
         }
     }
 }
