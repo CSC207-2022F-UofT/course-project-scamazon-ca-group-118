@@ -105,7 +105,8 @@ public class User {
         this.getCart().addItem(listing);
     }
 
-    public void removeFromCart() {
+    public void removeFromCart(Listing listing) {
+        this.getCart().removeItem(listing);
     }
 
     // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
@@ -139,6 +140,7 @@ public class User {
 
     /**
      * calculates the average integer rating earned by this User
+     * 0
      *
      * @return the average rating of all this User's reviews
      */
@@ -151,6 +153,47 @@ public class User {
         return (int) rating;
     }
 
+    // TODO test
+    public boolean removeFromCartByID(int listingID) {
+        ArrayList<Listing> listings = this.getCart().getItems();
+        for (Listing listing : listings) {
+            if (listing.getId() == listingID) {
+                listings.remove(listing);
+                this.setCart(new Cart(listings));
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean equals(User user) {
+        if (this.getID() == user.getID() &&
+                this.getUsername().equals(user.getUsername()) &&
+                this.getPassword().equals(user.getPassword()) &&
+                this.getEmail().equals(user.getEmail()) &&
+                this.getReviews().equals(user.getReviews())
+        ) {
+            // check listings are equal, ORDER MATTERS
+            if (this.getListings().size() != user.getListings().size()) {
+                return false;
+            }
+            for (int i = 0; i < this.getListings().size(); i++) {
+                if (!this.getListings().get(i).equals(user.getListings().get(i))) {
+                    return false;
+                }
+            }
+            // check carts are equal, ORDER MATTERS
+            if (this.getCart().getItems().size() != user.getCart().getItems().size()) {
+                return false;
+            }
+            for (int i = 0; i < this.getCart().getItems().size(); i++) {
+                if (!this.getCart().getItems().get(i).equals(user.getCart().getItems().get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }
 
