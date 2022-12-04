@@ -13,11 +13,6 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
     private JTextField usernameReviewed;
     private JPanel usernameInfo;
     private JPanel ratingInfo;
-    private JButton rating1;
-    private JButton rating2;
-    private JButton rating3;
-    private JButton rating4;
-    private JButton rating5;
     private int rating = 0;
     private JLabel ratingChosen;
     private JButton submit;
@@ -53,18 +48,25 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         errorMessage = new JLabel("");
 
         JLabel ratingLabel = new JLabel("Give them a rating between 1 and 5: ");
-        rating1 = new JButton("1");
-        rating2 = new JButton("2");
-        rating3 = new JButton("3");
-        rating4 = new JButton("4");
-        rating5 = new JButton("5");
-        ratingInfo = new RatingPanel(ratingLabel, rating1, rating2, rating3, rating4, rating5);
+        RatingButton rating1 = new RatingButton("1");
+        RatingButton rating2 = new RatingButton("2");
+        RatingButton rating3 = new RatingButton("3");
+        RatingButton rating4 = new RatingButton("4");
+        RatingButton rating5 = new RatingButton("5");
 
         rating1.addActionListener(this);
         rating2.addActionListener(this);
         rating3.addActionListener(this);
         rating4.addActionListener(this);
         rating5.addActionListener(this);
+
+        ratingInfo = new JPanel();
+        ratingInfo.add(ratingLabel);
+        ratingInfo.add(rating1);
+        ratingInfo.add(rating2);
+        ratingInfo.add(rating3);
+        ratingInfo.add(rating4);
+        ratingInfo.add(rating5);
 
         submit = new JButton("Submit review");
         submit.addActionListener(this);
@@ -104,29 +106,10 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == rating1) {
-            rating = 1;
-            ratingChosen.setText("Rating set to 1.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating2) {
-            rating = 2;
-            ratingChosen.setText("Rating set to 2.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating3) {
-            rating = 3;
-            ratingChosen.setText("Rating set to 3.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating4) {
-            rating = 4;
-            ratingChosen.setText("Rating set to 4.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating5) {
-            rating = 5;
-            ratingChosen.setText("Rating set to 5.");
+        if (e.getSource() instanceof RatingButton) {
+            String num = ((RatingButton) e.getSource()).getText();
+            rating = Integer.parseInt(num);
+            ratingChosen.setText("Rating set to " + num + ".");
             errorMessage.setText("");
             successfulReview.setText("");
         } else if (e.getSource() == reset) {
