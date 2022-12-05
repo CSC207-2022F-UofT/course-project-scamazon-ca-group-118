@@ -170,12 +170,17 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     public void removeListing(int ID) throws IOException {
         try {
             File listings = new File(LISTING_TABLE_PATH);
-            File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
+            File temp = File.createTempFile("temp", ".csv", new File("src/test/java/database/"));
+            FileWriter tempCSV = new FileWriter(temp);
 
             BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(listings)));
-            CSVWriter writer = new CSVWriter(new FileWriter(temp));
+            CSVWriter writer = new CSVWriter(tempCSV, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
 
             String currLine;
+
 
             while ((currLine = reader.readLine()) != null) {
                 String[] listing = currLine.split(";");
@@ -327,7 +332,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         User currUser = Main.getCurrentUser();
         try {
             File users = new File(USER_TABLE_PATH);
-            File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
+            File temp = File.createTempFile("temp", ".csv", new File("src/test/java/database/"));
 
             BufferedReader userReader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             BufferedReader listingReader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
@@ -384,7 +389,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         reviewedUserRatings.add(rating);
         try {
             File users = new File(USER_TABLE_PATH);
-            File temp = File.createTempFile("temp", ".csv", new File("../entities/"));
+            File temp = File.createTempFile("temp", ".csv", new File("src/test/java/database/"));
 
             BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             CSVWriter writer = new CSVWriter(new FileWriter(temp));
