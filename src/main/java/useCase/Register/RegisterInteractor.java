@@ -24,6 +24,11 @@ public class RegisterInteractor {
     }
 
     public boolean shouldRegister(){
+        //check if username is empty
+        System.out.println(username);
+        if (username.equals("")){
+            throw new RegisterFailed("Please enter a username");
+        }
         if (!emailExists && !usernameExists){
             return true;
         }else{

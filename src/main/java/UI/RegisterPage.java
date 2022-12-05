@@ -3,7 +3,6 @@ package UI;
 import forms.RegisterForm;
 import useCase.Register.RegisterFailed;
 import useCase.Register.RegisterResponseModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +38,7 @@ public class RegisterPage extends Page implements ActionListener{
         title.setLocation(550, 150);
         this.add(title);
 
-        name = new JLabel("Name");
+        name = new JLabel("Username");
         name.setFont(new Font("Arial", Font.PLAIN, 17));
         name.setSize(100, 20);
         name.setLocation(500, 250);
