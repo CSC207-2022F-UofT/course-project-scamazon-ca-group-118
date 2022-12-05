@@ -146,8 +146,11 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      **/
     public void createUser(String username, String password, String email) {
         try {
-            FileWriter outputFile = new FileWriter(USER_TABLE_PATH);
-            CSVWriter writer = new CSVWriter(outputFile);
+            FileWriter outputFile = new FileWriter(USER_TABLE_PATH, true);
+            CSVWriter writer = new CSVWriter(outputFile, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
 
             String[] newUser = {String.valueOf(User.getNextID()), username, password, email, "[]", "[]", "[]"};
             writer.writeNext(newUser);
@@ -361,10 +364,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             if (!successful) {
                 System.out.printf("Unable to remove listing %s%n from cart", listingID);
             }
-        }
-
-
-         catch (IOException ex) {
+        } catch (IOException ex) {
             throw new IOException(ex.getMessage());
         }
 
@@ -393,7 +393,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             while ((currLine = reader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
                 if (userObject == reviewed) {
-                    userObject.addReview(rating); // need to fix reviews
+                    // userObject.addReview(rating); // TODO need to fix reviews
                     String userString = createUserString(userObject);
                     writer.writeNext(userString.split(";"));
                     continue;
