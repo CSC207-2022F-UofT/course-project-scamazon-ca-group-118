@@ -1,5 +1,6 @@
 package database;
 
+import com.opencsv.CSVWriter;
 import entities.Cart;
 import entities.User;
 import org.junit.jupiter.api.AfterAll;
@@ -8,8 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreateListingUnitTests {
     public static final DatabaseController db = new DatabaseController();
@@ -41,5 +45,17 @@ public class CreateListingUnitTests {
         File listingsCSV = new File(db.getListingTablePath());
         listingsCSV.delete();
     }
+
+    @Test
+    public void testCreateOneListing() throws IOException {
+        // call method
+        db.createListing("seller", "title", 1, LocalDate.EPOCH, "desc", "imagePath");
+        // populate users csv file
+        FileWriter userCSV = new FileWriter(db.getUserTablePath());
+        CSVWriter userWriter = new CSVWriter(userCSV, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        List<String[]> userData = new ArrayList<String[]>();
 
 }
