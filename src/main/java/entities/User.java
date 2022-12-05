@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, String image) {
+    public void createListing(String title, float price, String description, String image) throws IOException {
         new ListingCreator().createListing(this, title, price, description, image);
     }
 

@@ -16,9 +16,6 @@ public class ListingInteractor {
     private String image;
 
 
-
-
-
     /**
      * The constructor for the ListingInteractor class
      *
@@ -33,7 +30,7 @@ public class ListingInteractor {
 
     }
 
-    private void createListing() {
+    private void createListing() throws IOException {
         this.seller.createListing(listingTitle, price, description, image);
     }
 
@@ -43,11 +40,10 @@ public class ListingInteractor {
      * @return a string indicating whether the listing was created
      */
     public String getMessage() {
-        try{
+        try {
             this.createListing();
             return "Listing Created!";
-        }
-        catch(Exception e){
+        } catch (Exception e) {
 
             return "There was an error (are you logged in?)";
         }
