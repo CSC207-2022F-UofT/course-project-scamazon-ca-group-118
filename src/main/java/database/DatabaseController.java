@@ -321,8 +321,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
 
     }
-
-
     /**
      * method called when a user deletes a listing from their cart
      *

@@ -1,7 +1,9 @@
 package UI;
 
+import Main.Main;
 import forms.CheckoutForm;
 import useCase.checkout.CheckoutResponseModel;
+import useCase.login.LoginResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,84 +11,97 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 public class CheckoutPage extends Page implements ActionListener {
-    final int WIDTH = 800;
-    final int HEIGHT = 600;
-    private final JButton SUBMIT;
-    JTextField jtUsername = new JTextField();
-    JTextField jtName = new JTextField();
-    JTextField jtCardNumber = new JTextField(16);
-    JTextField jtCVV = new JTextField(3);
-    JTextField jtExpiration = new JTextField();
-    JTextField jtAddress = new JTextField();
+    private final JButton SUBMIT = new JButton("Submit");
+    private JTextField jtName = new JTextField(16);
+    private JTextField jtCardNumber = new JTextField(16);
+    private JTextField jtCVV = new JTextField(16);
+    private JTextField jtExpiration = new JTextField(16);
+    private JTextField jtAddress = new JTextField(15);
+    private final SpringLayout LAYOUT;
+    private LabelTextPanel nameInfo;
+    private LabelTextPanel cardNumberInfo;
+    private LabelTextPanel cvvInfo;
+    private LabelTextPanel expirationInfo;
+    private LabelTextPanel addressInfo;
+    private JLabel titleLabel;
 
     public CheckoutPage() {
-        super("Checkout");
+        super("Scamazon.ca");
+        this.LAYOUT = new SpringLayout();
 
-        JPanel form = new JPanel();
-        JFrame frame = new JFrame();
-        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        frame.setTitle("Scamazon.ca");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(form);
-
-        form.setLayout(new BorderLayout(10, 10));
-        form.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        JLabel username = new JLabel("Username");
-        username.setBounds(10, 20, 80, 25);
-        form.add(username);
-        jtUsername.setBounds(100, 20, 165, 25);
-        form.add(jtUsername);
-
-        JLabel name = new JLabel("Name");
-        name.setBounds(10, 20, 80, 25);
-        form.add(name);
-        jtName.setBounds(100, 20, 165, 25);
-        form.add(jtName);
-
-        JLabel cardNumber = new JLabel("Card Number");
-        cardNumber.setBounds(10, 20, 80, 25);
-        form.add(cardNumber);
-        jtCardNumber.setBounds(100, 20, 165, 25);
-        form.add(jtCardNumber);
-
-        JLabel cvv = new JLabel("CVV");
-        cvv.setBounds(10, 20, 80, 25);
-        form.add(cvv);
-        jtCVV.setBounds(100, 20, 165, 25);
-        form.add(jtCVV);
-
-        JLabel expiration = new JLabel("Expiration Date");
-        expiration.setBounds(10, 20, 80, 25);
-        form.add(expiration);
-        jtExpiration.setBounds(100, 20, 165, 25);
-        form.add(jtExpiration);
-
-        JLabel address = new JLabel("Address");
-        address.setBounds(10, 20, 80, 25);
-        form.add(address);
-        jtAddress.setBounds(100, 20, 165, 25);
-        form.add(jtAddress);
-
-        SUBMIT = new JButton("Submit");
-        SUBMIT.addActionListener(this);
-        SUBMIT.setBounds(10, 80, 80, 25);
-        form.add(SUBMIT);
-
-        frame.setVisible(true);
+        setUpPanel();
+        setUpLayout();
     }
+
+    private void setUpPanel() {
+        this.setPreferredSize(new Dimension(1280, 720));
+        this.setLayout(LAYOUT);
+
+        //listener for SUBMIT button
+        SUBMIT.addActionListener(this);
+
+        //JLabels
+        JLabel nameLabel = new JLabel("Name: ");
+        JLabel cardNumberLabel = new JLabel("Card Number: ");
+        JLabel cvvLabel = new JLabel("CVV: ");
+        JLabel expirationLabel = new JLabel("Card Expiration: ");
+        JLabel addressLabel = new JLabel("Address: ");
+        titleLabel = new JLabel("Checkout");
+
+        //LabelTextPanels
+        nameInfo = new LabelTextPanel(nameLabel, jtName);
+        cardNumberInfo = new LabelTextPanel(cardNumberLabel, jtCardNumber);
+        cvvInfo = new LabelTextPanel(cvvLabel, jtCVV);
+        expirationInfo = new LabelTextPanel(expirationLabel, jtExpiration);
+        addressInfo = new LabelTextPanel(addressLabel, jtAddress);
+
+        //add all elements to the panel
+        this.add(titleLabel);
+        this.add(nameInfo);
+        this.add(cardNumberInfo);
+        this.add(cvvInfo);
+        this.add(expirationInfo);
+        this.add(addressInfo);
+        this.add(SUBMIT);
+    }
+
+    private void setUpLayout() {
+        //align everything near the middle
+        LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 500, SpringLayout.WEST, this);
+        LAYOUT.putConstraint(SpringLayout.WEST, nameInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, cardNumberInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, cvvInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, expirationInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, addressInfo, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.EAST, SUBMIT, 0, SpringLayout.EAST, addressInfo);
+
+        //align everything vertically
+        LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 150, SpringLayout.NORTH, this);
+        LAYOUT.putConstraint(SpringLayout.NORTH, nameInfo, 30, SpringLayout.SOUTH, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.NORTH, cardNumberInfo, 30, SpringLayout.SOUTH, nameInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, cvvInfo, 30, SpringLayout.SOUTH, cardNumberInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, expirationInfo, 30, SpringLayout.SOUTH, cvvInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, addressInfo, 30, SpringLayout.SOUTH, expirationInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, SUBMIT, 30, SpringLayout.SOUTH, addressInfo);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.SUBMIT) {
-            CheckoutForm form = new CheckoutForm(jtUsername.getText(), jtName.getText(),
-                    jtCardNumber.getText(), jtCVV.getText(), LocalDate.parse(jtExpiration.getText()),
-                    jtAddress.getText() );
+        if (e.getSource() == SUBMIT) {
             try {
-                CheckoutResponseModel responseModel = form.getResponseModel();
-            } catch (IOException ex) {
+                CheckoutForm form = new CheckoutForm(jtName.getText(), jtCardNumber.getText(), jtCVV.getText(),
+                        LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
+                form.getResponseModel();
+            }
+            catch (DateTimeParseException error) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
+            }
+            catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
