@@ -35,6 +35,8 @@ public class SerializerUnitTests {
         if (listingsCSV.delete()) {
             listingsCSV.createNewFile();
         }
+        Listing.setNextId(0);
+        User.setNextId(0);
     }
 
     @Test

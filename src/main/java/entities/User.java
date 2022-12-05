@@ -14,7 +14,7 @@ public class User {
     private ArrayList<Integer> reviews;
     private ArrayList<Listing> listings;
     private Cart cart;
-    private static int nextID = 0;
+    private static int nextId = 0;
 
     public User(int id, String username, String password, String email, ArrayList<Integer> reviews,
                 ArrayList<Listing> listings, Cart cart) {
@@ -27,12 +27,12 @@ public class User {
         this.cart = cart;
     }
 
-    public static int getNextID() {
-        return nextID++;
+    public static int getNextId() {
+        return nextId++;
     }
 
-    public static void setNextID(int id) {
-        nextID = id;
+    public static void setNextId(int id) {
+        nextId = id;
     }
 
     public String getUsername() {

@@ -29,8 +29,6 @@ public class AddListingToUserCartUnitTests {
 
     @BeforeEach
     public void resetCSVFiles() throws IOException {
-
-
         File usersCSV = new File(db.getUserTablePath());
         if (usersCSV.delete()) {
             usersCSV.createNewFile();
@@ -39,6 +37,8 @@ public class AddListingToUserCartUnitTests {
         if (listingsCSV.delete()) {
             listingsCSV.createNewFile();
         }
+        Listing.setNextId(0);
+        User.setNextId(0);
     }
 
     @AfterAll
@@ -61,5 +61,28 @@ public class AddListingToUserCartUnitTests {
                 new ArrayList<>(), new Cart(new ArrayList<>(List.of(listing))));
         User actualUser = db.getUserWithUsername("test");
         assert actualUser.equals(expectedUser);
+    }
+
+    @Test
+    public void testAddListingToSingleCart() throws IOException {
+        db.createUser("test", "test", "test");
+        User user = db.getUserWithUsername("test");
+        Listing listing1 = new Listing(0, "seller", "title1", LocalDate.EPOCH,
+                100, "description", "imagePath");
+        Listing listing2 = new Listing(1, "seller", "title2", LocalDate.EPOCH,
+                100, "description", "imagePath");
+        db.createListing("seller", "title1", 100, LocalDate.EPOCH, "description", "imagePath");
+        db.createListing("seller", "title2", 100, LocalDate.EPOCH, "description", "imagePath");
+        // correctly added one listing to cart
+        db.addListingToUserCart(user, listing1);
+        user = db.getUserWithUsername("test");
+        assert user.getCart().getItems().size() == 1;
+        assert user.getCart().getItems().get(0).equals(listing1);
+
+        // correctly added next listing to cart
+        db.addListingToUserCart(user, listing2);
+        user = db.getUserWithUsername("test");
+        assert user.getCart().getItems().size() == 2;
+        assert user.getCart().getItems().get(1).equals(listing2);
     }
 }

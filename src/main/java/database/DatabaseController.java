@@ -150,7 +150,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
 
-            String[] newUser = {String.valueOf(User.getNextID()), username, password, email, "[]", "[]", "[]"};
+            String[] newUser = {String.valueOf(User.getNextId()), username, password, email, "[]", "[]", "[]"};
             writer.writeNext(newUser);
             writer.close();
 
