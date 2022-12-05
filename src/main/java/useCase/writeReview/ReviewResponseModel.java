@@ -15,7 +15,7 @@ public class ReviewResponseModel {
      * @param requestModel the ReviewRequestModel that will be used as an argument for the ReviewInteractor
      *                     that this ReviewResponseModel retrieves data from
      */
-    public ReviewResponseModel(ReviewRequestModel requestModel) throws IOException {
+    public ReviewResponseModel(ReviewRequestModel requestModel){
         ReviewInteractor interactor = new ReviewInteractor(requestModel);
         this.message = interactor.getMessage();
     }

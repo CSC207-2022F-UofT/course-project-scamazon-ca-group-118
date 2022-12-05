@@ -24,7 +24,7 @@ public class ReviewForm extends Form {
     }
 
     @Override
-    protected void submitForm() throws IOException {
+    protected void submitForm(){
         if (this.validateForm()) {
             ReviewRequestModel requestModel = new ReviewRequestModel(REVIEWER_USERNAME,
                     REVIEWED_USERNAME,
@@ -33,7 +33,7 @@ public class ReviewForm extends Form {
         }
     }
 
-    public String getMessage() throws IOException {
+    public String getMessage(){
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();
