@@ -17,12 +17,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RemoveListingUnitTests {
+
     private static final DatabaseController db = new DatabaseController();
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws IOException {
         db.setListingTablePath("src/test/java/database/Listings.csv");
         db.setUserTablePath("src/test/java/database/Users.csv");
+        File usersCSV = new File(db.getUserTablePath());
+        usersCSV.createNewFile();
+        File listingsCSV = new File(db.getListingTablePath());
+        listingsCSV.createNewFile();
     }
 
     @BeforeEach
@@ -85,7 +90,7 @@ public class RemoveListingUnitTests {
         // read csv file after deletion
         db.removeListing(1);
         BufferedReader reader = new BufferedReader(new FileReader(db.getListingTablePath()));
-        String expected = "0;currUser;title;100;1970-01-01;description;imagePath";
+        String expected = "0;currUser;title;100.00;1970-01-01;description;imagePath";
         String result = "";
         String currLine;
         while ((currLine = reader.readLine()) != null) {
@@ -124,7 +129,6 @@ public class RemoveListingUnitTests {
         // test
         assert result.equals(expected);
     }
-
 
 
 }

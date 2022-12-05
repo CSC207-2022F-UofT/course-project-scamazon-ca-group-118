@@ -179,7 +179,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             for (String[] currLine : csvRead) {
                 String listingString = "";
                 for (String field : currLine) {
-                    listingString = listingFile + field + ";";
+                    listingString = listingString + field + ";";
                 }
                 Listing listingObject = createListingObject(listingString.substring(0, listingString.length() - 1));
                 if (listingObject.getId() == ID) {
@@ -192,8 +192,8 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             }
             reader.close();
 
-            FileWriter userFileWriter = new FileWriter(getUserTablePath());
-            CSVWriter writer = new CSVWriter(userFileWriter, ';',
+            FileWriter listingFileWriter = new FileWriter(getListingTablePath());
+            CSVWriter writer = new CSVWriter(listingFileWriter, ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
@@ -322,6 +322,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
 
     }
+
     /**
      * method called when a user deletes a listing from their cart
      *
