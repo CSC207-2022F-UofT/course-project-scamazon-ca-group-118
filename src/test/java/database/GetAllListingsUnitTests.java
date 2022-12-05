@@ -15,7 +15,7 @@ import java.util.List;
 
 public class GetAllListingsUnitTests {
     public static final DatabaseController db = new DatabaseController();
-    
+
     @BeforeAll
     public static void setUp() {
         db.setListingTablePath("src/test/java/database/Listings.csv");
@@ -34,11 +34,6 @@ public class GetAllListingsUnitTests {
         }
     }
 
-    @BeforeEach
-    public void resetListingAndUserNextIDs() {
-        Listing.setNextId(0);
-        User.setNextID(0);
-    }
 
     @Test
     public void testEmptyDatabase() throws IOException {
@@ -62,11 +57,11 @@ public class GetAllListingsUnitTests {
         db.createListing("seller2", "title2", 2, LocalDate.EPOCH, "desc2", "imagePath2");
         db.createListing("seller3", "title3", 3, LocalDate.EPOCH, "desc3", "imagePath3");
         ArrayList<Listing> actualListings = db.getAllListings();
-        Listing expectedListing1 = new Listing(0, "seller1", "title1", LocalDate.EPOCH,
+        Listing expectedListing1 = new Listing(1, "seller1", "title1", LocalDate.EPOCH,
                 1, "desc1", "imagePath1");
-        Listing expectedListing2 = new Listing(1, "seller2", "title2", LocalDate.EPOCH,
+        Listing expectedListing2 = new Listing(2, "seller2", "title2", LocalDate.EPOCH,
                 2, "desc2", "imagePath2");
-        Listing expectedListing3 = new Listing(2, "seller3", "title3", LocalDate.EPOCH,
+        Listing expectedListing3 = new Listing(3, "seller3", "title3", LocalDate.EPOCH,
                 3, "desc3", "imagePath3");
         ArrayList<Listing> expectedListings = new ArrayList<>(List.of(expectedListing1, expectedListing2, expectedListing3));
 
