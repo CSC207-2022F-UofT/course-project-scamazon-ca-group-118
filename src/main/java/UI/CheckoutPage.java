@@ -94,7 +94,7 @@ public class CheckoutPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
             try {
-                CheckoutForm form = new CheckoutForm(jtName.getText(), jtCardNumber.getText(), jtCVV.getText(),
+                CheckoutForm form = new CheckoutForm(Main.getCurrentUser(), jtName.getText(), jtCardNumber.getText(), jtCVV.getText(),
                         LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
                 form.getResponseModel();
             }

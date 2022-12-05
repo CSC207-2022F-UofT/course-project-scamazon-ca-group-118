@@ -13,7 +13,15 @@ public class CheckoutResponseModel {
      *                     that this CheckoutResponseModel retrieves data from
      */
     public CheckoutResponseModel(CheckoutRequestModel requestModel) throws IOException {
-        CheckoutInteractor interactor = new CheckoutInteractor(requestModel.getUsername());
+        CheckoutInteractor interactor = new CheckoutInteractor(requestModel);
         this.message = interactor.getMessage();
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

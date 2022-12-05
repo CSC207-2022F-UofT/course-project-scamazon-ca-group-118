@@ -1,21 +1,23 @@
 package useCase.checkout;
 
+import entities.User;
+
 /**
  * Represents a CheckoutRequestModel object that holds all data to be passed to the CheckoutInteractor
  */
 public class CheckoutRequestModel {
-    private String username;
+    private User buyer;
 
     /**
      * Constructor for a CheckoutRequestModel
      *
-     * @param username the username of the buyer User
+     * @param buyer User who is checking out items
      */
-    public CheckoutRequestModel(String username) {
-        this.username = username;
+    public CheckoutRequestModel(User buyer) {
+        this.buyer = buyer;
     }
 
-
-    public String getUsername() { return username; }
-
+    public User getBuyer() {
+        return buyer;
+    }
 }
