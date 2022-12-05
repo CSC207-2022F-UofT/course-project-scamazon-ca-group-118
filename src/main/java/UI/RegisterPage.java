@@ -122,6 +122,8 @@ public class RegisterPage extends Page implements ActionListener{
                 res.setText(response.getMessage());
             }catch (RegisterFailed error){
                 res.setText(error.getMessage());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         } else if (e.getSource() == reset) {
             String def = "";

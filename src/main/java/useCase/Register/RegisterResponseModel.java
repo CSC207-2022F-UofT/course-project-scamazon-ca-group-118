@@ -1,22 +1,22 @@
 package useCase.Register;
 
-import entities.User;
+import java.io.IOException;
 
 public class RegisterResponseModel {
 
-    private User user;
     private String message;
 
-    public RegisterResponseModel(RegisterRequestModel requestModel){
+    public RegisterResponseModel(RegisterRequestModel requestModel) throws IOException {
         String username = requestModel.getUsername();
         String password = requestModel.getPassword();
         String email = requestModel.getUserEmail();
-        RegisterInteractor interactor = new RegisterInteractor(password, username, email);
-        if (interactor.shouldRegister(username, email)){
-            this.user = interactor.createUser(username, email, password);
+        RegisterInteractor interactor = new RegisterInteractor(password, email, username);
+        if (interactor.shouldRegister()){
+            interactor.createUser(username, email, password);
             this.message = "Account Created";
         }else{
-            this.message = "";
+            //TODO: Figure out error msg to put
+            this.message = "Username or Email is already taken";
         }
     }
 
@@ -25,7 +25,8 @@ public class RegisterResponseModel {
     }
 
     public String getMessage(){
-        return this.message;
+        RegisterPresenter presenter = new RegisterPresenter(this);
+        return presenter.getMessage();
     }
 
 }

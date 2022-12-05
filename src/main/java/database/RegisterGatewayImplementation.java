@@ -1,6 +1,8 @@
 package database;
 
-public class RegisterGatewayImplementation implements RegisterDatabaseGateway {
+import java.io.IOException;
+
+public class RegisterGatewayImplementation implements RegisterDatabaseGateway{
 
     private String email;
     private String username;
@@ -13,14 +15,21 @@ public class RegisterGatewayImplementation implements RegisterDatabaseGateway {
     }
 
     @Override
-    public boolean checkUserWithEmail(String email) {
-        //TODO: implement this
-        return true;
+    public boolean checkUserWithEmail(String email) throws IOException {
+        DatabaseController check = new DatabaseController();
+        return check.checkUserWithEmail(email);
+    }
+
+    //Get checkUserWithUsername From DatabaseController Class
+    @Override
+    public boolean checkUserWithUsername(String username) throws IOException {
+        DatabaseController check = new DatabaseController();
+        return check.checkUserWithUsername(username);
     }
 
     @Override
-    public boolean checkUserWithUsername(String username) {
-        //TODO: implement this
-        return false;
+    public void createUser(String username, String email, String password) {
+        DatabaseController check = new DatabaseController();
+        check.createUser(username, password, email);
     }
 }

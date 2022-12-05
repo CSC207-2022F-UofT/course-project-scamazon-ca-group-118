@@ -3,6 +3,8 @@ package useCase.Register;
 import database.RegisterGatewayImplementation;
 import entities.User;
 
+import java.io.IOException;
+
 public class RegisterInteractor {
 
     private String password;
@@ -13,16 +15,17 @@ public class RegisterInteractor {
     private RegisterGatewayImplementation implementation;
     private User user;
 
-    public RegisterInteractor(String password, String email, String username){
+    public RegisterInteractor(String password, String email, String username) throws IOException {
         this.email = email;
         this.password = password;
         this.username = username;
         this.implementation = new RegisterGatewayImplementation(email, username, password);
         this.emailExists = implementation.checkUserWithEmail(email);
+        System.out.println(emailExists);
         this.usernameExists = implementation.checkUserWithUsername(username);
     }
 
-    public boolean shouldRegister(String username, String email){
+    public boolean shouldRegister(){
         if (!emailExists && !usernameExists){
             return true;
         }else{
@@ -36,6 +39,8 @@ public class RegisterInteractor {
         }
     }
 
-    public User createUser(String username, String email, String password){ return null; }
+    public void createUser(String username, String email, String password){
+        implementation.createUser(username, email, password);
+    }
 
 }

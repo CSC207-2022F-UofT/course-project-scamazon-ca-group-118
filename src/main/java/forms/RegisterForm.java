@@ -3,6 +3,8 @@ package forms;
 import useCase.Register.RegisterRequestModel;
 import useCase.Register.RegisterResponseModel;
 
+import java.io.IOException;
+
 public class RegisterForm extends Form{
 
     private String username;
@@ -31,10 +33,10 @@ public class RegisterForm extends Form{
     protected boolean validateForm() {
         //password and confirm password
         if (!(this.password.equals(this.confirmPassword))) {
-            this.message = "Passwords are not the same!";
+            this.message = "Passwords are not the same";
             return false;
         }else if (password.length() < 8){
-            this.message = "Password must be at least 8 characters long!";
+            this.message = "Password must be at least 8 characters long";
             return false;
         }
 
@@ -48,7 +50,7 @@ public class RegisterForm extends Form{
     }
 
     @Override
-    protected void submitForm() {
+    protected void submitForm() throws IOException {
         if (this.validateForm()){
             RegisterRequestModel requestModel = new RegisterRequestModel(username, email, password);
             this.responseModel = new RegisterResponseModel(requestModel);
@@ -57,7 +59,7 @@ public class RegisterForm extends Form{
         }
     }
 
-    public RegisterResponseModel getResponseModel(){
+    public RegisterResponseModel getResponseModel() throws IOException {
         this.submitForm();
         return this.responseModel;
     }
