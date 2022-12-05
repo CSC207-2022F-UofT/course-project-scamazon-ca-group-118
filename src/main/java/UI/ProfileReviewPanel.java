@@ -1,9 +1,14 @@
 package UI;
 
+import Main.Main;
+import forms.ReviewForm;
+import useCase.writeReview.ReviewPresenter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * This is the panel that is used to review another user from the profile page.
@@ -17,7 +22,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
     private JLabel ratingChosen;
     private JButton submit;
     private JButton reset;
-    private JLabel successfulReview;
+    private JLabel message;
     private JLabel errorMessage;
 
     /**
@@ -44,7 +49,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         usernameInfo.add(usernameReviewed);
 
         ratingChosen = new JLabel("");
-        successfulReview = new JLabel("");
+        message = new JLabel("");
         errorMessage = new JLabel("");
 
         JLabel ratingLabel = new JLabel("Give them a rating between 1 and 5: ");
@@ -79,7 +84,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         this.add(ratingChosen);
         this.add(submit);
         this.add(reset);
-        this.add(successfulReview);
+        this.add(message);
         this.add(errorMessage);
     }
 
@@ -94,8 +99,8 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, submit, 30, SpringLayout.SOUTH, ratingInfo);
         layout.putConstraint(SpringLayout.NORTH, reset, 30, SpringLayout.SOUTH, ratingInfo);
         layout.putConstraint(SpringLayout.WEST, reset, 20, SpringLayout.EAST, submit);
-        layout.putConstraint(SpringLayout.NORTH, successfulReview, 15, SpringLayout.SOUTH, submit);
-        layout.putConstraint(SpringLayout.WEST, successfulReview, 5, SpringLayout.WEST, ratingInfo);
+        layout.putConstraint(SpringLayout.NORTH, message, 15, SpringLayout.SOUTH, submit);
+        layout.putConstraint(SpringLayout.WEST, message, 5, SpringLayout.WEST, ratingInfo);
         layout.putConstraint(SpringLayout.NORTH, errorMessage, 15, SpringLayout.SOUTH, submit);
         layout.putConstraint(SpringLayout.WEST, errorMessage, 5, SpringLayout.WEST, ratingInfo);
     }
@@ -110,32 +115,22 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
             String num = ((RatingButton) e.getSource()).getText();
             rating = Integer.parseInt(num);
             ratingChosen.setText("Rating set to " + num + ".");
-            errorMessage.setText("");
-            successfulReview.setText("");
+            message.setText("");
         } else if (e.getSource() == reset) {
             rating = 0;
             usernameReviewed.setText("");
             ratingChosen.setText("");
-            errorMessage.setText("");
-            successfulReview.setText("");
+            message.setText("");
         } else if (e.getSource() == submit) {
             String username = usernameReviewed.getText();
-            if (username.equals("")) {
-                successfulReview.setText("");
-                errorMessage.setText("You must enter a username.");
-            } else if (rating == 0) {
-                successfulReview.setText("");
-                errorMessage.setText("You must pick a rating.");
-            } else {
-                /* TODO Update User with username's reviews.
-                    Need to add these methods to ReviewDatabaseGateway and create a review request.
-                    void updateUserReviews(String username);
-                    boolean checkUserWithUsername(String username) throws IOException; */
+            ReviewForm form = new ReviewForm(Main.getCurrentUser().getUsername(), username, rating);
+            try {
+                message.setText(new ReviewPresenter(form).getMessage());
                 rating = 0;
-                errorMessage.setText("");
                 usernameReviewed.setText("");
                 ratingChosen.setText("");
-                successfulReview.setText("Review successful.");
+            } catch (IOException exception) {
+                // TODO IDK yet
             }
         }
     }
