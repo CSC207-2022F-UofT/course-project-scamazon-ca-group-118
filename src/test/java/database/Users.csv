@@ -1,1 +1,2 @@
-0;currUser;password;curr@user.com;[4,5,0];[0,1];[2,3]
+0;currUser;password;currUser@user.com;[4];[0];[1]
+1;sellerUser;password;sellerUser@user.com;[4];[0];[1]
