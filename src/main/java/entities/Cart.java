@@ -90,8 +90,8 @@ public class Cart {
      *
      * @return The total price of all items in the cart.
      */
-    public int getPrice() {
-        int total_price = 0;
+    public float getPrice() {
+        float total_price = 0;
         for (Listing item : this.listings) {
             total_price += item.getPrice();
         }
