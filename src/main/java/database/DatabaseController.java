@@ -1,8 +1,7 @@
 package database;
 
-import com.opencsv.*;
+import com.opencsv.CSVWriter;
 
-import com.opencsv.exceptions.CsvException;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
@@ -362,7 +361,10 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             if (!successful) {
                 System.out.printf("Unable to remove listing %s%n from cart", listingID);
             }
-        } catch (IOException ex) {
+        }
+
+
+         catch (IOException ex) {
             throw new IOException(ex.getMessage());
         }
 
@@ -510,7 +512,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         return new User(userID, username, password, email, reviews, listings, cart);
     }
 
-
     /**
      * Creates the string version of a User object
      *
@@ -605,47 +606,13 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     }
 
     /**
-     * @param user    the current user
-     * @param listing the listing we want to add to their cart
+     * @param currentUser the current user
+     * @param listing     the listing we want to add to their cart
      * @throws IOException
      */
     @Override
-    public void addListingToUserCart(User user, Listing listing) throws IOException {
-        try {
-            FileReader userFile = new FileReader(getUserTablePath());
-            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
-            CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
-            List<String[]> csvBody = reader.readAll();
-            int currRow = 0;
-            for (String[] currLine : csvBody) {
-                String userString = "";
-                for (String field : currLine) {
-                    userString = userString + field + ";";
-                }
-                User userObject = createUserObject(userString.substring(0, userString.length() - 1));
-                if (userObject.getUsername().equals(user.getUsername())) {
-                    userObject.addToCart(listing);
-                    String newUserString = createUserString(userObject);
-                    csvBody.set(currRow, newUserString.split(";"));
-                    break;
-                }
-                currRow++;
-
-                FileWriter userFileWriter = new FileWriter(getUserTablePath());
-                CSVWriter writer = new CSVWriter(userFileWriter, ';',
-                        CSVWriter.NO_QUOTE_CHARACTER,
-                        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                        CSVWriter.DEFAULT_LINE_END);
-                writer.writeAll(csvBody);
-                writer.flush();
-                writer.close();
-            }
-            reader.close();
-        } catch (IOException | CsvException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+    public void addListingToUserCart(User currentUser, Listing listing) throws IOException {
+        // TODO implement
     }
 
     // we need these methods for testing
