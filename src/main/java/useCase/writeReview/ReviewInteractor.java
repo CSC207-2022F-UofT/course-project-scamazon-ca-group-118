@@ -14,13 +14,14 @@ public class ReviewInteractor {
     private User reviewer;
     private User reviewed;
     private int rating;
+    private String message;
 
     /**
      * The constructor for the ReviewInteractor class
      *
      * @param requestModel the request model that's data will be manipulated
      */
-    public ReviewInteractor(ReviewRequestModel requestModel) throws IOException {
+    public ReviewInteractor(ReviewRequestModel requestModel){
         this.reviewer = getUserWithUsername(requestModel.getReviewerUsername());
         this.reviewed = getUserWithUsername(requestModel.getReviewedUsername());
         this.rating = requestModel.getRating();
@@ -32,8 +33,13 @@ public class ReviewInteractor {
      * @param username the username being searched for
      * @return the user with the given username
      */
-    private User getUserWithUsername(String username) throws IOException {
-        return new GetUser().getUserWithUsername(username);
+    private User getUserWithUsername(String username) {
+        try{
+            return new GetUser().getUserWithUsername(username);
+        }catch(IOException e){
+            this.message = "Error reading file. Please try again.";
+            return null;
+        }
     }
 
     /**
@@ -51,7 +57,7 @@ public class ReviewInteractor {
      * Then, adds this new review reviewed's reviews
      */
     private void createReview() {
-        //this.reviewer.writeReview(reviewed, rating);
+        this.reviewer.writeReview(reviewed, rating);
     }
 
     /**
@@ -64,10 +70,13 @@ public class ReviewInteractor {
     public String getMessage() {
         if (userExists(reviewed)) {
             this.createReview();
-            return "Review Successful";
+            this.message = "Review Successful";
         } else {
-            return "Review Unsuccessful: No User exists with this username";
+            if(this.message.equals("")){
+                this.message = "Review Unsuccessful: No User exists with this username";
+            }
         }
+        return this.message;
     }
 
     public User getReviewer() {

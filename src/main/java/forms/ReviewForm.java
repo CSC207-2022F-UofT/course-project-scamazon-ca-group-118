@@ -20,7 +20,7 @@ public class ReviewForm extends Form {
 
     @Override
     protected boolean validateForm() {
-        return this.REVIEWED_USERNAME.length() > 0;
+        return this.REVIEWED_USERNAME.length() > 0 && this.RATING > 0;
     }
 
     @Override
@@ -37,9 +37,10 @@ public class ReviewForm extends Form {
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();
-        } else {
+        } else if (this.REVIEWED_USERNAME.length() == 0) {
             return "Please enter the username of the User you wish to review";
+        } else{
+            return "You must enter a rating";
         }
-
     }
 }
