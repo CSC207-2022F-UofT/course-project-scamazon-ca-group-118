@@ -89,4 +89,126 @@ public class getListingByUserUnitTests {
         System.out.println(actualObjectString);
         assert (expectedObjectString.equals(actualObjectString));
     }
+
+    @Test
+    public void testListingByUserTwoUsersTwoListings() throws IOException {
+        // populate listings csv file
+        FileWriter listingCSV = new FileWriter(db.getListingTablePath());
+        CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        List<String[]> listingData = new ArrayList<String[]>();
+        listingData.add(new String[]{"0", "currUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
+        listingData.add(new String[]{"1", "sellerUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
+        listingWriter.writeAll(listingData);
+        listingWriter.close();
+        // populate users csv file
+        FileWriter userCSV = new FileWriter(db.getUserTablePath());
+        CSVWriter userWriter = new CSVWriter(userCSV, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        List<String[]> userData = new ArrayList<String[]>();
+        userData.add(new String[]{"0", "currUser", "password", "currUser@user.com", "[4]", "[0]", "[1]"});
+        userData.add(new String[]{"1", "sellerUser", "password", "sellerUser@user.com", "[4]", "[0]", "[1]"});
+        userWriter.writeAll(userData);
+        userWriter.close();
+        // test
+        String userString = "0;currUser;password;sellercurr@user.com;[0];[0];[0]";
+        User userObject = db.createUserObject(userString);
+        ArrayList<Listing> actualObject = db.getListingsByUser(userObject.getUsername());
+
+        ArrayList<Listing> expectedObject = new ArrayList<>();
+        Listing listing1 = new Listing(0, "currUser", "title", LocalDate.EPOCH, 100,"description", "imagePath");
+        expectedObject.add(listing1);
+        String expectedObjectString = "";
+        String actualObjectString = "";
+        for (Listing listing : actualObject) {
+            actualObjectString += (db.createListingString(listing));
+        }
+        for (Listing listing : expectedObject) {
+            expectedObjectString +=  db.createListingString(listing);
+        }
+
+        System.out.println(expectedObjectString);
+        System.out.println(actualObjectString);
+        assert (expectedObjectString.equals(actualObjectString));
+    }
+
+    @Test
+    public void testListingByUserTwoUsersTwoListingsOtherUser() throws IOException {
+        // populate listings csv file
+        FileWriter listingCSV = new FileWriter(db.getListingTablePath());
+        CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        List<String[]> listingData = new ArrayList<String[]>();
+        listingData.add(new String[]{"0", "currUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
+        listingData.add(new String[]{"1", "sellerUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
+        listingWriter.writeAll(listingData);
+        listingWriter.close();
+        // populate users csv file
+        FileWriter userCSV = new FileWriter(db.getUserTablePath());
+        CSVWriter userWriter = new CSVWriter(userCSV, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        List<String[]> userData = new ArrayList<String[]>();
+        userData.add(new String[]{"0", "currUser", "password", "currUser@user.com", "[4]", "[0]", "[1]"});
+        userData.add(new String[]{"1", "sellerUser", "password", "sellerUser@user.com", "[4]", "[0]", "[1]"});
+        userWriter.writeAll(userData);
+        userWriter.close();
+        // test
+        String userString = "1;sellerUser;password;sellercurr@user.com;[0];[0];[0]";
+        User userObject = db.createUserObject(userString);
+        ArrayList<Listing> actualObject = db.getListingsByUser(userObject.getUsername());
+
+        ArrayList<Listing> expectedObject = new ArrayList<>();
+        Listing listing1 = new Listing(1, "sellerUser", "title", LocalDate.EPOCH, 100,"description", "imagePath");
+        expectedObject.add(listing1);
+        String expectedObjectString = "";
+        String actualObjectString = "";
+        for (Listing listing : actualObject) {
+            actualObjectString += (db.createListingString(listing));
+        }
+        for (Listing listing : expectedObject) {
+            expectedObjectString +=  db.createListingString(listing);
+        }
+
+        System.out.println(expectedObjectString);
+        System.out.println(actualObjectString);
+        assert (expectedObjectString.equals(actualObjectString));
+    }
+
+    @Test
+    public void testListingByUserTwoUsersNoListings() throws IOException {
+        // no listings
+        // populate users csv file
+        FileWriter userCSV = new FileWriter(db.getUserTablePath());
+        CSVWriter userWriter = new CSVWriter(userCSV, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        List<String[]> userData = new ArrayList<String[]>();
+        userData.add(new String[]{"0", "currUser", "password", "currUser@user.com", "[4]", "[0]", "[1]"});
+        userData.add(new String[]{"1", "sellerUser", "password", "sellerUser@user.com", "[4]", "[0]", "[1]"});
+        userWriter.writeAll(userData);
+        userWriter.close();
+        // test
+        String userString = "1;sellerUser;password;sellercurr@user.com;[0];[0];[0]";
+        User userObject = db.createUserObject(userString);
+        ArrayList<Listing> actualObject = db.getListingsByUser(userObject.getUsername());
+
+        String expectedObjectString = "";
+        String actualObjectString = "";
+        for (Listing listing : actualObject) {
+            actualObjectString += (db.createListingString(listing));
+        }
+
+        System.out.println(expectedObjectString);
+        System.out.println(actualObjectString);
+        assert (expectedObjectString.equals(actualObjectString));
+    }
 }
