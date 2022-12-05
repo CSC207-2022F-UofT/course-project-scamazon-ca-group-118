@@ -58,7 +58,7 @@ public class RemoveListingUnitTests {
         }
 
         // test
-        assert result == expected;
+        assert result.equals(expected);
     }
 
     @Test
