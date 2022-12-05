@@ -1,8 +1,6 @@
 package useCase.displayProfile;
-import entities.Review;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // This class is in the application business rules layer of clean architecture.
 

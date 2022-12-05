@@ -14,10 +14,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class DatabaseControllerUnitTests {
+public class SerializerUnitTests {
     private static final DatabaseController db = new DatabaseController();
 
     @BeforeAll
