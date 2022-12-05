@@ -13,7 +13,6 @@ public class RegisterInteractor {
     private boolean emailExists;
     private boolean usernameExists;
     private RegisterGatewayImplementation implementation;
-    private User user;
 
     public RegisterInteractor(String password, String email, String username) throws IOException {
         this.email = email;
@@ -28,12 +27,12 @@ public class RegisterInteractor {
         if (!emailExists && !usernameExists){
             return true;
         }else{
-            if (emailExists){
-                throw new RegisterFailed("Email is already taken");
+            if (emailExists && usernameExists){
+                throw new RegisterFailed("Username and Email and already taken");
             }else if (usernameExists){
                 throw new RegisterFailed("Username is already taken");
             }else{
-                throw new RegisterFailed("Username and Email are already taken");
+                throw new RegisterFailed("Email is already taken");
             }
         }
     }

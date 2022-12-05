@@ -40,7 +40,7 @@ public class RegisterPage extends Page implements ActionListener{
         this.add(title);
 
         name = new JLabel("Name");
-        name.setFont(new Font("Arial", Font.PLAIN, 20));
+        name.setFont(new Font("Arial", Font.PLAIN, 17));
         name.setSize(100, 20);
         name.setLocation(500, 250);
         this.add(name);
@@ -52,7 +52,7 @@ public class RegisterPage extends Page implements ActionListener{
         this.add(input_name);
 
         email = new JLabel("Email");
-        email.setFont(new Font("Arial", Font.PLAIN, 20));
+        email.setFont(new Font("Arial", Font.PLAIN, 17));
         email.setSize(100, 20);
         email.setLocation(500, 300);
         this.add(email);
@@ -64,7 +64,7 @@ public class RegisterPage extends Page implements ActionListener{
         this.add(input_email);
 
         password = new JLabel("Password");
-        password.setFont(new Font("Arial", Font.PLAIN, 20));
+        password.setFont(new Font("Arial", Font.PLAIN, 17));
         password.setSize(100, 20);
         password.setLocation(500, 350);
         this.add(password);
@@ -102,7 +102,7 @@ public class RegisterPage extends Page implements ActionListener{
         this.add(reset);
 
         res = new JLabel("");
-        res.setFont(new Font("Arial", Font.PLAIN, 20));
+        res.setFont(new Font("Arial", Font.PLAIN, 17));
         res.setSize(475, 25);
         res.setLocation(550, 450);
         this.add(res);

@@ -14,9 +14,6 @@ public class RegisterResponseModel {
         if (interactor.shouldRegister()){
             interactor.createUser(username, email, password);
             this.message = "Account Created";
-        }else{
-            //TODO: Figure out error msg to put
-            this.message = "Username or Email is already taken";
         }
     }
 

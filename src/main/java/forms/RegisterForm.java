@@ -1,5 +1,6 @@
 package forms;
 
+import useCase.Register.RegisterFailed;
 import useCase.Register.RegisterRequestModel;
 import useCase.Register.RegisterResponseModel;
 
@@ -33,22 +34,20 @@ public class RegisterForm extends Form{
     protected boolean validateForm() {
         //password and confirm password
         if (!(this.password.equals(this.confirmPassword))) {
-            this.message = "Passwords are not the same";
-            return false;
+            throw new RegisterFailed("Passwords are not the same");
         }else if (password.length() < 8){
-            this.message = "Password must be at least 8 characters long";
-            return false;
+            throw new RegisterFailed("Password must be at least 8 characters long");
         }
         //email validation
         if (!this.email.contains("@")) {
-            this.message = "Email must contain '@'";
-            return false;
+            throw new RegisterFailed ("Email must contain '@'");
         }
         return true;
     }
 
     @Override
     protected void submitForm() throws IOException {
+        //run form validate method
         if (this.validateForm()){
             RegisterRequestModel requestModel = new RegisterRequestModel(username, email, password);
             this.responseModel = new RegisterResponseModel(requestModel);
