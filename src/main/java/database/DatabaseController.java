@@ -393,7 +393,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             while ((currLine = reader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
                 if (userObject == reviewed) {
-                    userObject.addReview(rating); // need to fix reviews
+                    // userObject.addReview(rating); // need to fix reviews
                     String userString = createUserString(userObject);
                     writer.writeNext(userString.split(";"));
                     continue;
