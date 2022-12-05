@@ -5,6 +5,7 @@ import entities.Cart;
 import entities.Listing;
 import entities.User;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,6 +35,14 @@ public class RemoveListingUnitTests {
         if (listingsCSV.delete()) {
             listingsCSV.createNewFile();
         }
+    }
+
+    @AfterAll
+    public static void deleteCSVFiles() {
+        File usersCSV = new File(db.getUserTablePath());
+        usersCSV.delete();
+        File listingsCSV = new File(db.getListingTablePath());
+        listingsCSV.delete();
     }
 
     @Test
@@ -81,7 +90,9 @@ public class RemoveListingUnitTests {
         String currLine;
         while ((currLine = reader.readLine()) != null) {
             result += currLine;
+            System.out.println(result);
         }
+        System.out.println(expected);
         // test
         assert result.equals(expected);
     }
@@ -107,7 +118,9 @@ public class RemoveListingUnitTests {
         String currLine;
         while ((currLine = reader.readLine()) != null) {
             result += currLine;
+            System.out.println(result);
         }
+        System.out.println(expected);
         // test
         assert result.equals(expected);
     }

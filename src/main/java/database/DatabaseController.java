@@ -9,6 +9,7 @@ import entities.User;
 import Main.Main;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,40 +171,39 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     // TODO: test
     public void removeListing(int ID) throws IOException {
         try {
-            File listings = new File(LISTING_TABLE_PATH);
-            File temp = File.createTempFile("temp", ".csv", new File("src/test/java/database/"));
-            FileWriter tempCSV = new FileWriter(temp);
+            FileReader listingFile = new FileReader(getListingTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(listingFile).withCSVParser(parser).build();
+            List<String[]> csvRead = reader.readAll();
+            List<String[]> csvBody = new ArrayList<>();
+            for (String[] currLine : csvRead) {
+                String listingString = "";
+                for (String field : currLine) {
+                    listingString = listingFile + field + ";";
+                }
+                Listing listingObject = createListingObject(listingString.substring(0, listingString.length() - 1));
+                if (listingObject.getId() == ID) {
+                    removeListingFromAllCarts(ID);
+                    continue;
+                }
+                String newListingString = createListingString(listingObject);
+                String[] newArrayString = newListingString.split(";");
+                csvBody.add(newArrayString);
+            }
+            reader.close();
 
-            BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(listings)));
-            CSVWriter writer = new CSVWriter(tempCSV, ';',
+            FileWriter userFileWriter = new FileWriter(getUserTablePath());
+            CSVWriter writer = new CSVWriter(userFileWriter, ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
-
-            String currLine;
-
-
-            while ((currLine = reader.readLine()) != null) {
-                String[] listing = currLine.split(";");
-                int listingID = Integer.parseInt(listing[0]);
-                if (listingID == ID) {
-                    continue;
-                }
-                writer.writeNext(listing);
-            }
-            reader.close();
+            writer.writeAll(csvBody);
+            writer.flush();
             writer.close();
-            String path = listings.getAbsolutePath();
-            listings.delete();
-            boolean successful = temp.renameTo(new File(path));
-
-            if (!successful) {
-                // didn't find the listing
-                System.out.printf("Unable to remove listing %s%n", ID);
-            }
-
         } catch (IOException e) {
             throw new IOException(e);
+        } catch (CsvException e) {
+            throw new RuntimeException(e);
         }
     }
 
