@@ -6,8 +6,8 @@ public class RegisterPresenter {
 
     private String message;
 
-    public RegisterPresenter(RegisterResponseModel response){
-        this.message = response.getMessage();
+    public RegisterPresenter(String message){
+        this.message = message;
     }
 
     public String getMessage(){

@@ -25,7 +25,7 @@ public class RegisterResponseModel {
     }
 
     public String getMessage(){
-        RegisterPresenter presenter = new RegisterPresenter(this);
+        RegisterPresenter presenter = new RegisterPresenter(this.message);
         return presenter.getMessage();
     }
 

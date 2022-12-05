@@ -99,9 +99,9 @@ public class ListingListPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
             SearchForm form = new SearchForm(jtSearch.getText(), controller);
-            SearchResponseModel responseModel = form.getResponseModel();
-            ArrayList<Listing> searchListings = responseModel.getListings();
-            setUpPanel(searchListings);
+//            SearchResponseModel responseModel = form.getResponseModel();
+//            ArrayList<Listing> searchListings = responseModel.getListings();
+//            setUpPanel(searchListings);
 
         } else if (buttons.contains(e.getSource())) {
             String title = "";
@@ -113,7 +113,7 @@ public class ListingListPage extends Page implements ActionListener {
             }
             for (Listing listing : displayedListings) {
                 if (Objects.equals(listing.getTitle(), title)) {
-                    Main.setCurrentPage(new ListingDetailPage(listing));
+//                    Main.setCurrentPage(new ListingDetailPage(listing));
                     break;
                 }
             }

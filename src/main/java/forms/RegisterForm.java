@@ -39,13 +39,11 @@ public class RegisterForm extends Form{
             this.message = "Password must be at least 8 characters long";
             return false;
         }
-
         //email validation
         if (!this.email.contains("@")) {
             this.message = "Email must contain '@'";
             return false;
         }
-
         return true;
     }
 

@@ -21,7 +21,6 @@ public class RegisterInteractor {
         this.username = username;
         this.implementation = new RegisterGatewayImplementation(email, username, password);
         this.emailExists = implementation.checkUserWithEmail(email);
-        System.out.println(emailExists);
         this.usernameExists = implementation.checkUserWithUsername(username);
     }
 
