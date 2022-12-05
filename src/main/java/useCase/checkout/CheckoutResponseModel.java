@@ -14,6 +14,6 @@ public class CheckoutResponseModel {
      */
     public CheckoutResponseModel(CheckoutRequestModel requestModel) throws IOException {
         CheckoutInteractor interactor = new CheckoutInteractor(requestModel.getUsername());
-        interactor.removeListings();
+        this.message = interactor.getMessage();
     }
 }

@@ -21,13 +21,13 @@ public class ListingDetailPage extends Page implements ActionListener {
     final int WIDTH = 1280;
     final int HEIGHT = 570;
 
-    private final DatabaseController db = new DatabaseController<>();
+    private final DatabaseController db = new DatabaseController();
     private final Listing listing;
 
     private JLabel message;
     private JButton addToCartButton;
 
-    public ListingDetailPage(Listing listing) {
+    public ListingDetailPage(Listing listing) throws IOException {
         super(listing.getTitle());
         this.listing = listing;
         this.setLayout(null);
@@ -140,7 +140,7 @@ public class ListingDetailPage extends Page implements ActionListener {
         }
     }
 
-    private boolean canAddToCart() {
+    private boolean canAddToCart() throws IOException {
 
         if (db.currentUserHasListingInCart(Main.getCurrentUser(), listing)) {
             message = new JLabel("This item is already in your cart");

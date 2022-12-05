@@ -18,6 +18,8 @@ public class CreateListingPage extends Page{
         private final JTextField listing_text = new JTextField();
         private final JLabel price_label = new JLabel("Listing Price:");
         private final JTextField price_text = new JTextField();
+
+        private JLabel responseText = new JLabel();
         private final JLabel desc_label = new JLabel("Listing Description:");
         private final JTextField desc_text = new JTextField();
         private final JLabel img_label = new JLabel("Images: ");
@@ -30,6 +32,7 @@ public class CreateListingPage extends Page{
         private String fileName;
         private String filePath;
         private String responseModel;
+
         public CreateListingPage() {
             super("Create Listing Page");
 
@@ -39,10 +42,7 @@ public class CreateListingPage extends Page{
         }
         public void setUpPanel(){
 
-//            NavBar nb = new NavBar();
-//            nb.setLocation(0, 0);
-//            nb.setSize(1280, 100);
-//            this.add(nb);
+
             add_your_listing.setFont(new Font("Arial", Font.PLAIN, 30));
             add_your_listing.setSize(300, 30);
             add_your_listing.setLocation(550, 150);
@@ -65,10 +65,17 @@ public class CreateListingPage extends Page{
             this.add(price_label);
 
 
+
+
             price_text.setSize(250, 30);
             price_text.setLocation(550, 250);
             this.add(price_text);
 
+
+            responseText.setSize(250, 100);
+            responseText.setLocation(900, 250);
+            responseText.setFont(new Font("Arial", Font.PLAIN, 20));
+            this.add(responseText);
 
             desc_label.setSize(250, 30);
             desc_label.setLocation(350, 300);
@@ -108,13 +115,9 @@ public class CreateListingPage extends Page{
 
                     try {
                         myPicture = ImageIO.read(new File(filePath + "/" + fileName));
-                        BufferedImage scaled_pic = new BufferedImage(150, 150, BufferedImage.TYPE_INT_RGB);
-                        Graphics g = scaled_pic.createGraphics();
-                        g.drawImage(myPicture, 0, 0, 300, 150, null);
-                        g.dispose();
-                        picLabel.setIcon(new ImageIcon(scaled_pic));
+                        Image scaled_img = myPicture.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+                        picLabel.setIcon(new ImageIcon(scaled_img));
 
-                        // TODO Work on resizing
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -151,28 +154,23 @@ public class CreateListingPage extends Page{
                     throw new RuntimeException(ex);
                 }
 
-                submit.setText(responseModel);
+                responseText.setText("<html>"+ responseModel +"</html>");
+                if(responseModel.equals("Listing Created!")){
+                    listing_text.setText("");
+                    price_text.setText("");
+                    desc_text.setText("");
+                    fileName = "";
+                    filePath = "";
+                    img.setText("No image selected");
+                    picLabel.setIcon(null);
 
-                //use Class to submit information
-
-                //String sellerUsername = "temp"; //temp variable while we figure out current user
-                //CreateListingForm clf = new CreateListingForm(listingTitle, listingPrice, sellerUsername, listingDesc, images);
-                //String message = clf.getMessage();
-                //System.out.println(message);
-                // submit.setText(message);
+                }
 
             });
             this.add(submit);
-            this.setPreferredSize(new Dimension(1280, 720)); //570
+            this.setPreferredSize(new Dimension(1280, 720));
             this.setMaximumSize(new Dimension(1280, 720));
-//            this.setMinimumSize(new Dimension(1280, 570));
-//
 
-
-//            this.setTitle("Create a listing");
-//            this.setMinimumSize(new Dimension(1280, 720));
-//            this.add(this);
-//            this.setVisible(true);
 
         }
 
