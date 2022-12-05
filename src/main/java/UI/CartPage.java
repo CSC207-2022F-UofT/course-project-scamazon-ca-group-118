@@ -27,7 +27,7 @@ public class CartPage extends Page implements ActionListener {
      */
     public CartPage() {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
-        this.setLayout(new GridLayout(1, 2));
+        this.setLayout(new GridLayout(1, 2, 150, 320));
         this.itemCart = Main.getCurrentUser().getCart();
 
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
