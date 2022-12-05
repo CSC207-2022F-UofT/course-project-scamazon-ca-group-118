@@ -60,4 +60,24 @@ public class CreateListingUnitTests {
         assert result.equals(expected);
 
     }
+
+    @Test
+    public void testCreateTwoListings() throws IOException {
+        // call method
+        db.createListing("sellerUser", "title", 1, LocalDate.EPOCH, "desc", "imagePath");
+        db.createListing("currUser", "title", 1, LocalDate.EPOCH, "desc", "imagePath");
+
+
+        BufferedReader reader = new BufferedReader(new FileReader(db.getListingTablePath()));
+        String expected = "0;sellerUser;title;1.00;1970-01-01;desc;imagePath1;currUser;title;1.00;1970-01-01;desc;imagePath";
+        String result = "";
+        String currLine;
+        while ((currLine = reader.readLine()) != null) {
+            result += currLine;
+            System.out.println(result);
+        }
+        // test
+        assert result.equals(expected);
+
+    }
 }
