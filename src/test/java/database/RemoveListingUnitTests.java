@@ -87,7 +87,7 @@ public class RemoveListingUnitTests {
     }
 
     @Test
-    public void testRemoveNoListing() throws IOException {
+    public void testRemoveTwoListingsInARow() throws IOException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
@@ -111,5 +111,7 @@ public class RemoveListingUnitTests {
         // test
         assert result.equals(expected);
     }
+
+
 
 }
