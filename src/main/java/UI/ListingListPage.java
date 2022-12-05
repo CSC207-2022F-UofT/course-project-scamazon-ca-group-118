@@ -1,4 +1,5 @@
 package UI;
+
 import Main.Main;
 import entities.Listing;
 import database.DatabaseController;
@@ -62,7 +63,7 @@ public class ListingListPage extends Page implements ActionListener {
         ListingPanel previousListing = null;
 
         //looping through listings
-        for (Listing listing: listings) {
+        for (Listing listing : listings) {
             //info needed to create a ListingPanel for each listing
             JButton listingDetails = new JButton(listing.getTitle());
             listingDetails.addActionListener(this);
@@ -86,8 +87,7 @@ public class ListingListPage extends Page implements ActionListener {
                 //is the first listing --> put under titleLabel
                 LAYOUT.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, titleLabel);
                 previousListing = listingInfo; //set previousListing to the one we just created
-            }
-            else {
+            } else {
                 //not the first listing --> put under previousListing
                 LAYOUT.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, previousListing);
                 previousListing = listingInfo; //reset previousListing to the one we just created
@@ -99,7 +99,12 @@ public class ListingListPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
             SearchForm form = new SearchForm(jtSearch.getText(), controller);
-            SearchResponseModel responseModel = form.getResponseModel();
+            SearchResponseModel responseModel = null;
+            try {
+                responseModel = form.getResponseModel();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             ArrayList<Listing> searchListings = responseModel.getListings();
             setUpPanel(searchListings);
 
@@ -113,7 +118,11 @@ public class ListingListPage extends Page implements ActionListener {
             }
             for (Listing listing : displayedListings) {
                 if (Objects.equals(listing.getTitle(), title)) {
-                    Main.setCurrentPage(new ListingDetailPage(listing));
+                    try {
+                        Main.setCurrentPage(new ListingDetailPage(listing));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     break;
                 }
             }
