@@ -55,7 +55,7 @@ public class Listing {
     }
 
     public static void setNextId(int id) {
-        nextID = id;
+        nextId = id;
     }
 
     public int getId() {

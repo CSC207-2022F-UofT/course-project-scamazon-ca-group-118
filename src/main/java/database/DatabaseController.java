@@ -1,18 +1,16 @@
 package database;
 
-import com.opencsv.CSVWriter;
+import com.opencsv.*;
 
+import com.opencsv.exceptions.CsvException;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
 import Main.Main;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.Buffer;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -152,7 +150,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
 
-            String[] newUser = {String.valueOf(User.getNextID()), username, password, email, "[]", "[]", "[]"};
+            String[] newUser = {String.valueOf(User.getNextId()), username, password, email, "[]", "[]", "[]"};
             writer.writeNext(newUser);
             writer.close();
 
@@ -209,7 +207,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
-    // TODO test
+    // TODO rewrite this shit
     private void removeListingFromAllCarts(int listingID) {
         try {
             BufferedReader file = new BufferedReader(new FileReader(USER_TABLE_PATH));
@@ -245,7 +243,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     }
 
-
     //TODO test
 
     /**
@@ -266,7 +263,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
-            ;
 
             Listing listing = new Listing(sellerUsername, listingTitle, dateAdded, price, description, imagePath);
             String[] listingStringArray = createListingString(listing).split(";");
@@ -326,8 +322,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
 
     }
-
-
     /**
      * method called when a user deletes a listing from their cart
      *
@@ -521,6 +515,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         return new User(userID, username, password, email, reviews, listings, cart);
     }
 
+
     /**
      * Creates the string version of a User object
      *
@@ -615,13 +610,47 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     }
 
     /**
-     * @param currentUser the current user
-     * @param listing     the listing we want to add to their cart
+     * @param user    the current user
+     * @param listing the listing we want to add to their cart
      * @throws IOException
      */
     @Override
-    public void addListingToUserCart(User currentUser, Listing listing) throws IOException {
-        // TODO implement
+    public void addListingToUserCart(User user, Listing listing) throws IOException {
+        try {
+            FileReader userFile = new FileReader(getUserTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
+            List<String[]> csvBody = reader.readAll();
+            int currRow = 0;
+            for (String[] currLine : csvBody) {
+                String userString = "";
+                for (String field : currLine) {
+                    userString = userString + field + ";";
+                }
+                User userObject = createUserObject(userString.substring(0, userString.length() - 1));
+                if (userObject.getUsername().equals(user.getUsername())) {
+                    userObject.addToCart(listing);
+                    String newUserString = createUserString(userObject);
+                    csvBody.set(currRow, newUserString.split(";"));
+                    break;
+                }
+                currRow++;
+            }
+            reader.close();
+
+            FileWriter userFileWriter = new FileWriter(getUserTablePath());
+            CSVWriter writer = new CSVWriter(userFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            writer.writeAll(csvBody);
+            writer.flush();
+            writer.close();
+        } catch (IOException | CsvException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
     }
 
     // we need these methods for testing
