@@ -9,11 +9,8 @@ import entities.User;
 import Main.Main;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.Buffer;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -205,7 +202,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
-    // TODO test
+    // TODO rewrite this shit
     private void removeListingFromAllCarts(int listingID) {
         try {
             BufferedReader file = new BufferedReader(new FileReader(USER_TABLE_PATH));
@@ -241,8 +238,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     }
 
-    // TODO test
-
     //TODO test
 
     /**
@@ -263,7 +258,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
-            ;
 
             Listing listing = new Listing(sellerUsername, listingTitle, dateAdded, price, description, imagePath);
             String[] listingStringArray = createListingString(listing).split(";");
