@@ -361,10 +361,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             if (!successful) {
                 System.out.printf("Unable to remove listing %s%n from cart", listingID);
             }
-        }
-
-
-         catch (IOException ex) {
+        } catch (IOException ex) {
             throw new IOException(ex.getMessage());
         }
 
@@ -393,7 +390,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             while ((currLine = reader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
                 if (userObject == reviewed) {
-                    userObject.addReview(rating); // need to fix reviews
+                    //userObject.addReview(rating); // need to fix reviews
                     String userString = createUserString(userObject);
                     writer.writeNext(userString.split(";"));
                     continue;
@@ -596,12 +593,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     // TODO implement
     @Override
     public boolean currentUserHasListingInCart(User currentUser, Listing listing) throws IOException {
-        ArrayList<Listing> currCart = currentUser.getCart().getItems();
-        for (Listing listingInCurrCart : currCart) {
-            if (listingInCurrCart == listing) {
-                return true;
-            }
-        }
         return false;
     }
 

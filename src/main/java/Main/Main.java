@@ -1,10 +1,16 @@
 package Main;
 
+import UI.ListingDetailPage;
 import UI.LoginPage;
 import UI.Page;
 import database.DatabaseController;
+import entities.Cart;
+import entities.Listing;
 import entities.User;
 import entities.View;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
     /**
@@ -20,12 +26,15 @@ public class Main {
      */
     static View view;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         DatabaseController databaseInteractor = new DatabaseController();
-
+        Listing listing = databaseInteractor.getListingByID(0);
+        User user = new User(0, "currUser", "password", "curr@user.com", new ArrayList<>(), new ArrayList<>(), new Cart());
+        setCurrentUser(user);
         //Open the application with the Login Page
         currentPage = new LoginPage();
         view = new View();
+        setCurrentPage(new ListingDetailPage(listing));
 
     }
 
