@@ -31,6 +31,10 @@ public class User {
         return nextID++;
     }
 
+    public static void setNextID(int id) {
+        nextID = id;
+    }
+
     public String getUsername() {
         return this.username;
     }
