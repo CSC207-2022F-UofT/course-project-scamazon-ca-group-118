@@ -7,8 +7,6 @@ import entities.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,4 +48,11 @@ public class CreateListingFormUnitTests {
         String response = form.getMessage();
         assertEquals(response, "There was an error (are you logged in?)");
     }
+    @Test
+    public void noPrice() throws IOException {
+        CreateListingForm form = new CreateListingForm("Title", "", exampleUser, "Description", "/example/image/path");
+        assertFalse(form.validateForm());
+    }
+
+
 }
