@@ -55,6 +55,7 @@ public class AddListingToUserCartUnitTests {
         User user = db.getUserWithUsername("test");
         Listing listing = new Listing(0, "seller", "title", LocalDate.EPOCH,
                 100, "description", "imagePath");
+        db.createListing("seller", "title", 100, LocalDate.EPOCH, "description", "imagePath");
         db.addListingToUserCart(user, listing);
         User expectedUser = new User(0, "test", "test", "test", new ArrayList<>(),
                 new ArrayList<>(), new Cart(new ArrayList<>(List.of(listing))));

@@ -632,17 +632,17 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                     break;
                 }
                 currRow++;
-
-                FileWriter userFileWriter = new FileWriter(getUserTablePath());
-                CSVWriter writer = new CSVWriter(userFileWriter, ';',
-                        CSVWriter.NO_QUOTE_CHARACTER,
-                        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                        CSVWriter.DEFAULT_LINE_END);
-                writer.writeAll(csvBody);
-                writer.flush();
-                writer.close();
             }
             reader.close();
+
+            FileWriter userFileWriter = new FileWriter(getUserTablePath());
+            CSVWriter writer = new CSVWriter(userFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            writer.writeAll(csvBody);
+            writer.flush();
+            writer.close();
         } catch (IOException | CsvException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
