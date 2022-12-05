@@ -147,8 +147,11 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      **/
     public void createUser(String username, String password, String email) {
         try {
-            FileWriter outputFile = new FileWriter(USER_TABLE_PATH);
-            CSVWriter writer = new CSVWriter(outputFile);
+            FileWriter outputFile = new FileWriter(USER_TABLE_PATH, true);
+            CSVWriter writer = new CSVWriter(outputFile, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
 
             String[] newUser = {String.valueOf(User.getNextID()), username, password, email, "[]", "[]", "[]"};
             writer.writeNext(newUser);
@@ -240,6 +243,8 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     // TODO test
 
+    //TODO test
+
     /**
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded,
      * description, and imagePath from createListingForm after a listing is submitted
@@ -253,14 +258,16 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      **/
     public void createListing(String sellerUsername, String listingTitle, float price, LocalDate dateAdded, String description, String imagePath) {
         try {
-            FileWriter outputFile = new FileWriter(LISTING_TABLE_PATH);
-            CSVWriter writer = new CSVWriter(outputFile);
+            FileWriter outputFile = new FileWriter(LISTING_TABLE_PATH, true);
+            CSVWriter writer = new CSVWriter(outputFile, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            ;
 
-            String[] newListing = {String.valueOf(Listing.getNextID()), sellerUsername, listingTitle,
-                    String.valueOf(price), convertLocalDateToStringDate(dateAdded),
-                    description, imagePath};
-            writer.writeNext(newListing);
-
+            Listing listing = new Listing(sellerUsername, listingTitle, dateAdded, price, description, imagePath);
+            String[] listingStringArray = createListingString(listing).split(";");
+            writer.writeNext(listingStringArray);
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -392,7 +399,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             while ((currLine = reader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
                 if (userObject == reviewed) {
-                    //userObject.addReview(rating); // need to fix reviews
+                    // userObject.addReview(rating); // TODO need to fix reviews
                     String userString = createUserString(userObject);
                     writer.writeNext(userString.split(";"));
                     continue;

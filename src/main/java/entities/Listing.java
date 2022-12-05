@@ -54,6 +54,10 @@ public class Listing {
         return nextID++;
     }
 
+    public static void setNextId(int id) {
+        nextID = id;
+    }
+
     public int getId() {
         return id;
     }
