@@ -22,7 +22,9 @@ public class CartPage extends Page implements ActionListener {
     private JLabel priceTotal;
     public Cart itemCart;
 
-
+    /**
+     * Cart Page constructor that creates the CartPage Panel.
+     */
     public CartPage() {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
         this.setLayout(new GridLayout(1, 2));
@@ -47,11 +49,16 @@ public class CartPage extends Page implements ActionListener {
         buttonPanel.add(this.CHECKOUT);
         buttonPanel.add(this.priceTotal);
 
-        //Assigning all panes and panels to frame
+        //Assigning all panes and panels to CartPage Panel
         this.add(scrollPane);
         this.add(buttonPanel);
     }
 
+    /**
+     * Creates a JTable of all the items in the Users cart.
+     *
+     * @return JTable of the items in cart.
+     */
     public JTable createItemTable() {
         ArrayList<Listing> items = this.itemCart.getItems();
         String[][] data = new String[itemCart.countItems()][];
@@ -68,10 +75,18 @@ public class CartPage extends Page implements ActionListener {
     }
 
 
-    public Page goToCheckout() {
-        return new CheckoutPage();
+    /**
+     * Creates a new instance of CheckoutPage and sets it as the current page.
+     */
+    public void goToCheckout() {
+        Main.setCurrentPage(new CheckoutPage());
     }
 
+    /**
+     * Preforms the removal of a cart item or moves the User to the checkout page based on input e.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.REMOVE) {
