@@ -8,9 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,13 +47,17 @@ public class CreateListingUnitTests {
     @Test
     public void testCreateOneListing() throws IOException {
         // call method
-        db.createListing("seller", "title", 1, LocalDate.EPOCH, "desc", "imagePath");
-        // populate users csv file
-        FileWriter userCSV = new FileWriter(db.getUserTablePath());
-        CSVWriter userWriter = new CSVWriter(userCSV, ';',
-                CSVWriter.NO_QUOTE_CHARACTER,
-                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                CSVWriter.DEFAULT_LINE_END);
-        List<String[]> userData = new ArrayList<String[]>();
+        db.createListing("sellerUser", "title", 1, LocalDate.EPOCH, "desc", "imagePath");
 
+        BufferedReader reader = new BufferedReader(new FileReader(db.getListingTablePath()));
+        String expected = "0;sellerUser;title;1.00;1970-01-01;desc;imagePath";
+        String result = "";
+        String currLine;
+        while ((currLine = reader.readLine()) != null) {
+            result += currLine;
+        }
+        // test
+        assert result.equals(expected);
+
+    }
 }
