@@ -1,33 +1,29 @@
 package useCase.login;
 
+import entities.Cart;
+import entities.User;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-/**
- * TODO uncomment and implement these tests once Database implemented
 public class LoginInteractorUnitTests {
-    static User clare = new User("clare",
+    static User clare = new User(1, "clare",
             "12345",
-            1,
             "clare@gmail.com",
             new ArrayList<>(),
             new ArrayList<>(),
             new Cart());
-    static User emptyUser = new User("",
-            "",
-            0,
-            "",
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new Cart());
-
     @Test
     void testLoginInteractorPasswordsMatch() {
         LoginInteractor interactor = new LoginInteractor("clare", "12345");
         interactor.setUser(clare);
+        interactor.setUserExists(true);
         assert (interactor.getUserExists());
         assert (interactor.getUser() == clare);
         assert (interactor.getUsername().equals("clare"));
-        assert (interactor.getEnteredPassword().equals("12345"));
+        assert (interactor.getENTERED_PASSWORD().equals("12345"));
         assert (interactor.shouldLogin());
     }
 
@@ -35,10 +31,11 @@ public class LoginInteractorUnitTests {
     void testLoginInteractorPasswordWrong() {
         LoginInteractor interactor = new LoginInteractor("clare", "1234");
         interactor.setUser(clare);
+        interactor.setUserExists(true);
         assert (interactor.getUserExists());
         assert (interactor.getUser() == clare);
         assert (interactor.getUsername().equals("clare"));
-        assert (interactor.getEnteredPassword().equals("1234"));
+        assert (interactor.getENTERED_PASSWORD().equals("1234"));
         try {
             interactor.shouldLogin();
         } catch (LoginFailed e) {
@@ -49,11 +46,10 @@ public class LoginInteractorUnitTests {
     @Test
     void testLoginInteractorUserDoesNotExist() {
         LoginInteractor interactor = new LoginInteractor("clare", "1234");
-        interactor.setUser(emptyUser);
+        interactor.setUser(null);
         assertFalse(interactor.getUserExists());
-        assert (interactor.getUser() == emptyUser);
         assert (interactor.getUsername().equals("clare"));
-        assert (interactor.getEnteredPassword().equals("1234"));
+        assert (interactor.getENTERED_PASSWORD().equals("1234"));
         try {
             interactor.shouldLogin();
         } catch (LoginFailed e) {
@@ -62,4 +58,3 @@ public class LoginInteractorUnitTests {
     }
 
 }
- */
