@@ -1,4 +1,5 @@
 package UI;
+
 import Main.Main;
 import entities.Listing;
 import database.DatabaseController;
@@ -66,7 +67,7 @@ public class ListingListPage extends Page implements ActionListener {
         ListingPanel previousListing = null;
 
         //looping through listings
-        for (Listing listing: listings) {
+        for (Listing listing : listings) {
             //info needed to create a ListingPanel for each listing
             JButton listingDetails = new JButton(listing.getTitle());
             listingDetails.addActionListener(this);
@@ -93,8 +94,7 @@ public class ListingListPage extends Page implements ActionListener {
                 //is the first listing --> put under titleLabel
                 LAYOUT.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, titleLabel);
                 previousListing = listingInfo; //set previousListing to the one we just created
-            }
-            else {
+            } else {
                 //not the first listing --> put under previousListing
                 LAYOUT.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, previousListing);
                 previousListing = listingInfo; //reset previousListing to the one we just created
