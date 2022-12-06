@@ -1,6 +1,7 @@
 package database;
 
 import entities.Cart;
+import entities.Listing;
 import entities.User;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,6 +35,8 @@ public class CreateUserUnitTests {
         if (listingsCSV.delete()) {
             listingsCSV.createNewFile();
         }
+        Listing.setNextId(0);
+        User.setNextId(0);
     }
 
     @AfterAll
@@ -58,11 +61,11 @@ public class CreateUserUnitTests {
         db.createUser("user1", "pass1", "test1@test.com");
         db.createUser("user2", "pass2", "test2@test.com");
         db.createUser("user3", "pass3", "test3@test.com");
-        User expectedUser1 = new User(1, "user1", "pass1", "test1@test.com", new ArrayList<>(),
+        User expectedUser1 = new User(0, "user1", "pass1", "test1@test.com", new ArrayList<>(),
                 new ArrayList<>(), new Cart());
-        User expectedUser2 = new User(2, "user2", "pass2", "test2@test.com", new ArrayList<>(),
+        User expectedUser2 = new User(1, "user2", "pass2", "test2@test.com", new ArrayList<>(),
                 new ArrayList<>(), new Cart());
-        User expectedUser3 = new User(3, "user3", "pass3", "test3@test.com", new ArrayList<>(),
+        User expectedUser3 = new User(2, "user3", "pass3", "test3@test.com", new ArrayList<>(),
                 new ArrayList<>(), new Cart());
         User actualUser1 = db.getUserWithUsername("user1");
         User actualUser2 = db.getUserWithUsername("user2");
