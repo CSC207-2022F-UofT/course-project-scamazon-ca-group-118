@@ -184,6 +184,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                 Listing listingObject = createListingObject(listingString.substring(0, listingString.length() - 1));
                 if (listingObject.getId() == ID) {
                     removeListingFromAllCarts(ID);
+                    // removeListingFromUserListings(ID); TODO: implement
                     continue;
                 }
                 String newListingString = createListingString(listingObject);
