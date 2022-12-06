@@ -37,7 +37,7 @@ public class ReviewInteractor {
         try{
             return new GetUser().getUserWithUsername(username);
         }catch(IOException e){
-            this.message = "Error reading file. Please try again.";
+            this.message = "**DATABASE ERROR**";
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class ReviewInteractor {
             this.createReview();
             this.message = "Review Successful";
         } else {
-            if(this.message.equals("")){
+            if(this.message == null){
                 this.message = "Review Unsuccessful: No User exists with this username";
             }
         }

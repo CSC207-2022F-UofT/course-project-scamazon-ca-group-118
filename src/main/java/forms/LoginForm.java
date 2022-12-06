@@ -39,30 +39,13 @@ public class LoginForm extends Form {
     }
 
     @Override
-    protected void submitForm() throws IOException {
+    protected void submitForm() {
         if (this.validateForm()) {
             LoginRequestModel requestModel = new LoginRequestModel(username, password);
             this.responseModel = new LoginResponseModel(requestModel);
         }
     }
 
-    /** TODO once we have UserPresenter implemented
-     *public UserPresenter getPresenter(){
-     *     UserPresenter presenter = new UserPresenter(responseModel.getUsername(),
-     *                               responseModel.getID(),
-     *                               responseModel.getEmail(),
-     *                               responseModel.getReviews(),
-     *                               responseModel.getListings(),
-     *                               responseModel.getCart());  //or whatever the parameters are for a UserPresenter
-     *     return presenter;
-     *}
-     */
-
-    /**
-     * submit the form then return the response model generated
-     *
-     * @return the response model generated after submitting the form
-     */
     public LoginResponseModel getResponseModel() throws IOException {
         this.submitForm();
         return responseModel;

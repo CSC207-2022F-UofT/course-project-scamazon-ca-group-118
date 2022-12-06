@@ -2,7 +2,6 @@ package useCase.writeReview;
 
 import forms.ReviewForm;
 
-import java.io.IOException;
 
 /**
  * The presenter class for writing a review

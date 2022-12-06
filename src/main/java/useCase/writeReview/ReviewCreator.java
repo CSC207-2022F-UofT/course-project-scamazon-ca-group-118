@@ -1,7 +1,6 @@
 package useCase.writeReview;
 
 import entities.User;
-import entities.Review;
 
 /**
  * Represents a ReviewCreator object
