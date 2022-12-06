@@ -16,20 +16,18 @@ import java.util.Objects;
 import javax.swing.*;
 
 public class ListingListPage extends Page implements ActionListener {
-    private JLabel titleLabel;
     private final SpringLayout LAYOUT;
-    private SearchBarPanel SearchBar;
-    private JTextField jtSearch = new JTextField(20);
+    private final JTextField JT_SEARCH = new JTextField(20);
     private final JButton SEARCH = new JButton("Search");
-    private DatabaseController controller = new DatabaseController();
-    private ArrayList<JButton> buttons = new ArrayList<>();
+    private final DatabaseController CONTROLLER = new DatabaseController();
+    private final ArrayList<JButton> BUTTONS = new ArrayList<>();
     private List<Listing> displayedListings;
 
     public ListingListPage() throws IOException {
         super("Scamazon.ca");
         this.LAYOUT = new SpringLayout();
 
-        ArrayList<Listing> allListings = controller.getAllListings();
+        ArrayList<Listing> allListings = CONTROLLER.getAllListings();
 
         //displays all listings from database before User has searched anything
         setUpPanel(allListings);
@@ -42,22 +40,22 @@ public class ListingListPage extends Page implements ActionListener {
 
         //SearchBar with TextField and SEARCH Button
         SEARCH.addActionListener(this);
-        SearchBar = new SearchBarPanel(jtSearch, SEARCH);
-        this.add(SearchBar);
+        SearchBarPanel searchBar = new SearchBarPanel(JT_SEARCH, SEARCH);
+        this.add(searchBar);
 
         //title label
-        titleLabel = new JLabel("Listings");
+        JLabel titleLabel = new JLabel("Listings");
         this.add(titleLabel);
 
 
         //LAYOUT FOR PANEL
         //align SearchBar and titleLabel near the middle
-        LAYOUT.putConstraint(SpringLayout.WEST, SearchBar, 500, SpringLayout.WEST, this);
-        LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 0, SpringLayout.WEST, SearchBar);
+        LAYOUT.putConstraint(SpringLayout.WEST, searchBar, 500, SpringLayout.WEST, this);
+        LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 0, SpringLayout.WEST, searchBar);
 
         //align SearchBar and titleLabel vertically
-        LAYOUT.putConstraint(SpringLayout.NORTH, SearchBar, 150, SpringLayout.NORTH, this);
-        LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 30, SpringLayout.SOUTH, SearchBar);
+        LAYOUT.putConstraint(SpringLayout.NORTH, searchBar, 150, SpringLayout.NORTH, this);
+        LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 30, SpringLayout.SOUTH, searchBar);
 
         //keeps track of previous listing for layout
         ListingPanel previousListing = null;
@@ -67,7 +65,7 @@ public class ListingListPage extends Page implements ActionListener {
             //info needed to create a ListingPanel for each listing
             JButton listingDetails = new JButton(listing.getTitle());
             listingDetails.addActionListener(this);
-            buttons.add(listingDetails);
+            BUTTONS.add(listingDetails);
             JLabel resultPrice = new JLabel("Price: " + listing.getPrice());
             JLabel resultImage = new JLabel(listing.getImagePath());
             JLabel resultDescription = new JLabel(listing.getDescription());
@@ -80,7 +78,7 @@ public class ListingListPage extends Page implements ActionListener {
             this.add(listingInfo);
 
             //align listing in the middle
-            LAYOUT.putConstraint(SpringLayout.WEST, listingInfo, 0, SpringLayout.WEST, SearchBar);
+            LAYOUT.putConstraint(SpringLayout.WEST, listingInfo, 0, SpringLayout.WEST, searchBar);
 
             //align listing vertically
             if (previousListing == null) {
@@ -98,8 +96,9 @@ public class ListingListPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
-            SearchForm form = new SearchForm(jtSearch.getText(), controller);
-            SearchResponseModel responseModel = null;
+            SearchForm form = new SearchForm(JT_SEARCH.getText(), CONTROLLER);
+
+            SearchResponseModel responseModel;
             try {
                 responseModel = form.getResponseModel();
             } catch (IOException ex) {
@@ -108,9 +107,10 @@ public class ListingListPage extends Page implements ActionListener {
             ArrayList<Listing> searchListings = responseModel.getListings();
             setUpPanel(searchListings);
 
-        } else if (buttons.contains(e.getSource())) {
+
+        } else if (BUTTONS.contains(e.getSource())) {
             String title = "";
-            for (JButton button : buttons) {
+            for (JButton button : BUTTONS) {
                 if (button == e.getSource()) {
                     title = button.getText();
                     break;
@@ -118,11 +118,13 @@ public class ListingListPage extends Page implements ActionListener {
             }
             for (Listing listing : displayedListings) {
                 if (Objects.equals(listing.getTitle(), title)) {
+
                     try {
                         Main.setCurrentPage(new ListingDetailPage(listing));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+
                     break;
                 }
             }

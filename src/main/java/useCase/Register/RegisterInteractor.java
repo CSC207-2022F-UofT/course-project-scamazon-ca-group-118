@@ -1,41 +1,47 @@
 package useCase.Register;
 
 import database.RegisterGatewayImplementation;
-import entities.User;
+
+import java.io.IOException;
 
 public class RegisterInteractor {
 
-    private String password;
-    private String email;
-    private String username;
-    private boolean emailExists;
-    private boolean usernameExists;
-    private RegisterGatewayImplementation implementation;
-    private User user;
+    private final String PASSWORD;
+    private final String EMAIL;
+    private final String USERNAME;
+    private final boolean EMAIL_EXISTS;
+    private final boolean USERNAME_EXISTS;
+    private final RegisterGatewayImplementation IMPLEMENTATION;
 
-    public RegisterInteractor(String password, String email, String username){
-        this.email = email;
-        this.password = password;
-        this.username = username;
-        this.implementation = new RegisterGatewayImplementation(email, username, password);
-        this.emailExists = implementation.checkUserWithEmail(email);
-        this.usernameExists = implementation.checkUserWithUsername(username);
+    public RegisterInteractor(String password, String email, String username) throws IOException {
+        this.EMAIL = email;
+        this.PASSWORD = password;
+        this.USERNAME = username;
+        this.IMPLEMENTATION = new RegisterGatewayImplementation();
+        this.EMAIL_EXISTS = IMPLEMENTATION.checkUserWithEmail(email);
+        this.USERNAME_EXISTS = IMPLEMENTATION.checkUserWithUsername(username);
     }
 
-    public boolean shouldRegister(String username, String email){
-        if (!emailExists && !usernameExists){
+    public boolean shouldRegister(){
+        //check if username is empty
+        System.out.println(USERNAME);
+        if (USERNAME.equals("")){
+            throw new RegisterFailed("Please enter a username");
+        }
+        if (!EMAIL_EXISTS && !USERNAME_EXISTS){
             return true;
         }else{
-            if (emailExists){
-                throw new RegisterFailed("Email is already taken");
-            }else if (usernameExists){
+            if (EMAIL_EXISTS && USERNAME_EXISTS){
+                throw new RegisterFailed("Username and Email and already taken");
+            }else if (USERNAME_EXISTS){
                 throw new RegisterFailed("Username is already taken");
             }else{
-                throw new RegisterFailed("Username and Email are already taken");
+                throw new RegisterFailed("Email is already taken");
             }
         }
     }
 
-    public User createUser(String username, String email, String password){ return null; }
-
+    public void createUser(){
+        IMPLEMENTATION.createUser(USERNAME, EMAIL, PASSWORD);
+    }
 }

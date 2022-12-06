@@ -1,19 +1,25 @@
 package useCase.Register;
 
-import entities.User;
+import java.io.IOException;
 
 public class RegisterResponseModel {
 
-    private User user;
+    private String message;
 
-    public RegisterResponseModel(RegisterRequestModel requestModel){
+    public RegisterResponseModel(RegisterRequestModel requestModel) throws IOException {
         String username = requestModel.getUsername();
         String password = requestModel.getPassword();
         String email = requestModel.getUserEmail();
-        RegisterInteractor interactor = new RegisterInteractor(password, username, email);
-        if (interactor.shouldRegister(username, email)){
-            this.user = interactor.createUser(username, email, password);
+        RegisterInteractor interactor = new RegisterInteractor(password, email, username);
+        if (interactor.shouldRegister()){
+            interactor.createUser();
+            this.message = "Account Created";
         }
+    }
+
+    public String getMessage(){
+        RegisterPresenter presenter = new RegisterPresenter(this.message);
+        return presenter.getMessage();
     }
 
 }

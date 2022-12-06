@@ -1,8 +1,10 @@
 package database;
 
+import java.io.IOException;
+
 public interface RegisterDatabaseGateway {
-    boolean checkUserWithEmail(String email);
+    boolean checkUserWithUsername(String username) throws IOException;
+    boolean checkUserWithEmail(String email) throws IOException;
     // TODO: Checks database to see if email exists
-    boolean checkUserWithUsername(String username);
-    // TODO: Checks database to see if username exists
+    void createUser(String username, String email, String password);
 }

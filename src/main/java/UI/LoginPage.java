@@ -2,7 +2,6 @@ package UI;
 
 import Main.Main;
 import forms.LoginForm;
-import forms.RegisterForm;
 import useCase.login.LoginFailed;
 import useCase.login.LoginResponseModel;
 
@@ -18,10 +17,10 @@ import java.io.IOException;
 public class LoginPage extends Page implements ActionListener {
     private final JButton LOGIN = new JButton("Log in");
     private final JButton REGISTER = new JButton("Register");
-    private JLabel errorMessage = new JLabel("");
+    private final JLabel ERROR_MESSAGE = new JLabel("");
     private final SpringLayout LAYOUT;
-    private JTextField username = new JTextField(15);
-    private JPasswordField password = new JPasswordField(15);
+    private final JTextField USERNAME = new JTextField(15);
+    private final JPasswordField PASSWORD = new JPasswordField(15);
     private LabelTextPanel usernameInfo;
     private LabelTextPanel passwordInfo;
     private LabelButtonPanel ifNoAccount;
@@ -57,12 +56,12 @@ public class LoginPage extends Page implements ActionListener {
         titleLabel = new JLabel("Log In");
 
         //LabelTextPanels and LabelButtonPanels
-        usernameInfo = new LabelTextPanel(usernameLabel, username);
-        passwordInfo = new LabelTextPanel(passwordLabel, password);
+        usernameInfo = new LabelTextPanel(usernameLabel, USERNAME);
+        passwordInfo = new LabelTextPanel(passwordLabel, PASSWORD);
         ifNoAccount = new LabelButtonPanel(ifNoAccountLabel, REGISTER);
 
         //add all elements to the panel
-        this.add(errorMessage);
+        this.add(ERROR_MESSAGE);
         this.add(ifNoAccount);
         this.add(titleLabel);
         this.add(usernameInfo);
@@ -79,7 +78,7 @@ public class LoginPage extends Page implements ActionListener {
         LAYOUT.putConstraint(SpringLayout.WEST, usernameInfo, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.WEST, passwordInfo, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.EAST, LOGIN, 0, SpringLayout.EAST, passwordInfo);
-        LAYOUT.putConstraint(SpringLayout.WEST, errorMessage, 0, SpringLayout.WEST, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.WEST, ERROR_MESSAGE, 0, SpringLayout.WEST, titleLabel);
         LAYOUT.putConstraint(SpringLayout.WEST, ifNoAccount, 0, SpringLayout.WEST, titleLabel);
 
         //Align everything vertically
@@ -87,7 +86,7 @@ public class LoginPage extends Page implements ActionListener {
         LAYOUT.putConstraint(SpringLayout.NORTH, usernameInfo, 30, SpringLayout.SOUTH, titleLabel);
         LAYOUT.putConstraint(SpringLayout.NORTH, passwordInfo, 30, SpringLayout.SOUTH, usernameInfo);
         LAYOUT.putConstraint(SpringLayout.NORTH, LOGIN, 30, SpringLayout.SOUTH, passwordInfo);
-        LAYOUT.putConstraint(SpringLayout.NORTH, errorMessage, 30, SpringLayout.SOUTH, LOGIN);
+        LAYOUT.putConstraint(SpringLayout.NORTH, ERROR_MESSAGE, 30, SpringLayout.SOUTH, LOGIN);
         LAYOUT.putConstraint(SpringLayout.NORTH, ifNoAccount, 90, SpringLayout.SOUTH, LOGIN);
     }
 
@@ -100,18 +99,18 @@ public class LoginPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == LOGIN) {
             try {
-                LoginForm form = new LoginForm(username.getText(),
-                        String.valueOf(password.getPassword()));
+                LoginForm form = new LoginForm(USERNAME.getText(),
+                        String.valueOf(PASSWORD.getPassword()));
                 LoginResponseModel responseModel = form.getResponseModel();
                 Main.setCurrentUser(responseModel.getUser());
                 Main.setCurrentPage(new ProfilePage("Profile Page"));
             } catch (LoginFailed error) {
-                errorMessage.setText(error.getMessage());
+                ERROR_MESSAGE.setText(error.getMessage());
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         } else if (e.getSource() == REGISTER) {
-            Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
+            Main.setCurrentPage(new RegisterPage("Register"));
         }
     }
 
@@ -121,8 +120,8 @@ public class LoginPage extends Page implements ActionListener {
      * @param error the String error message that should be displayed on this LoginPage
      */
     public void setErrorMessage(String error) {
-        this.errorMessage.setText(error);
-        this.errorMessage.updateUI();
+        this.ERROR_MESSAGE.setText(error);
+        this.ERROR_MESSAGE.updateUI();
     }
 }
 
