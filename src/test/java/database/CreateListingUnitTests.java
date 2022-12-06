@@ -106,6 +106,20 @@ public class CreateListingUnitTests {
         }
         // test
         assert result.equals(expected);
+    }
 
+    @Test
+    public void testAddListingUpdatesUserListings() throws IOException {
+        db.createUser("user", "pass", "email");
+        db.createListing("user", "title", 100, LocalDate.EPOCH, "desc", "imagePath");
+        User user = db.getUserWithUsername("user");
+        assert user.getListings().size() == 1;
+        assert user.getListings().get(0).getId() == 0;
+
+        db.createListing("user", "title2", 100, LocalDate.EPOCH, "desc2", "imagePath");
+        user = db.getUserWithUsername("user");
+        assert user.getListings().size() == 2;
+        assert user.getListings().get(0).getId() == 0;
+        assert user.getListings().get(1).getId() == 1;
     }
 }
