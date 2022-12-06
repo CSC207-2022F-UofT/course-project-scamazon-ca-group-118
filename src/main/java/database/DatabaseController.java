@@ -410,7 +410,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     @Override
     public void addReview(User reviewed, int rating) throws IOException {
         User reviewedUser = getUserWithUsername(reviewed.getUsername());
-        ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
+        ArrayList<Integer> reviewedUserRatings = reviewedUser.getREVIEWS();
         reviewedUserRatings.add(rating);
         try {
             File users = new File(USER_TABLE_PATH);
@@ -557,7 +557,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         String password = user.getPassword();
         String email = user.getEmail();
         // convert reviews
-        ArrayList<Integer> rawReviews = user.getReviews();
+        ArrayList<Integer> rawReviews = user.getREVIEWS();
         String reviews = "[";
         for (int i = 0; i < rawReviews.size(); i++) {
             // don't add comma on last iteration
