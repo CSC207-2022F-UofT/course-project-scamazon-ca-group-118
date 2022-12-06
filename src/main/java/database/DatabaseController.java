@@ -243,7 +243,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         userWriter.close();
     }
 
-    // TODO rewrite this shit
     protected void removeListingFromAllCarts(int listingID) throws IOException {
         try {
             FileReader userFile = new FileReader(getUserTablePath());

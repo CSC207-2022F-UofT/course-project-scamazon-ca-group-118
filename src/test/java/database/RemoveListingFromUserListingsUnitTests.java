@@ -1,5 +1,6 @@
 package database;
 
+import com.opencsv.exceptions.CsvException;
 import entities.Listing;
 import entities.User;
 import org.junit.jupiter.api.AfterAll;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class RemoveListingFromUserListingsUnitTests {
     public static final DatabaseController db = new DatabaseController();
@@ -46,7 +48,33 @@ public class RemoveListingFromUserListingsUnitTests {
     }
 
     @Test
-    public void testDeleteListingFromSingleUserListings() {
+    public void testDeleteListingFromSingleUserListings() throws IOException, CsvException {
+        db.createUser("1", "1", "1@1");
+        db.createListing("1", "title", 100, LocalDate.EPOCH, "desc", "imagePath");
+        db.removeListingFromUserListings(0);
+        User user = db.getUserWithUsername("1");
+        assert user.getListings().size() == 0;
+    }
 
+    @Test
+    public void testDeleteMultipleListingsFromSingleUserListings() throws IOException, CsvException {
+        db.createUser("1", "1", "1@1");
+        db.createListing("1", "title1", 100, LocalDate.EPOCH, "desc", "imagePath");
+        db.createListing("1", "title2", 100, LocalDate.EPOCH, "desc", "imagePath");
+        db.createListing("1", "title3", 100, LocalDate.EPOCH, "desc", "imagePath");
+        db.removeListingFromUserListings(0);
+        User user = db.getUserWithUsername("1");
+        assert user.getListings().size() == 2;
+        assert user.getListings().get(0).getId() == 1;
+        assert user.getListings().get(1).getId() == 2;
+
+        db.removeListingFromUserListings(2);
+        user = db.getUserWithUsername("1");
+        assert user.getListings().size() == 1;
+        assert user.getListings().get(0).getId() == 1;
+
+        db.removeListingFromUserListings(1);
+        user = db.getUserWithUsername("1");
+        assert user.getListings().size() == 0;
     }
 }
