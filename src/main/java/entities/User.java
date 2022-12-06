@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class User {
     private ArrayList<Integer> reviews;
     private ArrayList<Listing> listings;
     private Cart cart;
-    private static int nextID = 0;
+    private static int nextId = 0;
 
     public User(int id, String username, String password, String email, ArrayList<Integer> reviews,
                 ArrayList<Listing> listings, Cart cart) {
@@ -27,8 +28,12 @@ public class User {
         this.cart = cart;
     }
 
-    public static int getNextID() {
-        return nextID++;
+    public static int getNextId() {
+        return nextId++;
+    }
+
+    public static void setNextId(int id) {
+        nextId = id;
     }
 
     public String getUsername() {
@@ -82,7 +87,7 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, String image) {
+    public void createListing(String title, float price, String description, String image) throws IOException {
         new ListingCreator().createListing(this, title, price, description, image);
     }
 
@@ -109,34 +114,28 @@ public class User {
         this.getCart().removeItem(listing);
     }
 
-    // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
-//    public void writeReview(User reviewed, int rating) {
-//        new ReviewCreator().createReview(this, reviewed, rating);
-//
-//    }
-//
-//    /**
-//     * Removes a review from this User's list of reviews
-//     *
-//     * @param toBeRemoved the Review to be removed from this User's reviews
-//     */
-//    public void removeReview(Review toBeRemoved) {
-//        this.reviews.remove(toBeRemoved);
-//    }
-//
-//    /**
-//     * Adds a review to this User's list of reviews
-//     *
-//     * @param review the review to be added to this User's reviews
-//     */
-//    public void addReview(Review review) {
-//        this.reviews.add(review);
-//    }
-//
-//
-//    public void removeReview() {
-//    }
-//
+
+    public void writeReview(User reviewed, int rating) {
+        new ReviewCreator().createReview(reviewed, rating);
+    }
+
+    /**
+     * Removes a review from this User's list of reviews
+     *
+     * @param toBeRemoved the Review to be removed from this User's reviews
+     */
+    public void removeReview(int toBeRemoved) {
+        this.reviews.remove(toBeRemoved);
+    }
+
+    /**
+     * Adds a review to this User's list of reviews
+     *
+     * @param review the review to be added to this User's reviews
+     */
+    public void addReview(int review) {
+        this.reviews.add(review);
+    }
 
     /**
      * calculates the average integer rating earned by this User
@@ -144,13 +143,14 @@ public class User {
      *
      * @return the average rating of all this User's reviews
      */
-    public int calculateRating() {
-        double rating = 0;
+    public double calculateRating() {
+        double rating = 0.0;
         for (int review : reviews) {
             rating += review;
         }
         rating /= reviews.size();
-        return (int) rating;
+        rating = (double) (Math.round(rating * 100)) / 100;
+        return rating;
     }
 
     // TODO test

@@ -23,8 +23,8 @@ public class ProfileResponseModel {
      * @param profilePic The user's profilePic.
      * @param reviews The user's reviews about themselves.
      */
-    public ProfileResponseModel(String username, String email, double rating, String profilePic,
-                                ArrayList<Integer> reviews) {
+     
+    public ProfileResponseModel(String username, String email, double rating, String profilePic, ArrayList<Integer> reviews) {
         this.username = username;
         this.email = email;
         this.rating = rating;

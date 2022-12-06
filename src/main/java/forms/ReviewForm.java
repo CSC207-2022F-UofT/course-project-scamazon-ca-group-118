@@ -3,7 +3,8 @@ package forms;
 import useCase.writeReview.ReviewResponseModel;
 import useCase.writeReview.ReviewRequestModel;
 
-import java.io.IOException;
+import java.util.Objects;
+
 
 public class ReviewForm extends Form {
     private final String REVIEWER_USERNAME;
@@ -20,26 +21,33 @@ public class ReviewForm extends Form {
 
     @Override
     protected boolean validateForm() {
-        return this.REVIEWED_USERNAME.length() > 0;
+        return this.REVIEWED_USERNAME.length() > 0 && this.RATING > 0;
     }
 
     @Override
-    protected void submitForm() throws IOException {
+    protected void submitForm(){
         if (this.validateForm()) {
             ReviewRequestModel requestModel = new ReviewRequestModel(REVIEWER_USERNAME,
                     REVIEWED_USERNAME,
                     RATING);
-            responseModel = new ReviewResponseModel(requestModel);
+            if(Objects.isNull(responseModel)){
+                responseModel = new ReviewResponseModel(requestModel);
+            }
         }
     }
 
-    public String getMessage() throws IOException {
+    public String getMessage(){
         this.submitForm();
         if (this.validateForm()) {
             return responseModel.getMessage();
-        } else {
+        } else if (this.REVIEWED_USERNAME.length() == 0) {
             return "Please enter the username of the User you wish to review";
+        } else{
+            return "You must enter a rating";
         }
+    }
 
+    public ReviewResponseModel getResponseModel() {
+        return responseModel;
     }
 }

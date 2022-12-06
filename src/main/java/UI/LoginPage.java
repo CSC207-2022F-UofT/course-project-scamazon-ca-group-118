@@ -111,7 +111,7 @@ public class LoginPage extends Page implements ActionListener {
                 throw new RuntimeException(ex);
             }
         } else if (e.getSource() == REGISTER) {
-            Main.setCurrentPage(new RegisterPage("Register", new RegisterForm("Register")));
+            Main.setCurrentPage(new RegisterPage("Register"));
         }
     }
 

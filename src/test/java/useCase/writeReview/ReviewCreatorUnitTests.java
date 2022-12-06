@@ -23,8 +23,8 @@ public class ReviewCreatorUnitTests {
 
     @Test
     void testReviewCreator() {
-        new ReviewCreator().createReview(user1, user2, 4);
-        //assert user2.getReviews().size() == 1;
-        //assert user2.getReviews().get(0).getReviewer() == user1;
+        new ReviewCreator().createReview(user2, 4);
+        assert user2.getReviews().size() == 1;
+        assert user2.getReviews().get(0) == 4;
     }
 }

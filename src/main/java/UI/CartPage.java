@@ -22,17 +22,20 @@ public class CartPage extends Page implements ActionListener {
     private JLabel priceTotal;
     public Cart itemCart;
 
-
+    /**
+     * Cart Page constructor that creates the CartPage Panel.
+     */
     public CartPage() {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
-        this.setLayout(new GridLayout(1, 2));
+        SpringLayout layout = new SpringLayout();
+        this.setLayout(layout);
         this.itemCart = Main.getCurrentUser().getCart();
 
-        this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        this.setTitle("Scamazon.ca");
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         this.itemTable = this.createItemTable();
         JScrollPane scrollPane = new JScrollPane(this.itemTable);
+        scrollPane.setPreferredSize(new Dimension(500, 500));
 
         //Create appropriate buttons and label
         this.priceTotal = new JLabel("Total Price: $" + itemCart.getPrice());
@@ -42,16 +45,28 @@ public class CartPage extends Page implements ActionListener {
         this.CHECKOUT.addActionListener(this);
 
         //Assign appropriate buttons to new button panel
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 10, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.add(this.REMOVE);
         buttonPanel.add(this.CHECKOUT);
         buttonPanel.add(this.priceTotal);
+        buttonPanel.setPreferredSize(new Dimension(500, 500));
 
-        //Assigning all panes and panels to frame
-        this.add(scrollPane);
+        //Assigning all panes and panels to CartPage Panel
+        layout.putConstraint(SpringLayout.EAST, scrollPane, 120, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.WEST, buttonPanel, 120, SpringLayout.WEST, this);
+
+        layout.putConstraint(SpringLayout.NORTH, scrollPane, 170, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.NORTH, buttonPanel, 170, SpringLayout.NORTH, this);
+
         this.add(buttonPanel);
+        this.add(scrollPane);
     }
 
+    /**
+     * Creates a JTable of all the items in the Users cart.
+     *
+     * @return JTable of the items in cart.
+     */
     public JTable createItemTable() {
         ArrayList<Listing> items = this.itemCart.getItems();
         String[][] data = new String[itemCart.countItems()][];
@@ -68,10 +83,18 @@ public class CartPage extends Page implements ActionListener {
     }
 
 
-    public Page goToCheckout() {
-        return new CheckoutPage();
+    /**
+     * Creates a new instance of CheckoutPage and sets it as the current page.
+     */
+    public void goToCheckout() {
+        Main.setCurrentPage(new CheckoutPage());
     }
 
+    /**
+     * Preforms the removal of a cart item or moves the User to the checkout page based on input e.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.REMOVE) {
