@@ -5,6 +5,7 @@ import entities.Cart;
 import entities.Listing;
 import entities.User;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,9 +21,13 @@ public class CheckUserWithUsernameUnitTests {
     private static final DatabaseController db = new DatabaseController();
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws IOException {
         db.setListingTablePath("src/test/java/database/Listings.csv");
         db.setUserTablePath("src/test/java/database/Users.csv");
+        File usersCSV = new File(db.getUserTablePath());
+        usersCSV.createNewFile();
+        File listingsCSV = new File(db.getListingTablePath());
+        listingsCSV.createNewFile();
     }
 
     @BeforeEach
@@ -35,6 +40,16 @@ public class CheckUserWithUsernameUnitTests {
         if (listingsCSV.delete()) {
             listingsCSV.createNewFile();
         }
+        Listing.setNextId(0);
+        User.setNextId(0);
+    }
+
+    @AfterAll
+    public static void deleteCSVFiles() {
+        File usersCSV = new File(db.getUserTablePath());
+        usersCSV.delete();
+        File listingsCSV = new File(db.getListingTablePath());
+        listingsCSV.delete();
     }
 
     @Test
