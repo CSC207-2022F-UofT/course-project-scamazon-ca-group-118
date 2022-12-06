@@ -30,8 +30,6 @@ public class ListingCreator {
      * @param image        the file path to the listing image
      */
     public void createListing(User seller, String listingTitle, float price, String description, String image) {
-        Listing listing = new Listing(seller, listingTitle, price, description, image);
-        seller.addListing(listing);
         DatabaseController db = new DatabaseController();
         db.createListing(seller.getUsername(), listingTitle, price, LocalDate.now(), description, image);
 
