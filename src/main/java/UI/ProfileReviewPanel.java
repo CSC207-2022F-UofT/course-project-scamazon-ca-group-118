@@ -10,11 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// This class is in the Frameworks & Drivers layer of clean architecture.
+
 /**
- * This is the panel that is used to review another user from the profile page.
+ * This is the GUI that is used to review another user.
  */
 public class ProfileReviewPanel extends JPanel implements ActionListener {
-    private final SpringLayout layout;
+    private final SpringLayout LAYOUT;
     private JTextField usernameReviewed;
     private JPanel usernameInfo;
     private JPanel ratingInfo;
@@ -23,13 +25,12 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
     private JButton submit;
     private JButton reset;
     private JLabel message;
-    private JLabel errorMessage;
 
     /**
      * The constructor for the ProfileReviewPanel.
      */
     public ProfileReviewPanel() {
-        this.layout = new SpringLayout();
+        this.LAYOUT = new SpringLayout();
         setUpPanel();
         setUpLayout();
     }
@@ -39,7 +40,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
      * adding them to the ProfileReviewPanel.
      */
     private void setUpPanel() {
-        this.setLayout(layout);
+        this.setLayout(LAYOUT);
         this.setPreferredSize(new Dimension(640, 400));
 
         JLabel usernameLabel = new JLabel("Username of the user you wish to review: ");
@@ -50,7 +51,6 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
 
         ratingChosen = new JLabel("");
         message = new JLabel("");
-        errorMessage = new JLabel("");
 
         JLabel ratingLabel = new JLabel("Give them a rating between 1 and 5: ");
         RatingButton rating1 = new RatingButton("1");
@@ -85,24 +85,21 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         this.add(submit);
         this.add(reset);
         this.add(message);
-        this.add(errorMessage);
     }
 
     /**
      * This aligns each JLabel, JButton, and JPanel so that they are placed correctly within the ProfileReviewPanel.
      */
     private void setUpLayout() {
-        layout.putConstraint(SpringLayout.NORTH, usernameInfo, 0, SpringLayout.NORTH, this);
-        layout.putConstraint(SpringLayout.NORTH, ratingInfo, 10, SpringLayout.SOUTH, usernameInfo);
-        layout.putConstraint(SpringLayout.NORTH, ratingChosen, 0, SpringLayout.SOUTH, ratingInfo);
-        layout.putConstraint(SpringLayout.WEST, ratingChosen, 5, SpringLayout.WEST, ratingInfo);
-        layout.putConstraint(SpringLayout.NORTH, submit, 30, SpringLayout.SOUTH, ratingInfo);
-        layout.putConstraint(SpringLayout.NORTH, reset, 30, SpringLayout.SOUTH, ratingInfo);
-        layout.putConstraint(SpringLayout.WEST, reset, 20, SpringLayout.EAST, submit);
-        layout.putConstraint(SpringLayout.NORTH, message, 15, SpringLayout.SOUTH, submit);
-        layout.putConstraint(SpringLayout.WEST, message, 5, SpringLayout.WEST, ratingInfo);
-        layout.putConstraint(SpringLayout.NORTH, errorMessage, 15, SpringLayout.SOUTH, submit);
-        layout.putConstraint(SpringLayout.WEST, errorMessage, 5, SpringLayout.WEST, ratingInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, usernameInfo, 0, SpringLayout.NORTH, this);
+        LAYOUT.putConstraint(SpringLayout.NORTH, ratingInfo, 10, SpringLayout.SOUTH, usernameInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, ratingChosen, 0, SpringLayout.SOUTH, ratingInfo);
+        LAYOUT.putConstraint(SpringLayout.WEST, ratingChosen, 5, SpringLayout.WEST, ratingInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, submit, 30, SpringLayout.SOUTH, ratingInfo);
+        LAYOUT.putConstraint(SpringLayout.NORTH, reset, 30, SpringLayout.SOUTH, ratingInfo);
+        LAYOUT.putConstraint(SpringLayout.WEST, reset, 20, SpringLayout.EAST, submit);
+        LAYOUT.putConstraint(SpringLayout.NORTH, message, 15, SpringLayout.SOUTH, submit);
+        LAYOUT.putConstraint(SpringLayout.WEST, message, 5, SpringLayout.WEST, ratingInfo);
     }
 
     /**
@@ -122,15 +119,20 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
             ratingChosen.setText("");
             message.setText("");
         } else if (e.getSource() == submit) {
-            String username = usernameReviewed.getText();
-            ReviewForm form = new ReviewForm(Main.getCurrentUser().getUsername(), username, rating);
-            try {
-                message.setText(new ReviewPresenter(form).getMessage());
-                rating = 0;
-                usernameReviewed.setText("");
-                ratingChosen.setText("");
-            } catch (IOException exception) {
-                // TODO IDK yet
+            String reviewerUsername = Main.getCurrentUser().getUsername();
+            String reviewedUsername = usernameReviewed.getText();
+            if (reviewerUsername.equals(reviewedUsername)) {
+                message.setText("You can't review yourself.");
+            } else {
+                ReviewForm form = new ReviewForm(reviewerUsername, reviewedUsername, rating);
+                try {
+                    message.setText(new ReviewPresenter(form).getMessage());
+                    rating = 0;
+                    usernameReviewed.setText("");
+                    ratingChosen.setText("");
+                } catch (IOException exception) {
+                    // TODO I'm not sure yet if this try-catch is necessary.
+                }
             }
         }
     }

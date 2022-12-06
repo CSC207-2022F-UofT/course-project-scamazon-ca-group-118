@@ -4,6 +4,9 @@ import entities.User;
 
 import java.io.IOException;
 
+/**
+ * This is the gateway for the review use case.
+ */
 public interface ReviewDatabaseGateway {
     /**
      * should retrieve the User with the specified username from the database, or an empty User if no user has

@@ -6,11 +6,15 @@ import java.io.IOException;
 
 // This class is in the application business rules layer of clean architecture.
 
+/**
+ * This is the ProfileInteractor for the display profile page use case which gets the user from the database using the
+ * gateway and passing the response model returned to the profile presenter through the ProfileOutputBoundary.
+ */
 public class ProfileInteractor implements ProfileInputBoundary {
-    // Note: I use ReviewDatabaseGateway because it has the same methods the ProfilePage needs.
+    // Note: I use ReviewDatabaseGateway because it has the same methods the ProfilePage needs, and it would
+    // be redundant to have two gateways with the same methods.
     private final ReviewDatabaseGateway gateway;
     private final ProfileOutputBoundary output;
-    // TODO do we need a User or UserFactory attribute here?
 
     /**
      * The ProfileInteractor constructor which assigns the gateway and output boundary needed to carry out the use case.
@@ -23,24 +27,27 @@ public class ProfileInteractor implements ProfileInputBoundary {
     }
 
     /**
-     *
+     * This uses the ProfileRequestModel and creates the ProfileResponseModel and passes it to the ProfilePresenter.
      * @param requestModel The request model instantiated by the user.
      * @return The ProfileResponseModel needed to display the profile page.
      */
     @Override
-    public ProfileResponseModel create(ProfileRequestModel requestModel){
+    public ProfileResponseModel create(ProfileRequestModel requestModel) {
         try {
             String username = requestModel.getUsername();
             User user = gateway.getUserWithUsername(username);
            /* TODO user.getProfilePic is not in user as of right now so we can add it as a field or not have a
                profile picture. */
-            ProfileResponseModel responseModel = new ProfileResponseModel(username, user.getEmail(),
-                    user.calculateRating(), "", user.getReviews());
-            return output.displaySuccess(responseModel);
+            if (user.equals(null)) {
+                return output.displayFail("This user does not exist");
+            } else {
+                ProfileResponseModel responseModel = new ProfileResponseModel(username, user.getEmail(),
+                        user.calculateRating(), "", user.getReviews());
+                return output.displaySuccess(responseModel);
+            }
         } catch (IOException error) {
-            return output.displayFail("No such user exists with given username.");
+            return output.displayFail("Something went wrong.");
         }
-
     }
 }
 

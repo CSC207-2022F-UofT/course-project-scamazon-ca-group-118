@@ -2,15 +2,19 @@ package useCase.displayProfile;
 
 // This class is in the interface adapters layer of clean architecture.
 
+/**
+ * This is the controller used for the display profile page use case which is used to pass the necessary request model
+ * to the ProfileInteractor through the ProfileInputBoundary.
+ */
 public class ProfileController {
-    private final ProfileInputBoundary input;
+    private final ProfileInputBoundary INPUT;
 
     /**
      * The constructor for the ProfileController which sets the given input boundary to the controller object.
      * @param input The ProfileInputBoundary for calling the profile interactor.
      */
     public ProfileController(ProfileInputBoundary input) {
-        this.input = input;
+        this.INPUT = input;
     }
 
     /**
@@ -20,6 +24,6 @@ public class ProfileController {
      */
     public ProfileResponseModel createRequest(String username) {
         ProfileRequestModel requestModel = new ProfileRequestModel(username);
-        return input.create(requestModel);
+        return INPUT.create(requestModel);
     }
 }
