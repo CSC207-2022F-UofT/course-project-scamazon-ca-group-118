@@ -4,14 +4,18 @@ import entities.Listing;
 import database.DatabaseController;
 import forms.SearchForm;
 import useCase.Search.SearchResponseModel;
+import useCase.login.LoginResponseModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class ListingListPage extends Page implements ActionListener {
@@ -34,7 +38,7 @@ public class ListingListPage extends Page implements ActionListener {
         setUpPanel(allListings);
     }
 
-    private void setUpPanel(List<Listing> listings) {
+    private void setUpPanel(List<Listing> listings) throws IOException {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setLayout(LAYOUT);
         this.displayedListings = listings;
@@ -51,7 +55,7 @@ public class ListingListPage extends Page implements ActionListener {
 
         //LAYOUT FOR PANEL
         //align SearchBar and titleLabel near the middle
-        LAYOUT.putConstraint(SpringLayout.WEST, SearchBar, 500, SpringLayout.WEST, this);
+        LAYOUT.putConstraint(SpringLayout.WEST, SearchBar, 350, SpringLayout.WEST, this);
         LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 0, SpringLayout.WEST, SearchBar);
 
         //align SearchBar and titleLabel vertically
@@ -68,8 +72,11 @@ public class ListingListPage extends Page implements ActionListener {
             listingDetails.addActionListener(this);
             buttons.add(listingDetails);
             JLabel resultPrice = new JLabel("Price: " + listing.getPrice());
-            JLabel resultImage = new JLabel(listing.getImagePath());
-            JLabel resultDescription = new JLabel(listing.getDescription());
+            String filepath = listing.getImagePath();
+            BufferedImage rawImage = ImageIO.read(new File(filepath));
+            Image scaled_image = rawImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            JLabel resultImage = new JLabel(new ImageIcon(scaled_image));
+            JLabel resultDescription = new JLabel("<html>" + listing.getDescription() + "<html/>");
             JLabel resultDate = new JLabel(listing.getDate().toString());
 
             //creating individual ListingPanel element
@@ -98,11 +105,14 @@ public class ListingListPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
-            SearchForm form = new SearchForm(jtSearch.getText(), controller);
-            SearchResponseModel responseModel = form.getResponseModel();
-            ArrayList<Listing> searchListings = responseModel.getListings();
-            setUpPanel(searchListings);
-
+            try {
+                SearchForm form = new SearchForm(jtSearch.getText(), controller);
+                SearchResponseModel responseModel = form.getResponseModel();
+                ArrayList<Listing> searchListings = responseModel.getListings();
+                setUpPanel(searchListings);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } else if (buttons.contains(e.getSource())) {
             String title = "";
             for (JButton button : buttons) {
@@ -113,7 +123,11 @@ public class ListingListPage extends Page implements ActionListener {
             }
             for (Listing listing : displayedListings) {
                 if (Objects.equals(listing.getTitle(), title)) {
-                    Main.setCurrentPage(new ListingDetailPage(listing));
+                    try {
+                        Main.setCurrentPage(new ListingDetailPage(listing));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     break;
                 }
             }
