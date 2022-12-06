@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ProfileResponseModel {
     private String username;
     private String email;
-    private int rating;
+    private double rating;
     private String profilePic;
     private ArrayList<Integer> reviews;
 
@@ -20,7 +20,7 @@ public class ProfileResponseModel {
      * @param profilePic The user's profilePic.
      * @param reviews The user's reviews about themselves.
      */
-    public ProfileResponseModel(String username, String email, int rating, String profilePic, ArrayList<Integer> reviews) {
+    public ProfileResponseModel(String username, String email, double rating, String profilePic, ArrayList<Integer> reviews) {
         this.username = username;
         this.email = email;
         this.rating = rating;
@@ -44,7 +44,7 @@ public class ProfileResponseModel {
         this.email = newEmail;
     }
 
-    public int getRating() {
+    public double getRating() {
         return this.rating;
     }
 
