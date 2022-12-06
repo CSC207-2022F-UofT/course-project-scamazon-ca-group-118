@@ -93,7 +93,17 @@ public class User {
 
 
     public void removeListing(Listing listing) {
-        listings.remove(listing);
+        int indexToRemove = -1;
+        for (int i = 0; i < getListings().size(); i++) {
+            if (getListings().get(i).getId() == listing.getId()) {
+                indexToRemove = i;
+            }
+        }
+        if (indexToRemove > -1) {
+            listings = getListings();
+            listings.remove(indexToRemove);
+            setListings(listings);
+        }
     }
 
     /**
