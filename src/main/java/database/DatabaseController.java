@@ -184,7 +184,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                 Listing listingObject = createListingObject(listingString.substring(0, listingString.length() - 1));
                 if (listingObject.getId() == ID) {
                     removeListingFromAllCarts(ID);
-                    // removeListingFromUserListings(ID); TODO: implement
+                    // removeListingFromUserListings(listingObject); TODO: implement
                     continue;
                 }
                 String newListingString = createListingString(listingObject);
@@ -208,8 +208,43 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
+    protected void removeListingFromUserListings(int id) throws IOException, CsvException {
+        Listing listing = getListingByID(id);
+
+        // update the user's listing array in users.csv
+        FileReader userFile = new FileReader(getUserTablePath());
+        CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+        CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
+        List<String[]> csvBody = reader.readAll();
+        int currRow = 0;
+        for (String[] currLine : csvBody) {
+            String userString = "";
+            for (String field : currLine) {
+                userString = userString + field + ";";
+            }
+            User userObject = createUserObject(userString.substring(0, userString.length() - 1));
+            if (userObject.getUsername().equals(listing.getSellerUsername())) {
+                userObject.removeListing(listing);
+                String newUserString = createUserString(userObject);
+                csvBody.set(currRow, newUserString.split(";"));
+                break;
+            }
+            currRow++;
+        }
+        reader.close();
+
+        FileWriter userFileWriter = new FileWriter(getUserTablePath());
+        CSVWriter userWriter = new CSVWriter(userFileWriter, ';',
+                CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END);
+        userWriter.writeAll(csvBody);
+        userWriter.flush();
+        userWriter.close();
+    }
+
     // TODO rewrite this shit
-    private void removeListingFromAllCarts(int listingID) {
+    protected void removeListingFromAllCarts(int listingID) {
         try {
             BufferedReader file = new BufferedReader(new FileReader(USER_TABLE_PATH));
             StringBuffer inputBuffer = new StringBuffer();
