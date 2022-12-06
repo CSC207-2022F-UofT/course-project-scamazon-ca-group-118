@@ -34,7 +34,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @throws IOException in case of IOException
      */
 
-    boolean checkUserWithUsername(String username) throws IOException {
+    public boolean checkUserWithUsername(String username) throws IOException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             String currLine;
@@ -48,9 +48,23 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         } catch (IOException e) {
             throw new IOException(e);
         }
-
     }
 
+    public boolean checkUserWithEmail(String email) throws IOException {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
+            String currLine;
+            while ((currLine = reader.readLine()) != null) {
+                User userObject = createUserObject(currLine);
+                if (email.equals(userObject.getEmail())) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+    }
 
     /**
      * Helper method that gets all listings for a certain user
