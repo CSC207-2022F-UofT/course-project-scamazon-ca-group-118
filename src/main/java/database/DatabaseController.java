@@ -265,8 +265,9 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @param description    description of item
      * @param imagePath      image of item
      **/
-    public void createListing(String sellerUsername, String listingTitle, float price, LocalDate dateAdded, String description, String imagePath) {
+    public void createListing(String sellerUsername, String listingTitle, float price, LocalDate dateAdded, String description, String imagePath) throws IOException {
         try {
+            // write the listing into listings.csv
             FileWriter outputFile = new FileWriter(LISTING_TABLE_PATH, true);
             CSVWriter writer = new CSVWriter(outputFile, ';',
                     CSVWriter.NO_QUOTE_CHARACTER,
@@ -277,7 +278,38 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             String[] listingStringArray = createListingString(listing).split(";");
             writer.writeNext(listingStringArray);
             writer.close();
-        } catch (IOException e) {
+
+            // update the user's listing array in users.csv
+            FileReader userFile = new FileReader(getUserTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
+            List<String[]> csvBody = reader.readAll();
+            int currRow = 0;
+            for (String[] currLine : csvBody) {
+                String userString = "";
+                for (String field : currLine) {
+                    userString = userString + field + ";";
+                }
+                User userObject = createUserObject(userString.substring(0, userString.length() - 1));
+                if (userObject.getUsername().equals(sellerUsername)) {
+                    userObject.addListing(listing);
+                    String newUserString = createUserString(userObject);
+                    csvBody.set(currRow, newUserString.split(";"));
+                    break;
+                }
+                currRow++;
+            }
+            reader.close();
+
+            FileWriter userFileWriter = new FileWriter(getUserTablePath());
+            CSVWriter userWriter = new CSVWriter(userFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            userWriter.writeAll(csvBody);
+            userWriter.flush();
+            userWriter.close();
+        } catch (IOException | CsvException e) {
             throw new RuntimeException(e);
         }
     }
@@ -661,7 +693,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 
     // we need these methods for testing
