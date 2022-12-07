@@ -1,6 +1,8 @@
 package UI;
 import Main.Main;
+import entities.Listing;
 import forms.CreateListingForm;
+import useCase.createListing.CreateListingPresenter;
 
 
 import javax.imageio.ImageIO;
@@ -146,13 +148,13 @@ public class CreateListingPage extends Page{
 
                 String listingDesc = desc_text.getText();
                 CreateListingForm form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, filePath + "/" + fileName);
-
+                CreateListingPresenter pres = null;
                 try {
-                    responseModel = form.getMessage();
+                    pres = new CreateListingPresenter(form);
                 } catch (IOException ex) {
-                    responseModel = "Response model error";
                     throw new RuntimeException(ex);
                 }
+                responseModel = pres.getMessage();
 
                 responseText.setText("<html>"+ responseModel +"</html>");
                 if(responseModel.equals("Listing Created!")){
