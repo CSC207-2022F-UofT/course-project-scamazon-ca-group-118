@@ -10,20 +10,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class RegisterPage extends Page implements ActionListener{
-    //Components of the form
-    private JLabel title;
-    private JLabel name;
     private JTextField input_name;
-    private JLabel email;
     private JTextField input_email;
-    private JLabel password;
     private JTextField input_password;
-    private JLabel confirmPass;
     private JTextField input_confirmPass;
     private JButton sub;
     private JButton reset;
     private JLabel res;
-    private RegisterForm form;
 
     public RegisterPage(String title) {
         super(title);
@@ -32,13 +25,14 @@ public class RegisterPage extends Page implements ActionListener{
     }
 
     private void setUpPage() {
-        title = new JLabel("Registration Form");
+        //Components of the form
+        JLabel title = new JLabel("Registration Form");
         title.setFont(new Font("Arial", Font.PLAIN, 30));
         title.setSize(300, 30);
         title.setLocation(550, 150);
         this.add(title);
 
-        name = new JLabel("Username");
+        JLabel name = new JLabel("Username");
         name.setFont(new Font("Arial", Font.PLAIN, 17));
         name.setSize(100, 20);
         name.setLocation(500, 250);
@@ -50,7 +44,7 @@ public class RegisterPage extends Page implements ActionListener{
         input_name.setLocation(650, 250);
         this.add(input_name);
 
-        email = new JLabel("Email");
+        JLabel email = new JLabel("Email");
         email.setFont(new Font("Arial", Font.PLAIN, 17));
         email.setSize(100, 20);
         email.setLocation(500, 300);
@@ -62,7 +56,7 @@ public class RegisterPage extends Page implements ActionListener{
         input_email.setLocation(650, 300);
         this.add(input_email);
 
-        password = new JLabel("Password");
+        JLabel password = new JLabel("Password");
         password.setFont(new Font("Arial", Font.PLAIN, 17));
         password.setSize(100, 20);
         password.setLocation(500, 350);
@@ -74,7 +68,7 @@ public class RegisterPage extends Page implements ActionListener{
         input_password.setLocation(650, 350);
         this.add(input_password);
 
-        confirmPass = new JLabel("Confirm Password");
+        JLabel confirmPass = new JLabel("Confirm Password");
         confirmPass.setFont(new Font("Arial", Font.PLAIN, 17));
         confirmPass.setSize(150, 20);
         confirmPass.setLocation(500, 400);
@@ -115,9 +109,9 @@ public class RegisterPage extends Page implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sub) {
             try{
-                this.form = new RegisterForm(this.getTitle(), input_email.getText(), input_name.getText(),
+                RegisterForm form = new RegisterForm(this.getTitle(), input_email.getText(), input_name.getText(),
                         input_password.getText(), input_confirmPass.getText());
-                RegisterResponseModel response = this.form.getResponseModel();
+                RegisterResponseModel response = form.getResponseModel();
                 res.setText(response.getMessage());
             }catch (RegisterFailed error){
                 res.setText(error.getMessage());
@@ -135,5 +129,4 @@ public class RegisterPage extends Page implements ActionListener{
     }
 }
 
-//submit page override
 

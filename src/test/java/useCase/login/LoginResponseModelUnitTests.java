@@ -21,13 +21,14 @@ public class LoginResponseModelUnitTests {
         responseModel.getInteractor().setUser(clare);
         responseModel.getInteractor().setUserExists(true);
         responseModel.refreshUser();
-        assert (responseModel.getUser().getUsername().equals("clare"));
-        assert (responseModel.getUser().getPassword().equals("12345"));
-        assert (responseModel.getUser().getID() == 1);
-        assert (responseModel.getUser().getEmail().equals("clare@gmail.com"));
-        assert (responseModel.getUser().getReviews().isEmpty());
-        assert (responseModel.getUser().getListings().isEmpty());
-        assert(responseModel.getUser().getCart().countItems() == 0);
+        User user = responseModel.getUser();
+        assert (user.getUsername().equals("clare"));
+        assert (user.getPassword().equals("12345"));
+        assert (user.getID() == 1);
+        assert (user.getEmail().equals("clare@gmail.com"));
+        assert (user.getREVIEWS().isEmpty());
+        assert (user.getListings().isEmpty());
+        assert(user.getCart().countItems() == 0);
     }
 
     @Test

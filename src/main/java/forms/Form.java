@@ -1,9 +1,8 @@
 package forms;
 
-import javax.swing.*;
 import java.io.IOException;
 
-public abstract class Form extends JFrame {
+public abstract class Form {
     private String title;
 
     public Form(String title) {

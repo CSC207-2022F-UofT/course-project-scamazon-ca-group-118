@@ -9,7 +9,7 @@ import entities.User;
  */
 public class LoginResponseModel {
     private User user;
-    private LoginInteractor interactor;
+    private final LoginInteractor INTERACTOR;
 
     /**
      * A constructor for the LoginResponseModel
@@ -18,12 +18,12 @@ public class LoginResponseModel {
      *                     necessary data for this LoginResponseModel
      */
     public LoginResponseModel(LoginRequestModel requestModel) {
-        this.interactor = new LoginInteractor(requestModel.getUsername(), requestModel.getEnteredPassword());
+        this.INTERACTOR = new LoginInteractor(requestModel.getUsername(), requestModel.getEnteredPassword());
     }
 
     public User getUser() {
-        if (interactor.shouldLogin()) {
-            this.user = interactor.getUser();
+        if (INTERACTOR.shouldLogin()) {
+            this.user = INTERACTOR.getUser();
         }
         return this.user;
     }
@@ -34,11 +34,11 @@ public class LoginResponseModel {
     }
 
     public LoginInteractor getInteractor(){
-        return this.interactor;
+        return this.INTERACTOR;
     }
     public void refreshUser(){
-        if (interactor.shouldLogin()) {
-            this.user = interactor.getUser();
+        if (INTERACTOR.shouldLogin()) {
+            this.user = INTERACTOR.getUser();
         }
     }
 
