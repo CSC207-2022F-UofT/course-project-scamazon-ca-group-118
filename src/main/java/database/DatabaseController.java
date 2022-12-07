@@ -705,7 +705,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     public boolean currentUserHasListingInCart(User currentUser, Listing listing) throws IOException {
         ArrayList<Listing> currCart = currentUser.getCart().getItems();
         for (Listing listingInCurrCart : currCart) {
-            if (listingInCurrCart == listing) {
+            if (listingInCurrCart.equals(listing)) {
                 return true;
             }
         }
