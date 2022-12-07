@@ -2,6 +2,8 @@ package database;
 
 import entities.User;
 
+import java.util.Objects;
+
 /**
  * Represents a UserExists class that will be used to check if a given user is not null i.e. exists
  */
@@ -23,11 +25,6 @@ public class UserExists {
      * @return true iff the user passed to the constructor is not null
      */
     public boolean checkExists() {
-        try{
-            this.user.getPassword();
-            return true;
-        }catch(NullPointerException e){
-            return false;
-        }
+        return !Objects.isNull(this.user);
     }
 }

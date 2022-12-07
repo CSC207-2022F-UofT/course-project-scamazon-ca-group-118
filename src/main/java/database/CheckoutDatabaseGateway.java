@@ -1,5 +1,6 @@
 package database;
 
+import com.opencsv.exceptions.CsvException;
 import entities.Cart;
 import entities.User;
 
@@ -10,5 +11,5 @@ public interface CheckoutDatabaseGateway {
     /**
      * given the current user, remove all the listings after someone checks out
      */
-    void checkoutRemoveListings() throws IOException;
+    void checkoutRemoveListings() throws IOException, CsvException;
 }

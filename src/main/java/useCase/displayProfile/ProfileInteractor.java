@@ -35,7 +35,7 @@ public class ProfileInteractor implements ProfileInputBoundary {
            /* TODO user.getProfilePic is not in user as of right now so we can add it as a field or not have a
                profile picture. */
             ProfileResponseModel responseModel = new ProfileResponseModel(username, user.getEmail(),
-                    user.calculateRating(), "", user.getReviews());
+                    user.calculateRating(), "", user.getREVIEWS());
             return output.displaySuccess(responseModel);
         } catch (IOException error) {
             return output.displayFail("No such user exists with given username.");

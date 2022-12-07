@@ -1,9 +1,6 @@
 package UI;
 
-import Main.Main;
 import forms.CheckoutForm;
-import useCase.checkout.CheckoutResponseModel;
-import useCase.login.LoginResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,15 +9,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Objects;
 
 public class CheckoutPage extends Page implements ActionListener {
     private final JButton SUBMIT = new JButton("Submit");
-    private JTextField jtName = new JTextField(16);
-    private JTextField jtCardNumber = new JTextField(16);
-    private JTextField jtCVV = new JTextField(16);
-    private JTextField jtExpiration = new JTextField(16);
-    private JTextField jtAddress = new JTextField(15);
+    private final JTextField JT_NAME = new JTextField(16);
+    private final JTextField JT_CARD_NUMBER = new JTextField(16);
+    private final JTextField JT_CVV = new JTextField(16);
+    private final JTextField JT_EXPIRATION = new JTextField(16);
+    private final JTextField JV_ADDRESS = new JTextField(15);
     private final SpringLayout LAYOUT;
     private LabelTextPanel nameInfo;
     private LabelTextPanel cardNumberInfo;
@@ -53,11 +49,11 @@ public class CheckoutPage extends Page implements ActionListener {
         titleLabel = new JLabel("Checkout");
 
         //LabelTextPanels
-        nameInfo = new LabelTextPanel(nameLabel, jtName);
-        cardNumberInfo = new LabelTextPanel(cardNumberLabel, jtCardNumber);
-        cvvInfo = new LabelTextPanel(cvvLabel, jtCVV);
-        expirationInfo = new LabelTextPanel(expirationLabel, jtExpiration);
-        addressInfo = new LabelTextPanel(addressLabel, jtAddress);
+        nameInfo = new LabelTextPanel(nameLabel, JT_NAME);
+        cardNumberInfo = new LabelTextPanel(cardNumberLabel, JT_CARD_NUMBER);
+        cvvInfo = new LabelTextPanel(cvvLabel, JT_CVV);
+        expirationInfo = new LabelTextPanel(expirationLabel, JT_EXPIRATION);
+        addressInfo = new LabelTextPanel(addressLabel, JV_ADDRESS);
 
         //add all elements to the panel
         this.add(titleLabel);
@@ -94,12 +90,16 @@ public class CheckoutPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
             try {
-                CheckoutForm form = new CheckoutForm(jtName.getText(), jtCardNumber.getText(), jtCVV.getText(),
-                        LocalDate.parse(jtExpiration.getText()), jtAddress.getText());
+                CheckoutForm form = new CheckoutForm(JT_NAME.getText(), JT_CARD_NUMBER.getText(), JT_CVV.getText(),
+                        LocalDate.parse(JT_EXPIRATION.getText()), JV_ADDRESS.getText());
                 form.getResponseModel();
+                String message = form.getMessage();
+                if(!message.equals("")) {
+                    JOptionPane.showMessageDialog(new JFrame(), message);
+                }
             }
             catch (DateTimeParseException error) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
+                JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
             }
             catch (IOException ex) {
                 throw new RuntimeException(ex);
