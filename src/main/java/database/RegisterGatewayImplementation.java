@@ -4,14 +4,7 @@ import java.io.IOException;
 
 public class RegisterGatewayImplementation implements RegisterDatabaseGateway{
 
-    private String email;
-    private String username;
-    private String password;
-
-    public RegisterGatewayImplementation(String email, String username, String password){
-        this.email = email;
-        this.username = username;
-        this.password = password;
+    public RegisterGatewayImplementation(){
     }
 
     @Override

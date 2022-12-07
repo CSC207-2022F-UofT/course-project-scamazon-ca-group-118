@@ -30,7 +30,7 @@ public class ReviewInteractorUnitTests {
         interactor.setReviewer(user1);
         interactor.setReviewed(user2);
         assert interactor.getMessage().equals("Review Successful");
-        assert user2.getReviews().get(0) == 4;
+        assert user2.getREVIEWS().get(0) == 4;
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ReviewInteractorUnitTests {
         ReviewInteractor interactor = new ReviewInteractor(requestModel);
         interactor.setReviewer(user1);
         assert interactor.getMessage().equals("Review Unsuccessful: No User exists with this username");
-        assert user2.getReviews().size() == 0;
+        assert user2.getREVIEWS().size() == 0;
     }
 }
 

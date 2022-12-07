@@ -476,6 +476,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     // TODO: test
     @Override
     public void addReview(User reviewed, int rating) throws RuntimeException {
+
         try {
             User reviewedUser = getUserWithUsername(reviewed.getUsername());
             ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
@@ -633,7 +634,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         String password = user.getPassword();
         String email = user.getEmail();
         // convert reviews
-        ArrayList<Integer> rawReviews = user.getReviews();
+        ArrayList<Integer> rawReviews = user.getREVIEWS();
         String reviews = "[";
         for (int i = 0; i < rawReviews.size(); i++) {
             // don't add comma on last iteration
