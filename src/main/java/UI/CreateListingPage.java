@@ -1,6 +1,7 @@
 package UI;
 import Main.Main;
 import forms.CreateListingForm;
+import useCase.createListing.CreateListingPresenter;
 
 
 import javax.imageio.ImageIO;
@@ -19,7 +20,7 @@ public class CreateListingPage extends Page{
         private final JLabel price_label = new JLabel("Listing Price:");
         private final JTextField price_text = new JTextField();
 
-        private JLabel responseText = new JLabel();
+        private final JLabel RESPONSE_TEXT = new JLabel();
         private final JLabel desc_label = new JLabel("Listing Description:");
         private final JTextField desc_text = new JTextField();
         private final JLabel img_label = new JLabel("Images: ");
@@ -72,10 +73,10 @@ public class CreateListingPage extends Page{
             this.add(price_text);
 
 
-            responseText.setSize(250, 100);
-            responseText.setLocation(900, 250);
-            responseText.setFont(new Font("Arial", Font.PLAIN, 20));
-            this.add(responseText);
+            RESPONSE_TEXT.setSize(250, 100);
+            RESPONSE_TEXT.setLocation(900, 250);
+            RESPONSE_TEXT.setFont(new Font("Arial", Font.PLAIN, 20));
+            this.add(RESPONSE_TEXT);
 
             desc_label.setSize(250, 30);
             desc_label.setLocation(350, 300);
@@ -145,8 +146,12 @@ public class CreateListingPage extends Page{
 
 
                 String listingDesc = desc_text.getText();
+
+                
+                CreateListingPresenter pres;
+
                 CreateListingForm form;
-                if((filePath == "" && fileName == "") || (filePath == null && fileName == null)){
+                if(filePath.equals("") && fileName.equals("")){
                     form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, "images/noimage.jpg");
 
                 }
@@ -154,15 +159,14 @@ public class CreateListingPage extends Page{
                     form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, filePath + "/" + fileName);
                 }
 
-
                 try {
-                    responseModel = form.getMessage();
+                    pres = new CreateListingPresenter(form);
                 } catch (IOException ex) {
-                    responseModel = "Response model error";
                     throw new RuntimeException(ex);
                 }
+                responseModel = pres.getMessage();
 
-                responseText.setText("<html>"+ responseModel +"</html>");
+                RESPONSE_TEXT.setText("<html>"+ responseModel +"</html>");
                 if(responseModel.equals("Listing Created!")){
                     listing_text.setText("");
                     price_text.setText("");

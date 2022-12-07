@@ -1,9 +1,8 @@
-//package useCase.Register;
+// package useCase.Register;
 //
-//import org.junit.jupiter.api.Test;
+// import org.junit.jupiter.api.Test;
 //
-//public class RegisterResponseModelUnitTests {
-//
-//    @Test
-//    void TestLoginWithNoUsername
-//}
+// public class RegisterResponseModelUnitTests {
+//     @Test
+//     void TestLoginWithNoUsername
+// }

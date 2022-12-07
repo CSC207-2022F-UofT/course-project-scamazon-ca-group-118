@@ -7,14 +7,14 @@ import java.io.IOException;
 /**
  * The presenter class for creating a listing
  */
-public class ListingPresenter {
+public class CreateListingPresenter {
     private String message;
     /**
      * The constructor for the ListingPresenter
      *
      * @param form the form from which this presenter retrieves a message
      */
-    public ListingPresenter(CreateListingForm form) throws IOException {
+    public CreateListingPresenter(CreateListingForm form) throws IOException {
         this.message = form.getMessage();
     }
 

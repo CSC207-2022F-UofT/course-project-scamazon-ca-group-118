@@ -1,9 +1,7 @@
 package database;
 
 import com.opencsv.CSVWriter;
-import entities.Cart;
-import entities.Listing;
-import entities.User;
+import com.opencsv.exceptions.CsvException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.BeforeAll;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RemoveListingUnitTests {
@@ -51,13 +48,13 @@ public class RemoveListingUnitTests {
     }
 
     @Test
-    public void testRemoveSingleListing() throws IOException {
+    public void testRemoveSingleListing() throws IOException, CsvException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END);
-        List<String[]> listingData = new ArrayList<String[]>();
+        List<String[]> listingData = new ArrayList<>();
         listingData.add(new String[]{"0", "currUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
         listingWriter.writeAll(listingData);
         listingWriter.close();
@@ -65,24 +62,24 @@ public class RemoveListingUnitTests {
         db.removeListing(0);
         BufferedReader reader = new BufferedReader(new FileReader(db.getListingTablePath()));
         String expected = "";
-        String result = "";
+        StringBuilder result = new StringBuilder();
         String currLine;
         while ((currLine = reader.readLine()) != null) {
-            result += currLine;
+            result.append(currLine);
         }
 
         // test
-        assert result.equals(expected);
+        assert result.toString().equals(expected);
     }
 
     @Test
-    public void testRemoveSingleListingOneRemains() throws IOException {
+    public void testRemoveSingleListingOneRemains() throws IOException, CsvException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END);
-        List<String[]> listingData = new ArrayList<String[]>();
+        List<String[]> listingData = new ArrayList<>();
         listingData.add(new String[]{"0", "currUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
         listingData.add(new String[]{"1", "sellerUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
         listingWriter.writeAll(listingData);
@@ -103,13 +100,13 @@ public class RemoveListingUnitTests {
     }
 
     @Test
-    public void testRemoveTwoListingsInARow() throws IOException {
+    public void testRemoveTwoListingsInARow() throws IOException, CsvException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END);
-        List<String[]> listingData = new ArrayList<String[]>();
+        List<String[]> listingData = new ArrayList<>();
         listingData.add(new String[]{"0", "currUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
         listingData.add(new String[]{"1", "sellerUser", "title", "100", db.convertLocalDateToStringDate(LocalDate.EPOCH), "description", "imagePath"});
         listingWriter.writeAll(listingData);
@@ -129,6 +126,4 @@ public class RemoveListingUnitTests {
         // test
         assert result.equals(expected);
     }
-
-
 }
