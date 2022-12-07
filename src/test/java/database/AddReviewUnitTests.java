@@ -51,8 +51,8 @@ public class AddReviewUnitTests {
         User user = db.getUserWithUsername("test");
         db.addReview(user, 4);
         user = db.getUserWithUsername("test");
-        assert user.getReviews().size() == 1;
-        assert user.getReviews().get(0) == 4;
+        assert user.getREVIEWS().size() == 1;
+        assert user.getREVIEWS().get(0) == 4;
     }
 
     @Test
@@ -62,8 +62,8 @@ public class AddReviewUnitTests {
         db.addReview(user, 4);
         db.addReview(user, 1);
         user = db.getUserWithUsername("test");
-        assert user.getReviews().size() == 2;
-        assert user.getReviews().contains(1) && user.getReviews().contains(4);
+        assert user.getREVIEWS().size() == 2;
+        assert user.getREVIEWS().contains(1) && user.getREVIEWS().contains(4);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class AddReviewUnitTests {
         db.addReview(user2, 1);
         user1 = db.getUserWithUsername("test1");
         user2 = db.getUserWithUsername("test2");
-        assert user1.getReviews().size() == 1 && user1.getReviews().get(0) == 4;
-        assert user2.getReviews().size() == 1 && user2.getReviews().get(0) == 1;
+        assert user1.getREVIEWS().size() == 1 && user1.getREVIEWS().get(0) == 4;
+        assert user2.getREVIEWS().size() == 1 && user2.getREVIEWS().get(0) == 1;
     }
 }
