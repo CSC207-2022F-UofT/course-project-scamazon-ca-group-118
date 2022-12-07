@@ -1,9 +1,10 @@
-package useCase.Register;
-
-import org.junit.jupiter.api.Test;
-
-public class RegisterResponseModelUnitTests {
-
-    @Test
-    void TestLoginWithNoUsername
-}
+// TODO write test
+//package useCase.Register;
+//
+//import org.junit.jupiter.api.Test;
+//
+//public class RegisterResponseModelUnitTests {
+//
+//    @Test
+//    void TestLoginWithNoUsername
+//}
