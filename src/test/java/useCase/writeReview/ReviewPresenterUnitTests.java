@@ -30,7 +30,7 @@ public class ReviewPresenterUnitTests {
         form.getResponseModel().getInteractor().setReviewed(user2);
         String message = new ReviewPresenter(form).getMessage();
         assert message.equals("Review Successful");
-        assert user2.getReviews().get(0) == 3;
+        assert user2.getREVIEWS().get(0) == 3;
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ReviewPresenterUnitTests {
         form.getMessage();
         form.getResponseModel().getInteractor().setReviewer(user1);
         form.getResponseModel().getInteractor().setReviewed(null);
-        assert(user2.getReviews().size() == 0);
+        assert(user2.getREVIEWS().size() == 0);
         String message = new ReviewPresenter(form).getMessage();
         assert message.equals("Review Unsuccessful: No User exists with this username");
     }

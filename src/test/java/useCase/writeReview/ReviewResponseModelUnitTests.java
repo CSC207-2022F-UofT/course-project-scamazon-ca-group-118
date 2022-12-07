@@ -32,7 +32,7 @@ public class ReviewResponseModelUnitTests {
         interactor.setReviewed(user2);
         String message = response_model.getMessage();
         assert(message.equals("Review Successful"));
-        assert(user2.getReviews().get(0) == 4);
+        assert(user2.getREVIEWS().get(0) == 4);
     }
 
     @Test
@@ -45,6 +45,6 @@ public class ReviewResponseModelUnitTests {
         interactor.setReviewed(null);
         String message = response_model.getMessage();
         assert(message.equals("Review Unsuccessful: No User exists with this username"));
-        assert(user2.getReviews().size() == 0);
+        assert(user2.getREVIEWS().size() == 0);
     }
 }
