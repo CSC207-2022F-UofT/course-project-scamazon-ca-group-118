@@ -1,4 +1,3 @@
-// TODO write test
 //package useCase.Register;
 //
 //import org.junit.jupiter.api.Test;

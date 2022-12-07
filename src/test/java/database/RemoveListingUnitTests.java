@@ -1,6 +1,7 @@
 package database;
 
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
@@ -51,7 +52,7 @@ public class RemoveListingUnitTests {
     }
 
     @Test
-    public void testRemoveSingleListing() throws IOException {
+    public void testRemoveSingleListing() throws IOException, CsvException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
@@ -76,7 +77,7 @@ public class RemoveListingUnitTests {
     }
 
     @Test
-    public void testRemoveSingleListingOneRemains() throws IOException {
+    public void testRemoveSingleListingOneRemains() throws IOException, CsvException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
@@ -103,7 +104,7 @@ public class RemoveListingUnitTests {
     }
 
     @Test
-    public void testRemoveTwoListingsInARow() throws IOException {
+    public void testRemoveTwoListingsInARow() throws IOException, CsvException {
         FileWriter listingCSV = new FileWriter(db.getListingTablePath());
         CSVWriter listingWriter = new CSVWriter(listingCSV, ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
@@ -129,6 +130,4 @@ public class RemoveListingUnitTests {
         // test
         assert result.equals(expected);
     }
-
-
 }
