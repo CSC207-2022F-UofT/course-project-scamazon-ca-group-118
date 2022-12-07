@@ -4,6 +4,6 @@ import org.junit.jupiter.api.Test;
 
 public class RegisterResponseModelUnitTests {
 
-    @Test
-    void TestLoginWithNoUsername
+    // @Test
+    // void TestLoginWithNoUsername
 }
