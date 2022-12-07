@@ -64,6 +64,13 @@ public class ListingListPage extends Page implements ActionListener {
 
         //keeps track of previous listing for layout
         ListingPanel previousListing = null;
+        JPanel panelOfListings = new JPanel();
+        panelOfListings.setLayout(new GridLayout(4, 1));
+        JScrollPane scroll = new JScrollPane(panelOfListings);
+        scroll.setPreferredSize(new Dimension(800, 400));
+        LAYOUT.putConstraint(SpringLayout.WEST, scroll, 0, SpringLayout.WEST, SearchBar);
+        LAYOUT.putConstraint(SpringLayout.NORTH, scroll, 30, SpringLayout.SOUTH, SearchBar);
+        this.add(scroll);
 
         //looping through listings
         for (Listing listing: listings) {
@@ -76,29 +83,33 @@ public class ListingListPage extends Page implements ActionListener {
             BufferedImage rawImage = ImageIO.read(new File(filepath));
             Image scaled_image = rawImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             JLabel resultImage = new JLabel(new ImageIcon(scaled_image));
-            JLabel resultDescription = new JLabel("<html>" + listing.getDescription() + "<html/>");
+            JLabel resultDescription = new JLabel("<html>" + listing.getDescription() + "</html>");
             JLabel resultDate = new JLabel(listing.getDate().toString());
 
             //creating individual ListingPanel element
             ListingPanel listingInfo = new ListingPanel(listingDetails, resultPrice, resultImage, resultDescription,
                     resultDate);
 
-            this.add(listingInfo);
+            panelOfListings.add(listingInfo);
 
             //align listing in the middle
-            LAYOUT.putConstraint(SpringLayout.WEST, listingInfo, 0, SpringLayout.WEST, SearchBar);
+
 
             //align listing vertically
+/*
             if (previousListing == null) {
                 //is the first listing --> put under titleLabel
-                LAYOUT.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, titleLabel);
+                layout.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, panelOfListings);
                 previousListing = listingInfo; //set previousListing to the one we just created
             }
             else {
                 //not the first listing --> put under previousListing
-                LAYOUT.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, previousListing);
+                layout.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, previousListing);
                 previousListing = listingInfo; //reset previousListing to the one we just created
             }
+
+ */
+
         }
     }
 
@@ -106,6 +117,7 @@ public class ListingListPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
             try {
+                this.buttons = new ArrayList<>();
                 SearchForm form = new SearchForm(jtSearch.getText(), controller);
                 SearchResponseModel responseModel = form.getResponseModel();
                 ArrayList<Listing> searchListings = responseModel.getListings();
