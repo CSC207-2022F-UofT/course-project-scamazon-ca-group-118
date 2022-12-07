@@ -183,7 +183,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @param ID id passed to removeListing
      */
     // TODO: test
-    public void removeListing(int ID) throws IOException {
+    public void removeListing(int ID) throws IOException, CsvException {
         try {
             FileReader listingFile = new FileReader(getListingTablePath());
             CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
@@ -215,10 +215,12 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             writer.writeAll(csvBody);
             writer.flush();
             writer.close();
-        } catch (IOException e) {
-            throw new IOException(e);
-        } catch (CsvException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | CsvException e) {
+            if (e instanceof IOException) {
+                throw new IOException(e);
+            } else {
+                throw new CsvException(e.getMessage());
+            }
         }
     }
 
@@ -473,43 +475,43 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      */
     // TODO: test
     @Override
-    public void addReview(User reviewed, int rating) throws IOException {
-        User reviewedUser = getUserWithUsername(reviewed.getUsername());
-        ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
-        reviewedUserRatings.add(rating);
+    public void addReview(User reviewed, int rating) throws RuntimeException {
         try {
-            File users = new File(USER_TABLE_PATH);
-            File temp = File.createTempFile("temp", ".csv", new File("src/test/java/database/"));
-
-            BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
-            CSVWriter writer = new CSVWriter(new FileWriter(temp));
-
-            String currLine;
-            while ((currLine = reader.readLine()) != null) {
-                User userObject = createUserObject(currLine);
-                if (userObject == reviewed) {
-
-                    // userObject.addReview(rating); // TODO need to fix reviews
-
-                    String userString = createUserString(userObject);
-                    writer.writeNext(userString.split(";"));
-                    continue;
+            User reviewedUser = getUserWithUsername(reviewed.getUsername());
+            ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
+            reviewedUserRatings.add(rating);
+            // write in the updated user object
+            FileReader userFile = new FileReader(getUserTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
+            List<String[]> csvBody = reader.readAll();
+            int currRow = 0;
+            for (String[] currLine : csvBody) {
+                String userString = "";
+                for (String field : currLine) {
+                    userString = userString + field + ";";
                 }
-                writer.writeNext(currLine.split(";"));
+                User userObject = createUserObject(userString.substring(0, userString.length() - 1));
+                if (userObject.getUsername().equals(reviewedUser.getUsername())) {
+                    userObject.addReview(rating);
+                    String newUserString = createUserString(userObject);
+                    csvBody.set(currRow, newUserString.split(";"));
+                    break;
+                }
+                currRow++;
             }
-
             reader.close();
-            writer.close();
-            String path = users.getAbsolutePath();
-            users.delete();
-            boolean successful = temp.renameTo(new File(path));
 
-            if (!successful) {
-                System.out.print("Unable to add review");
-            }
-
-        } catch (IOException ex) {
-            throw new IOException(ex.getMessage());
+            FileWriter userFileWriter = new FileWriter(getUserTablePath());
+            CSVWriter userWriter = new CSVWriter(userFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            userWriter.writeAll(csvBody);
+            userWriter.flush();
+            userWriter.close();
+        } catch (IOException | CsvException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -521,7 +523,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      */
     // TODO: test
     @Override
-    public void checkoutRemoveListings() throws IOException {
+    public void checkoutRemoveListings() throws IOException, CsvException {
 
         User currUser = Main.getCurrentUser();
         for (Listing listing : currUser.getCart().getItems()) {
