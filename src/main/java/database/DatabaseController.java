@@ -479,7 +479,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
         try {
             User reviewedUser = getUserWithUsername(reviewed.getUsername());
-            ArrayList<Integer> reviewedUserRatings = reviewedUser.getReviews();
+            ArrayList<Integer> reviewedUserRatings = reviewedUser.getREVIEWS();
             reviewedUserRatings.add(rating);
             // write in the updated user object
             FileReader userFile = new FileReader(getUserTablePath());
