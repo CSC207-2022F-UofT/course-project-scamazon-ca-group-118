@@ -12,13 +12,9 @@ public class RegisterResponseModel {
         String email = requestModel.getUserEmail();
         RegisterInteractor interactor = new RegisterInteractor(password, email, username);
         if (interactor.shouldRegister()){
-            interactor.createUser(username, email, password);
+            interactor.createUser();
             this.message = "Account Created";
         }
-    }
-
-    public RegisterResponseModel(String message){
-        this.message = message;
     }
 
     public String getMessage(){
