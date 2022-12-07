@@ -24,7 +24,7 @@ public class ProfilePage extends Page {
     private final SpringLayout LAYOUT;
     private final String username;
     private final String email;
-    private final int rating;
+    private final double rating;
     private JLabel usernameLabel;
     private JLabel emailLabel;
     private JLabel ratingLabel;

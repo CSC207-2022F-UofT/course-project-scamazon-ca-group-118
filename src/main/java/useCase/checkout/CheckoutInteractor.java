@@ -4,8 +4,6 @@ import database.GetUser;
 import entities.User;
 import entities.Cart;
 import entities.Listing;
-import useCase.login.CheckPassword;
-import useCase.login.LoginFailed;
 
 import java.io.IOException;
 
@@ -27,12 +25,18 @@ public class CheckoutInteractor {
         this.buyer = new GetUser().getUserWithUsername(this.username);
     }
 
+    public String getMessage() throws IOException {
+        this.removeListings();
+        return "You have successfully checked out";
+    }
+
     //removes all items in buyer User's cart by removing each item from the seller User's listings
-    public void removeListings() {
+    public void removeListings() throws IOException {
         Cart cart = this.buyer.getCart();
         for (Listing listing : cart.getItems()) {
-            //User seller = listing.getSeller();
-            //seller.removeListing(listing);
+            String sellerUsername = listing.getSellerUsername();
+            User seller = new GetUser().getUserWithUsername(sellerUsername);
+            seller.removeListing(listing);
         }
     }
 }

@@ -147,8 +147,19 @@ public class CreateListingPage extends Page{
 
 
                 String listingDesc = desc_text.getText();
-                CreateListingForm form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, filePath + "/" + fileName);
+
+                
                 CreateListingPresenter pres = null;
+
+                CreateListingForm form;
+                if((filePath == "" && fileName == "") || (filePath == null && fileName == null)){
+                    form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, "images/noimage.jpg");
+
+                }
+                else{
+                    form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, filePath + "/" + fileName);
+                }
+
                 try {
                     pres = new CreateListingPresenter(form);
                 } catch (IOException ex) {
