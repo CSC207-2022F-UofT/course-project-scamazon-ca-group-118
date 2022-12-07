@@ -27,14 +27,15 @@ public class CartPage extends Page implements ActionListener {
      */
     public CartPage() {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
-        this.setLayout(new GridLayout(1, 2, 150, 320));
+        SpringLayout layout = new SpringLayout();
+        this.setLayout(layout);
         this.itemCart = Main.getCurrentUser().getCart();
 
-        this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        this.setTitle("Scamazon.ca");
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         this.itemTable = this.createItemTable();
         JScrollPane scrollPane = new JScrollPane(this.itemTable);
+        scrollPane.setPreferredSize(new Dimension(500, 500));
 
         //Create appropriate buttons and label
         this.priceTotal = new JLabel("Total Price: $" + itemCart.getPrice());
@@ -44,14 +45,21 @@ public class CartPage extends Page implements ActionListener {
         this.CHECKOUT.addActionListener(this);
 
         //Assign appropriate buttons to new button panel
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 10, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.add(this.REMOVE);
         buttonPanel.add(this.CHECKOUT);
         buttonPanel.add(this.priceTotal);
+        buttonPanel.setPreferredSize(new Dimension(500, 500));
 
         //Assigning all panes and panels to CartPage Panel
-        this.add(scrollPane);
+        layout.putConstraint(SpringLayout.EAST, scrollPane, 120, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.WEST, buttonPanel, 120, SpringLayout.WEST, this);
+
+        layout.putConstraint(SpringLayout.NORTH, scrollPane, 170, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.NORTH, buttonPanel, 170, SpringLayout.NORTH, this);
+
         this.add(buttonPanel);
+        this.add(scrollPane);
     }
 
     /**
