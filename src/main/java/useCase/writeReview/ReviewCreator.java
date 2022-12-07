@@ -1,6 +1,9 @@
 package useCase.writeReview;
 
+import database.AddReview;
 import entities.User;
+
+import java.io.IOException;
 
 /**
  * Represents a ReviewCreator object
@@ -20,7 +23,7 @@ public class ReviewCreator {
      * @param reviewed the reviewed of the new review, and the User to whom this review will be added
      * @param rating   the rating value of the new review
      */
-    public void createReview(User reviewed, int rating) {
-        reviewed.addReview(rating);
+    public void createReview(User reviewed, int rating) throws IOException {
+        new AddReview().addReview(reviewed, rating);
     }
 }

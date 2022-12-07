@@ -1,6 +1,6 @@
 package UI;
 
-import database.GetUser;
+import database.AddReview;
 import database.ReviewDatabaseGateway;
 import useCase.displayProfile.*;
 
@@ -47,7 +47,7 @@ public class ProfilePage extends Page {
         this.username = getCurrentUser().getUsername();
 
         // Make a request for the user's profile.
-        ReviewDatabaseGateway profileGateway = new GetUser();
+        ReviewDatabaseGateway profileGateway = new AddReview();
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
         ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
         ProfileController profileController = new ProfileController(inputBoundary);

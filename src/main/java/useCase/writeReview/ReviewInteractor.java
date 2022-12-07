@@ -57,7 +57,11 @@ public class ReviewInteractor {
      * Then, adds this new review reviewed's reviews
      */
     private void createReview() {
-        this.reviewer.writeReview(reviewed, rating);
+        try{
+            this.reviewer.writeReview(reviewed, rating);
+        }catch(IOException e){
+            this.message = "**DATABASE ERROR**";
+        }
     }
 
     /**

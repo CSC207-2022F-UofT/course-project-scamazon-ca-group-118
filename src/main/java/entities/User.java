@@ -124,7 +124,7 @@ public class User {
     }
 
 
-    public void writeReview(User reviewed, int rating) {
+    public void writeReview(User reviewed, int rating) throws IOException {
         new ReviewCreator().createReview(reviewed, rating);
     }
 
