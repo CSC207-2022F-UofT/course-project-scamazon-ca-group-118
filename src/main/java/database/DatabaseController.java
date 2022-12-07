@@ -523,11 +523,30 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     @Override
     public void checkoutRemoveListings() throws IOException {
 
-        User currUser = Main.getCurrentUser();
-        for (Listing listing : currUser.getCart().getItems()) {
-            removeListing(listing.getId());
-            currUser.getCart().removeItem(listing);
-            removeListingFromAllCarts(listing.getId());
+        try {
+            User currUser = Main.getCurrentUser();
+            FileReader listingFile = new FileReader(getListingTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(listingFile).withCSVParser(parser).build();
+            List<String[]> csvRead = reader.readAll();
+            for (String[] currLine : csvRead) {
+                String listingString = "";
+                for (String field : currLine) {
+                    listingString = listingString + field + ";";
+                }
+                Listing listingObject = createListingObject(listingString.substring(0, listingString.length() - 1));
+                for (Listing listing : currUser.getCart().getItems()) {
+                    if (listing.getId() == listingObject.getId()) {
+                        removeListing(listing.getId());
+                    }
+
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            throw new IOException(e);
+        } catch (CsvException e) {
+            throw new RuntimeException(e);
         }
     }
 
