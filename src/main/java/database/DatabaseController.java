@@ -424,42 +424,38 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     public void removeFromCartByID(int listingID) throws IOException {
         User currUser = Main.getCurrentUser();
         try {
-            File users = new File(USER_TABLE_PATH);
-            File temp = File.createTempFile("temp", ".csv", new File("src/test/java/database/"));
-
-            BufferedReader userReader = new BufferedReader(new FileReader(USER_TABLE_PATH));
-            BufferedReader listingReader = new BufferedReader(new FileReader(LISTING_TABLE_PATH));
-            CSVWriter writer = new CSVWriter(new FileWriter(temp));
-
-            String currLine;
-            while ((currLine = userReader.readLine()) != null) {
-                User userObject = createUserObject(currLine);
-                if (userObject.getID() == currUser.getID()) {
-                    String currLine2;
-                    while ((currLine2 = listingReader.readLine()) != null) {
-                        Listing listingObject = createListingObject(currLine2);
-                        if (listingObject.getId() == listingID) {
-                            userObject.removeFromCart(listingObject);
-                            break;
-                        }
-                    }
-                    String userString = createUserString(userObject);
-                    writer.writeNext(userString.split(";"));
-                    continue;
+            Listing listingToRemove = getListingByID(listingID);
+            // update the user's listing array in users.csv
+            FileReader userFile = new FileReader(getUserTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
+            List<String[]> csvBody = reader.readAll();
+            int currRow = 0;
+            for (String[] currLine : csvBody) {
+                String userString = "";
+                for (String field : currLine) {
+                    userString = userString + field + ";";
                 }
-                writer.writeNext(currLine.split(";"));
+                User userObject = createUserObject(userString.substring(0, userString.length() - 1));
+                if (userObject.getUsername().equals(currUser.getUsername())) {
+                    userObject.getCart().removeItem(listingToRemove);
+                    String newUserString = createUserString(userObject);
+                    csvBody.set(currRow, newUserString.split(";"));
+                    break;
+                }
+                currRow++;
             }
-            userReader.close();
-            listingReader.close();
-            writer.close();
-            String path = users.getAbsolutePath();
-            users.delete();
-            boolean successful = temp.renameTo(new File(path));
+            reader.close();
 
-            if (!successful) {
-                System.out.printf("Unable to remove listing %s%n from cart", listingID);
-            }
-        } catch (IOException ex) {
+            FileWriter userFileWriter = new FileWriter(getUserTablePath());
+            CSVWriter userWriter = new CSVWriter(userFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            userWriter.writeAll(csvBody);
+            userWriter.flush();
+            userWriter.close();
+        } catch (IOException | CsvException ex) {
             throw new IOException(ex.getMessage());
         }
 
