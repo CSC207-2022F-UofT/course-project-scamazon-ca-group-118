@@ -1,9 +1,14 @@
 package UI;
 
+import Main.Main;
+import forms.ReviewForm;
+import useCase.writeReview.ReviewPresenter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * This is the panel that is used to review another user from the profile page.
@@ -13,16 +18,11 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
     private JTextField usernameReviewed;
     private JPanel usernameInfo;
     private JPanel ratingInfo;
-    private JButton rating1;
-    private JButton rating2;
-    private JButton rating3;
-    private JButton rating4;
-    private JButton rating5;
     private int rating = 0;
     private JLabel ratingChosen;
     private JButton submit;
     private JButton reset;
-    private JLabel successfulReview;
+    private JLabel message;
     private JLabel errorMessage;
 
     /**
@@ -49,22 +49,29 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         usernameInfo.add(usernameReviewed);
 
         ratingChosen = new JLabel("");
-        successfulReview = new JLabel("");
+        message = new JLabel("");
         errorMessage = new JLabel("");
 
         JLabel ratingLabel = new JLabel("Give them a rating between 1 and 5: ");
-        rating1 = new JButton("1");
-        rating2 = new JButton("2");
-        rating3 = new JButton("3");
-        rating4 = new JButton("4");
-        rating5 = new JButton("5");
-        ratingInfo = new RatingPanel(ratingLabel, rating1, rating2, rating3, rating4, rating5);
+        RatingButton rating1 = new RatingButton("1");
+        RatingButton rating2 = new RatingButton("2");
+        RatingButton rating3 = new RatingButton("3");
+        RatingButton rating4 = new RatingButton("4");
+        RatingButton rating5 = new RatingButton("5");
 
         rating1.addActionListener(this);
         rating2.addActionListener(this);
         rating3.addActionListener(this);
         rating4.addActionListener(this);
         rating5.addActionListener(this);
+
+        ratingInfo = new JPanel();
+        ratingInfo.add(ratingLabel);
+        ratingInfo.add(rating1);
+        ratingInfo.add(rating2);
+        ratingInfo.add(rating3);
+        ratingInfo.add(rating4);
+        ratingInfo.add(rating5);
 
         submit = new JButton("Submit review");
         submit.addActionListener(this);
@@ -77,7 +84,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         this.add(ratingChosen);
         this.add(submit);
         this.add(reset);
-        this.add(successfulReview);
+        this.add(message);
         this.add(errorMessage);
     }
 
@@ -92,8 +99,8 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, submit, 30, SpringLayout.SOUTH, ratingInfo);
         layout.putConstraint(SpringLayout.NORTH, reset, 30, SpringLayout.SOUTH, ratingInfo);
         layout.putConstraint(SpringLayout.WEST, reset, 20, SpringLayout.EAST, submit);
-        layout.putConstraint(SpringLayout.NORTH, successfulReview, 15, SpringLayout.SOUTH, submit);
-        layout.putConstraint(SpringLayout.WEST, successfulReview, 5, SpringLayout.WEST, ratingInfo);
+        layout.putConstraint(SpringLayout.NORTH, message, 15, SpringLayout.SOUTH, submit);
+        layout.putConstraint(SpringLayout.WEST, message, 5, SpringLayout.WEST, ratingInfo);
         layout.putConstraint(SpringLayout.NORTH, errorMessage, 15, SpringLayout.SOUTH, submit);
         layout.putConstraint(SpringLayout.WEST, errorMessage, 5, SpringLayout.WEST, ratingInfo);
     }
@@ -104,56 +111,23 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == rating1) {
-            rating = 1;
-            ratingChosen.setText("Rating set to 1.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating2) {
-            rating = 2;
-            ratingChosen.setText("Rating set to 2.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating3) {
-            rating = 3;
-            ratingChosen.setText("Rating set to 3.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating4) {
-            rating = 4;
-            ratingChosen.setText("Rating set to 4.");
-            errorMessage.setText("");
-            successfulReview.setText("");
-        } else if (e.getSource() == rating5) {
-            rating = 5;
-            ratingChosen.setText("Rating set to 5.");
-            errorMessage.setText("");
-            successfulReview.setText("");
+        if (e.getSource() instanceof RatingButton) {
+            String num = ((RatingButton) e.getSource()).getText();
+            rating = Integer.parseInt(num);
+            ratingChosen.setText("Rating set to " + num + ".");
+            message.setText("");
         } else if (e.getSource() == reset) {
             rating = 0;
             usernameReviewed.setText("");
             ratingChosen.setText("");
-            errorMessage.setText("");
-            successfulReview.setText("");
+            message.setText("");
         } else if (e.getSource() == submit) {
             String username = usernameReviewed.getText();
-            if (username.equals("")) {
-                successfulReview.setText("");
-                errorMessage.setText("You must enter a username.");
-            } else if (rating == 0) {
-                successfulReview.setText("");
-                errorMessage.setText("You must pick a rating.");
-            } else {
-                /* TODO Update User with username's reviews.
-                    Need to add these methods to ReviewDatabaseGateway and create a review request.
-                    void updateUserReviews(String username);
-                    boolean checkUserWithUsername(String username) throws IOException; */
-                rating = 0;
-                errorMessage.setText("");
-                usernameReviewed.setText("");
-                ratingChosen.setText("");
-                successfulReview.setText("Review successful.");
-            }
+            ReviewForm form = new ReviewForm(Main.getCurrentUser().getUsername(), username, rating);
+            message.setText(new ReviewPresenter(form).getMessage());
+            rating = 0;
+            usernameReviewed.setText("");
+            ratingChosen.setText("");
         }
     }
 }

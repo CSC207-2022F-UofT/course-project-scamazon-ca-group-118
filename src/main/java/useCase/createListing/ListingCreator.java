@@ -31,7 +31,7 @@ public class ListingCreator {
      * @param description  the description of the listing
      * @param image        the file path to the listing image
      */
-    public void createListing(User seller, String listingTitle, float price, String description, String image) {
+    public void createListing(User seller, String listingTitle, float price, String description, String image) throws IOException {
         DatabaseController db = new DatabaseController();
         db.createListing(seller.getUsername(), listingTitle, price, LocalDate.now(), description, image);
 

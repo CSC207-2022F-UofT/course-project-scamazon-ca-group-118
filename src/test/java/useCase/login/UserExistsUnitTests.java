@@ -27,7 +27,7 @@ public class UserExistsUnitTests {
 
     @Test
     void testUserExistsNo() {
-        assertFalse(new UserExists(emptyUser).checkExists());
+        assertFalse(new UserExists(null).checkExists());
     }
 
     @Test

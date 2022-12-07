@@ -135,11 +135,13 @@ public class ListingListPage extends Page implements ActionListener {
             }
             for (Listing listing : displayedListings) {
                 if (Objects.equals(listing.getTitle(), title)) {
+
                     try {
                         Main.setCurrentPage(new ListingDetailPage(listing));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+
                     break;
                 }
             }

@@ -3,11 +3,10 @@ package database;
 import entities.User;
 
 /**
- * Represents a UserExists class that will be used to check if a given user is non-empty i.e. exists.
- * Preconditions: only an empty user may have an empty string as password
+ * Represents a UserExists class that will be used to check if a given user is not null i.e. exists
  */
 public class UserExists {
-    private final String PASSWORD;
+    private final User user;
 
     /**
      * Constructor for the UserExists class
@@ -15,15 +14,20 @@ public class UserExists {
      * @param user the user that will be checked for existence
      */
     public UserExists(User user) {
-        this.PASSWORD = user.getPassword();
+        this.user = user;
     }
 
     /**
-     * Checks if the user passed to the constructor is non-empty or exists
+     * Checks if the user passed to the constructor is not null
      *
-     * @return true iff the user passed to the constructor is non-empty
+     * @return true iff the user passed to the constructor is not null
      */
     public boolean checkExists() {
-        return !this.PASSWORD.equals("");
+        try{
+            this.user.getPassword();
+            return true;
+        }catch(NullPointerException e){
+            return false;
+        }
     }
 }

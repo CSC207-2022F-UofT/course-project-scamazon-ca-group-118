@@ -2,7 +2,6 @@ package useCase.writeReview;
 
 import forms.ReviewForm;
 
-import java.io.IOException;
 
 /**
  * The presenter class for writing a review
@@ -15,7 +14,7 @@ public class ReviewPresenter {
      *
      * @param form the form from which this presenter retrieves a message
      */
-    public ReviewPresenter(ReviewForm form) throws IOException {
+    public ReviewPresenter(ReviewForm form){
         this.message = form.getMessage();
     }
 
