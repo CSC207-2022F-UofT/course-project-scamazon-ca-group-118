@@ -22,6 +22,6 @@ Welcome to Scamazon! This app is a marketplace where you can buy and sell a wide
 
 ## Customer Support
 
-If you have any issues with the app or need help with a purchase, please contact our customer support team. We're here to help and we'll do our best to resolve any issues you may have.
+If you have any issues with the app or need help with a purchase, please contact our customer support team at (707) 873-7862. We're here to help and we'll do our best to resolve any issues you may have.
 
 Thank you for using Scamazon!
