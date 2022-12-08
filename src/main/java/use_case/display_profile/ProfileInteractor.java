@@ -10,6 +10,7 @@ public class ProfileInteractor implements ProfileInputBoundary {
     // Note: I use ReviewDatabaseGateway because it has the same methods the ProfilePage needs.
     private final ReviewDatabaseGateway gateway;
     private final ProfileOutputBoundary output;
+    // TODO do we need a User or UserFactory attribute here?
 
     /**
      * The ProfileInteractor constructor which assigns the gateway and output boundary needed to carry out the use case.
