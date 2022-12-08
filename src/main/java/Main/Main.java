@@ -2,6 +2,8 @@ package Main;
 
 import UI.LoginPage;
 import UI.Page;
+import database.DatabaseController;
+import entities.Listing;
 import entities.User;
 import entities.View;
 
@@ -21,7 +23,12 @@ public class Main {
     static View view;
 
     public static void main(String[] args) {
-        //Open the application with the Login Page
+        // Remember next listingID and next userID from last time app was launched
+        DatabaseController db = new DatabaseController();
+        Listing.setNextId(db.getNextListingIDOnStartUp());
+        User.setNextId(db.getNextUserIDOnStartUp());
+        
+        // Open the application with the Login Page
         currentPage = new LoginPage();
         view = new View();
 
