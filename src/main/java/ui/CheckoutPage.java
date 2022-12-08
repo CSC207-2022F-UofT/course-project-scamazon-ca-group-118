@@ -1,5 +1,7 @@
 package ui;
 
+import main.Main;
+import com.opencsv.exceptions.CsvException;
 import forms.CheckoutForm;
 
 import javax.swing.*;
@@ -90,7 +92,7 @@ public class CheckoutPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
             try {
-                CheckoutForm form = new CheckoutForm(JT_NAME.getText(), JT_CARD_NUMBER.getText(), JT_CVV.getText(),
+                CheckoutForm form = new CheckoutForm(Main.getCurrentUser(), JT_NAME.getText(), JT_CARD_NUMBER.getText(), JT_CVV.getText(),
                         LocalDate.parse(JT_EXPIRATION.getText()), JV_ADDRESS.getText());
                 form.getResponseModel();
                 String message = form.getMessage();
@@ -101,7 +103,7 @@ public class CheckoutPage extends Page implements ActionListener {
             catch (DateTimeParseException error) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
             }
-            catch (IOException ex) {
+            catch (IOException | CsvException ex) {
                 throw new RuntimeException(ex);
             }
         }

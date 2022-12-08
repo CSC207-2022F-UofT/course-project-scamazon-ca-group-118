@@ -90,7 +90,7 @@ public class ListingDetailPage extends Page implements ActionListener {
         this.add(listingSellerAndDate);
 
         JLabel listingSellerRating = new JLabel(
-                String.format("%s has a %o star rating", listingSeller.getUsername(), listingSeller.calculateRating()));
+                String.format("%s has a %1.1f star rating", listingSeller.getUsername(), listingSeller.calculateRating()));
         listingSellerRating.setFont(new Font("Arial", Font.PLAIN, 20));
         listingSellerRating.setLocation(500, 500);
         listingSellerRating.setSize(500, 25);

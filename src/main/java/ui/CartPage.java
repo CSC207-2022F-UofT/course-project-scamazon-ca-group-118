@@ -50,7 +50,7 @@ public class CartPage extends Page implements ActionListener {
         buttonPanel.setPreferredSize(new Dimension(500, 500));
 
         //Assigning all panes and panels to CartPage Panel
-        layout.putConstraint(SpringLayout.EAST, scrollPane, 120, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.EAST, scrollPane, -50, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.WEST, buttonPanel, 120, SpringLayout.WEST, this);
 
         layout.putConstraint(SpringLayout.NORTH, scrollPane, 170, SpringLayout.NORTH, this);
