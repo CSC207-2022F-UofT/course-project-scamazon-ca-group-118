@@ -45,25 +45,4 @@ public class RegisterInteractor {
     public void createUser(String username, String email, String password){
         implementation.createUser(username, email, password);
     }
-
-    public String getPassword(){
-        return this.password;
-    }
-
-    public String getUsername(){
-        return this.username;
-    }
-
-    public String getEmail(){
-        return this.email;
-    }
-
-    public boolean getEmailExists(){
-        return this.emailExists;
-    }
-
-    public boolean getUsernameExists(){
-        return this.usernameExists;
-    }
-
 }
