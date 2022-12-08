@@ -27,11 +27,12 @@ public class CartPage extends Page implements ActionListener {
     /**
      * Cart Page constructor that creates the CartPage Panel.
      */
-    public CartPage() {
+    public CartPage() throws IOException {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
-        this.itemCart = Main.getCurrentUser().getCart();
+        DatabaseController db = new DatabaseController();
+        this.itemCart = db.getUserWithUsername(Main.getCurrentUser().getUsername()).getCart();
 
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
