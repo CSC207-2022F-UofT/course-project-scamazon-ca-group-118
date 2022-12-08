@@ -1,6 +1,6 @@
-package UI;
+package ui;
 
-import Main.Main;
+import main.Main;
 import database.DatabaseController;
 import entities.Cart;
 import entities.Listing;
