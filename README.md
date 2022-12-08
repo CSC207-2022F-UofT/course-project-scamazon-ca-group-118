@@ -1,4 +1,14 @@
-# Scamazon
+# Group 118 - Scamazon
+
+## Group Members
+- Samuel Liu
+- Luke Cheseldine
+- Daniel Qiu
+- Clare Gillis
+- Mark Voronovych
+- Helen Yu
+- Ethan Stark
+- Eric Guo
 
 Welcome to Scamazon! This app is a marketplace where you can buy and sell a wide variety of items.
 
