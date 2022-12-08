@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartPage extends Page implements ActionListener {
@@ -42,7 +43,8 @@ public class CartPage extends Page implements ActionListener {
         scrollPane.setPreferredSize(new Dimension(500, 500));
 
         //Create appropriate buttons and label
-        this.priceTotal = new JLabel("Total Price: $" + itemCart.getPrice());
+        DecimalFormat format = new DecimalFormat("0.00");
+        this.priceTotal = new JLabel("Total Price: $" + format.format(itemCart.getPrice()));
         this.REMOVE = new JButton("Remove Item");
         this.REMOVE.addActionListener(this);
         this.CHECKOUT = new JButton("Checkout");
@@ -111,7 +113,8 @@ public class CartPage extends Page implements ActionListener {
                 db.removeFromCartByID(listing.getId());
                 itemCart = db.getUserWithUsername(Main.getCurrentUser().getUsername()).getCart();
                 model.removeRow(row);
-                priceTotal.setText("Total Price: $" + itemCart.getPrice());
+                DecimalFormat format = new DecimalFormat("0.00");
+                priceTotal.setText("Total Price: $" + format.format(itemCart.getPrice()));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
