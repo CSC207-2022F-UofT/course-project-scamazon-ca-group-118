@@ -2,6 +2,8 @@ package database;
 
 import entities.User;
 
+import java.io.IOException;
+
 
 public interface LoginDatabaseGateway {
     /**
@@ -11,5 +13,5 @@ public interface LoginDatabaseGateway {
      * @param username the username that will be searched for in the database
      * @return User whose username is username, or an empty User
      */
-    User getUserWithUsername(String username);
+    User getUserWithUsername(String username) throws IOException;
 }

@@ -1,8 +1,6 @@
 package database;
 
 import com.opencsv.exceptions.CsvException;
-import entities.Cart;
-import entities.User;
 
 import java.io.IOException;
 

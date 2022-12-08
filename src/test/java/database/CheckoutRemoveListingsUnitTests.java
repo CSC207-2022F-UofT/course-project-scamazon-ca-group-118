@@ -1,6 +1,6 @@
 package database;
 
-import Main.Main;
+import main.Main;
 import com.opencsv.exceptions.CsvException;
 import entities.Listing;
 import entities.User;

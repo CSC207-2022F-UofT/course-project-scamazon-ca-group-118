@@ -1,7 +1,7 @@
 package forms;
 
-import useCase.writeReview.ReviewResponseModel;
-import useCase.writeReview.ReviewRequestModel;
+import use_case.write_review.ReviewResponseModel;
+import use_case.write_review.ReviewRequestModel;
 
 import java.util.Objects;
 
