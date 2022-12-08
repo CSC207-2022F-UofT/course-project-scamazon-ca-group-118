@@ -17,13 +17,6 @@ public class UserExistsUnitTests {
             new ArrayList<>(),
             new ArrayList<>(),
             new Cart());
-    static User emptyUser = new User(0,
-            "",
-            "",
-            "",
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new Cart());
 
     @Test
     void testUserExistsNo() {

@@ -79,14 +79,6 @@ public class ReviewInteractor {
         return this.message;
     }
 
-    public User getReviewer() {
-        return reviewer;
-    }
-
-    public User getReviewed() {
-        return reviewed;
-    }
-
     public int getRating() {
         return rating;
     }

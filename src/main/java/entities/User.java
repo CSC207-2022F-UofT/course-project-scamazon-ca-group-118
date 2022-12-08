@@ -2,7 +2,6 @@ package entities;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import useCase.createListing.ListingCreator;
 import useCase.writeReview.ReviewCreator;
@@ -10,9 +9,9 @@ import useCase.writeReview.ReviewCreator;
 public class User {
     private String username;
     private String password;
-    private int id;
+    private final int ID;
     private String email;
-    private ArrayList<Integer> reviews;
+    private final ArrayList<Integer> REVIEWS;
     private ArrayList<Listing> listings;
     private Cart cart;
     private static int nextId = 0;
@@ -21,9 +20,9 @@ public class User {
                 ArrayList<Listing> listings, Cart cart) {
         this.username = username;
         this.password = password;
-        this.id = id;
+        this.ID = id;
         this.email = email;
-        this.reviews = reviews;
+        this.REVIEWS = reviews;
         this.listings = listings;
         this.cart = cart;
     }
@@ -53,7 +52,7 @@ public class User {
     }
 
     public int getID() {
-        return this.id;
+        return this.ID;
     }
 
     public String getEmail() {
@@ -73,8 +72,8 @@ public class User {
         this.listings = listings;
     }
 
-    public ArrayList<Integer> getReviews() {
-        return this.reviews;
+    public ArrayList<Integer> getREVIEWS() {
+        return this.REVIEWS;
     }
 
     public Cart getCart() {
@@ -93,7 +92,17 @@ public class User {
 
 
     public void removeListing(Listing listing) {
-        listings.remove(listing);
+        int indexToRemove = -1;
+        for (int i = 0; i < getListings().size(); i++) {
+            if (getListings().get(i).getId() == listing.getId()) {
+                indexToRemove = i;
+            }
+        }
+        if (indexToRemove > -1) {
+            listings = getListings();
+            listings.remove(indexToRemove);
+            setListings(listings);
+        }
     }
 
     /**
@@ -119,14 +128,6 @@ public class User {
         new ReviewCreator().createReview(reviewed, rating);
     }
 
-    /**
-     * Removes a review from this User's list of reviews
-     *
-     * @param toBeRemoved the Review to be removed from this User's reviews
-     */
-    public void removeReview(int toBeRemoved) {
-        this.reviews.remove(toBeRemoved);
-    }
 
     /**
      * Adds a review to this User's list of reviews
@@ -134,7 +135,7 @@ public class User {
      * @param review the review to be added to this User's reviews
      */
     public void addReview(int review) {
-        this.reviews.add(review);
+        this.REVIEWS.add(review);
     }
 
     /**
@@ -145,10 +146,10 @@ public class User {
      */
     public double calculateRating() {
         double rating = 0.0;
-        for (int review : reviews) {
+        for (int review : REVIEWS) {
             rating += review;
         }
-        rating /= reviews.size();
+        rating /= REVIEWS.size();
         rating = (double) (Math.round(rating * 100)) / 100;
         return rating;
     }
@@ -171,7 +172,7 @@ public class User {
                 this.getUsername().equals(user.getUsername()) &&
                 this.getPassword().equals(user.getPassword()) &&
                 this.getEmail().equals(user.getEmail()) &&
-                this.getReviews().equals(user.getReviews())
+                this.getREVIEWS().equals(user.getREVIEWS())
         ) {
             // check listings are equal, ORDER MATTERS
             if (this.getListings().size() != user.getListings().size()) {
