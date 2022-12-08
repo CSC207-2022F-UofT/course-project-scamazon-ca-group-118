@@ -29,7 +29,7 @@ public class ProfileInteractor implements ProfileInputBoundary {
 
     /**
      * This instantiates the request for the profile page, creates the response model and passes it to the
-     * ProfilePresenter.
+     * ProfilePresenter through the ProfileOutputBoundary.
      * @param requestModel The request model instantiated by the user.
      * @return The ProfileResponseModel needed to display the profile page.
      */
@@ -75,7 +75,7 @@ public class ProfileInteractor implements ProfileInputBoundary {
     }
 
     /**
-     * Sets the output boun of this ProfileInteractor.
+     * Sets the output boundary of this ProfileInteractor.
      * @param outputBoundary The new ProfileOutputBoundary to update this ProfileInteractor with.
      */
     public void setOutputBoundary(ProfileOutputBoundary outputBoundary) {

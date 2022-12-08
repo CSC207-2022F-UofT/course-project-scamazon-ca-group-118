@@ -2,7 +2,6 @@ package use_case.display_profile;
 
 import com.opencsv.CSVWriter;
 import database.DatabaseController;
-import database.ReviewDatabaseGateway;
 import entities.User;
 import org.junit.jupiter.api.*;
 
@@ -59,13 +58,13 @@ public class ProfileInteratorUnitTests {
     }
 
     @Test
-    void createRequestEmpty() {
+    void createEmpty() {
         String username = "";
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
-        ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
-        ProfileController profileController = new ProfileController(inputBoundary);
+        ProfileInteractor interactor = new ProfileInteractor(db, profilePresenter);
+        ProfileRequestModel requestModel = new ProfileRequestModel(username);
         try {
-            profileController.createRequest(username);
+            interactor.create(requestModel);
             assert false;
         } catch (NoSuchUser e) {
             String message = e.getMessage();
@@ -74,43 +73,43 @@ public class ProfileInteratorUnitTests {
     }
 
     @Test
-    void createRequestSavedUser() {
-        String username = "Ethan";
+    void createSavedUser() {
+        String username = "itsmehiimtheprobelmitsme";
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
-        ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
-        ProfileController profileController = new ProfileController(inputBoundary);
+        ProfileInteractor interactor = new ProfileInteractor(db, profilePresenter);
+        ProfileRequestModel requestModel = new ProfileRequestModel(username);
         try {
             FileWriter userCSV = new FileWriter(db.getUserTablePath());
             CSVWriter userWriter = new CSVWriter(userCSV, ';', CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
             List<String[]> userData = new ArrayList<>();
-            userData.add(new String[]{"0", username, "password123", "Ethan@gmail.com", "[4,5,0]", "[0,1]", "[2,3]"});
+            userData.add(new String[]{"0", username, "afrbdef", "tswizzy@hotmail.com", "[1,4,3,5]", "[]", "[]"});
             userWriter.writeAll(userData);
             userWriter.close();
 
-            ProfileResponseModel output = profileController.createRequest(username);
+            ProfileResponseModel output = interactor.create(requestModel);
             assert output.getUsername().equals(username);
-            assert output.getEmail().equals("Ethan@gmail.com");
-            assert output.getRating() == 3.0;
-            assert output.getReviews().equals(new ArrayList<>(List.of(4, 5, 0)));
+            assert output.getEmail().equals("tswizzy@hotmail.com");
+            assert output.getRating() == 3.25;
+            assert output.getReviews().equals(new ArrayList<>(List.of(1, 4, 3, 5)));
         } catch (NoSuchUser | IOException e) {
             assert false;
         }
     }
 
-        @Test
-        void createRequestNonSavedUser() {
-            String username = "abcdefg";
-            ProfileOutputBoundary profilePresenter = new ProfilePresenter();
-            ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
-            ProfileController profileController = new ProfileController(inputBoundary);
-            try {
-                profileController.createRequest(username);
-                assert false;
-            } catch (NoSuchUser e) {
-                String message = e.getMessage();
-                assert message.equals("This user does not exist.") || message.equals("Something went wrong.");
-            }
+    @Test
+    void createNonSavedUser() {
+        String username = "abcdefg1211";
+        ProfileOutputBoundary profilePresenter = new ProfilePresenter();
+        ProfileInteractor interactor = new ProfileInteractor(db, profilePresenter);
+        ProfileRequestModel requestModel = new ProfileRequestModel(username);
+        try {
+            interactor.create(requestModel);
+            assert false;
+        } catch (NoSuchUser e) {
+            String message = e.getMessage();
+            assert message.equals("This user does not exist.") || message.equals("Something went wrong.");
         }
+    }
 }
 

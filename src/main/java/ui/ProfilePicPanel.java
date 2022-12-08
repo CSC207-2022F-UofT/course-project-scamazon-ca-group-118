@@ -18,8 +18,6 @@ public class ProfilePicPanel extends JPanel implements ActionListener {
     private final SpringLayout LAYOUT;
     private JLabel image;
     private JButton imgUpload;
-    private String fileName;
-    private String filePath;
 
     /**
      * The constructor for the ProfilePicPanel which sets up the panel and layout.
@@ -72,6 +70,8 @@ public class ProfilePicPanel extends JPanel implements ActionListener {
         if (e.getSource() == imgUpload) {
             final JFileChooser imgFiles = new JFileChooser();
             int returnVal = imgFiles.showOpenDialog(ProfilePicPanel.this);
+            String fileName;
+            String filePath;
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 fileName = imgFiles.getSelectedFile().getName();
                 filePath = imgFiles.getCurrentDirectory().toString();
@@ -82,9 +82,6 @@ public class ProfilePicPanel extends JPanel implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                fileName = "";
-                filePath = "";
             }
         }
     }

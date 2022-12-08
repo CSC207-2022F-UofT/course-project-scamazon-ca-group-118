@@ -94,7 +94,7 @@ public class ProfileControllerUnitTests {
             CSVWriter userWriter = new CSVWriter(userCSV, ';', CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
             List<String[]> userData = new ArrayList<>();
-            userData.add(new String[]{"0", username, "password123", "Ethan@gmail.com", "[4,5,0]", "[0,1]", "[2,3]"});
+            userData.add(new String[]{"0", username, "password123", "Ethan@gmail.com", "[4,5,0]", "[]", "[]"});
             userWriter.writeAll(userData);
             userWriter.close();
 
@@ -110,7 +110,7 @@ public class ProfileControllerUnitTests {
 
     @Test
     void createRequestNonSavedUser() {
-        String username = "abcdefg";
+        String username = "abc1defg";
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
         ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
         ProfileController profileController = new ProfileController(inputBoundary);

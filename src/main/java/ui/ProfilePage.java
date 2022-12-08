@@ -27,7 +27,7 @@ public class ProfilePage extends Page {
     private JLabel titleLabel;
     private JPanel reviewForm;
     private JPanel profilePicPanel;
-    private JLabel errorMessage = new JLabel();
+    private final JLabel errorMessage = new JLabel();
 
     /**
      * The ProfilePage constructor which creates a request and sets the necessary attributes from the
