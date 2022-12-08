@@ -27,6 +27,7 @@ public class ListingDetailPage extends Page implements ActionListener {
     private JLabel message;
     private JButton addToCartButton;
 
+
     public ListingDetailPage(Listing listing) throws IOException {
         super(listing.getTitle());
         this.listing = listing;
@@ -52,8 +53,11 @@ public class ListingDetailPage extends Page implements ActionListener {
         this.add(listingTitle);
 
         try {
-            BufferedImage rawImage = ImageIO.read(new File("src/main/java/image.JPG"));
-            JLabel img = new JLabel(new ImageIcon(rawImage));
+            String filepath = listing.getImagePath();
+            BufferedImage rawImage = ImageIO.read(new File(filepath));
+            Image scaled_image = rawImage.getScaledInstance(300, 220, Image.SCALE_SMOOTH);
+            JLabel img = new JLabel(new ImageIcon(scaled_image));
+
             img.setSize(300, 220);
             img.setLocation(350, 190);
             this.add(img);
@@ -89,7 +93,7 @@ public class ListingDetailPage extends Page implements ActionListener {
         this.add(listingSellerAndDate);
 
         JLabel listingSellerRating = new JLabel(
-                String.format("%s has a %o star rating", listingSeller.getUsername(), listingSeller.calculateRating()));
+                String.format("%s has a %1.1f star rating", listingSeller.getUsername(), listingSeller.calculateRating()));
         listingSellerRating.setFont(new Font("Arial", Font.PLAIN, 20));
         listingSellerRating.setLocation(500, 500);
         listingSellerRating.setSize(500, 25);

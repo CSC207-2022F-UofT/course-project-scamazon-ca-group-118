@@ -26,6 +26,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
     private JButton reset;
     private JLabel message;
 
+
     /**
      * The constructor for the ProfileReviewPanel.
      */
@@ -51,6 +52,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
 
         ratingChosen = new JLabel("");
         message = new JLabel("");
+
 
         JLabel ratingLabel = new JLabel("Give them a rating between 1 and 5: ");
         RatingButton rating1 = new RatingButton("1");
@@ -85,6 +87,7 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         this.add(submit);
         this.add(reset);
         this.add(message);
+
     }
 
     /**
@@ -125,14 +128,10 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
                 message.setText("You can't review yourself.");
             } else {
                 ReviewForm form = new ReviewForm(reviewerUsername, reviewedUsername, rating);
-                try {
-                    message.setText(new ReviewPresenter(form).getMessage());
-                    rating = 0;
-                    usernameReviewed.setText("");
-                    ratingChosen.setText("");
-                } catch (IOException exception) {
-                    // TODO I'm not sure yet if this try-catch is necessary.
-                }
+                message.setText(new ReviewPresenter(form).getMessage());
+                rating = 0;
+                usernameReviewed.setText("");
+                ratingChosen.setText("");
             }
         }
     }

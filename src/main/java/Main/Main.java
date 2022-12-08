@@ -2,9 +2,9 @@ package Main;
 
 import UI.LoginPage;
 import UI.Page;
-import database.DatabaseController;
 import entities.User;
 import entities.View;
+
 
 public class Main {
     /**
@@ -21,8 +21,6 @@ public class Main {
     static View view;
 
     public static void main(String[] args) {
-        DatabaseController databaseInteractor = new DatabaseController();
-
         //Open the application with the Login Page
         currentPage = new LoginPage();
         view = new View();

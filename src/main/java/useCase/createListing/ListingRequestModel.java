@@ -51,7 +51,7 @@ public class ListingRequestModel {
         return image;
     }
 
-    public void setSeller(String sellerUsername) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 
@@ -66,4 +66,6 @@ public class ListingRequestModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setImage(String imgpath){this.image = imgpath;}
 }

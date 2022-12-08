@@ -43,7 +43,7 @@ public class ProfileInteractor implements ProfileInputBoundary {
                 return outputBoundary.displayFail("This user does not exist.");
             } else {
                 ProfileResponseModel responseModel = new ProfileResponseModel(username, user.getEmail(),
-                        user.calculateRating(), user.getReviews());
+                        user.calculateRating(), user.getREVIEWS());
                 return outputBoundary.displaySuccess(responseModel);
             }
         } catch (IOException error) {
