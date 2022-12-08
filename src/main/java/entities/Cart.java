@@ -58,7 +58,14 @@ public class Cart {
      * @param item A Listing that appears in cart once and only once
      */
     public void removeItem(Listing item) {
-        this.listings.remove(item);
+        int indexTracker = 0;
+        for (Listing listing : listings) {
+            if (listing.getId() == item.getId()) {
+                this.removeItem(indexTracker);
+                break;
+            }
+            indexTracker++;
+        }
     }
 
     //OVERLOADED
