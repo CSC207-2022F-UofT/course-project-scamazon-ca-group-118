@@ -50,7 +50,7 @@ public class CheckoutRemoveListingsUnitTests {
     }
 
     @Test
-    public void checkoutRemoveListingsThreeListings() throws IOException {
+    public void checkoutRemoveListingsThreeListings() throws IOException, CsvException {
         db.createListing("1", "title1", 100, LocalDate.EPOCH, "desc", "imagePath");
         db.createListing("1", "title2", 100, LocalDate.EPOCH, "desc", "imagePath");
         db.createListing("1", "title3", 100, LocalDate.EPOCH, "desc", "imagePath");
@@ -94,7 +94,7 @@ public class CheckoutRemoveListingsUnitTests {
     }
 
     @Test
-    public void checkoutRemoveListingsOneListing() throws IOException {
+    public void checkoutRemoveListingsOneListing() throws IOException, CsvException {
         db.createListing("1", "title1", 100, LocalDate.EPOCH, "desc", "imagePath");
         db.createListing("1", "title2", 100, LocalDate.EPOCH, "desc", "imagePath");
         db.createListing("1", "title3", 100, LocalDate.EPOCH, "desc", "imagePath");
