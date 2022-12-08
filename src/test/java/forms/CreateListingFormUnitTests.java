@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CreateListingFormUnitTests {
-    User exampleUser = new User(1, "admin", "password", "e@mail.com",  new ArrayList<Integer>(1), new ArrayList<Listing>(), new Cart());
+    User exampleUser = new User(1, "admin", "password", "e@mail.com", new ArrayList<>(1), new ArrayList<>(), new Cart());
     User notLoggedIn = null;
     @Test
     public void validForm() throws IOException {

@@ -1,6 +1,6 @@
 package database;
 
-import Main.Main;
+import main.Main;
 import entities.Listing;
 import entities.User;
 import org.junit.jupiter.api.AfterAll;

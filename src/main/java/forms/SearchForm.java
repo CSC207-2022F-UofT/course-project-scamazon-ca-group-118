@@ -1,8 +1,8 @@
 package forms;
 
 import database.ListingDatabaseGateway;
-import useCase.Search.SearchRequestModel;
-import useCase.Search.SearchResponseModel;
+import use_case.search.SearchRequestModel;
+import use_case.search.SearchResponseModel;
 
 import java.io.IOException;
 
@@ -11,14 +11,14 @@ public class SearchForm extends Form {
 
     public String query;
 
-    private ListingDatabaseGateway databaseGateway;
+    private final ListingDatabaseGateway DATABASE_GATEWAY;
 
     private SearchResponseModel responseModel;
 
     public SearchForm(String query, ListingDatabaseGateway databaseGateway) {
         super("Search");
         this.query = query;
-        this.databaseGateway = databaseGateway;
+        this.DATABASE_GATEWAY = databaseGateway;
     }
 
 
@@ -30,7 +30,7 @@ public class SearchForm extends Form {
     @Override
     protected void submitForm() throws IOException {
         if (this.validateForm()) {
-            SearchRequestModel requestModel = new SearchRequestModel(query, databaseGateway);
+            SearchRequestModel requestModel = new SearchRequestModel(query, DATABASE_GATEWAY);
             this.responseModel = new SearchResponseModel(requestModel);
 
         }
