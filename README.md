@@ -15,7 +15,9 @@ Welcome to Scamazon! This app is a marketplace where you can buy and sell a wide
 ## Features
 
 - Browse and search for items to buy
+- Click into interesting items to learn more about them
 - Add items of interest to cart
+- Remove items from cart that are no longer wanted
 - Sell your own items by creating a listing
 - Check out with card information
 - Leave ratings for other users
