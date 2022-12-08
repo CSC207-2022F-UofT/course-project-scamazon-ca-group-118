@@ -1,5 +1,7 @@
 # Group 118 - Scamazon
 
+Welcome to Scamazon! This app is a marketplace where you can buy and sell a wide variety of items.
+
 ## Group Members
 - Samuel Liu
 - Luke Cheseldine
@@ -9,8 +11,6 @@
 - Helen Yu
 - Ethan Stark
 - Eric Guo
-
-Welcome to Scamazon! This app is a marketplace where you can buy and sell a wide variety of items.
 
 ## Features
 
@@ -24,6 +24,7 @@ Welcome to Scamazon! This app is a marketplace where you can buy and sell a wide
 
 1. Clone the repository
 2. Download the library https://sourceforge.net/projects/opencsv/ 
+3. Add this library to your modules
 2. Create an account or log in to your existing account
 3. Start browsing or search for specific items
 4. Add items of interest to cart
