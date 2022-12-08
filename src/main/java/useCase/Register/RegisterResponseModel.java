@@ -19,4 +19,9 @@ public class RegisterResponseModel {
             this.message = "Account Created";
         }
     }
+    
+    public String getMessage(){
+        RegisterPresenter presenter = new RegisterPresenter(this.message);
+        return presenter.getMessage();
+    }
 }
