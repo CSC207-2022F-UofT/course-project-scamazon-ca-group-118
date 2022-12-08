@@ -117,6 +117,7 @@ public class CheckoutPage extends Page implements ActionListener {
             }
 
             catch (IOException | CsvException ex) {
+
                 throw new RuntimeException(ex);
             }
         }
