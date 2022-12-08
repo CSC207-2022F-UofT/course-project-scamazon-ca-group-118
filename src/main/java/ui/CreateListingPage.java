@@ -151,7 +151,7 @@ public class CreateListingPage extends Page{
                 CreateListingPresenter pres;
 
                 CreateListingForm form;
-                if(filePath.equals("") && fileName.equals("")){
+                if((filePath == ""  && fileName == "")||(filePath == null && fileName == null)){
                     form = new CreateListingForm(listingTitle, listingPrice, Main.getCurrentUser(), listingDesc, "images/noimage.jpg");
 
                 }
