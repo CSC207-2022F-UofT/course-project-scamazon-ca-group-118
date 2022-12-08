@@ -16,6 +16,16 @@ public class User {
     private Cart cart;
     private static int nextId = 0;
 
+    /**
+     * constructor for a user object
+     * @param id id of user
+     * @param username username of user
+     * @param password password of user
+     * @param email email of user
+     * @param reviews reviews of user
+     * @param listings listings user are selling
+     * @param cart items in user's cart
+     */
     public User(int id, String username, String password, String email, ArrayList<Integer> reviews,
                 ArrayList<Listing> listings, Cart cart) {
         this.username = username;
@@ -80,17 +90,29 @@ public class User {
         return cart;
     }
 
-    //TODO: Implement
     public void setCart(Cart cart) {
         this.cart = cart;
     }
 
 
+    /**
+     * creates a listing given title, price, description, image
+     * @param title title of listing
+     * @param price price of listing
+     * @param description description of listing
+     * @param image image of the listing
+     * @throws IOException throws in case of IOException
+     */
     public void createListing(String title, float price, String description, String image) throws IOException {
         new ListingCreator().createListing(this, title, price, description, image);
     }
 
 
+    /**
+     * removes a listing from the user's listings that they are selling
+     *
+     * @param listing listing object to be removed from user listings
+     */
     public void removeListing(Listing listing) {
         int indexToRemove = -1;
         for (int i = 0; i < getListings().size(); i++) {
@@ -154,7 +176,11 @@ public class User {
         return rating;
     }
 
-    // TODO test
+    /**
+     * removes from the cart given a listing ID
+     * @param listingID ID of the listing to remove
+     * @return returns true if listing was removed from cart
+     */
     public boolean removeFromCartByID(int listingID) {
         ArrayList<Listing> listings = this.getCart().getItems();
         for (Listing listing : listings) {
@@ -167,6 +193,11 @@ public class User {
         return false;
     }
 
+    /**
+     * Given a user objects, checks to see if the current user and the user given are the exact same
+     * @param user user object that is passed in
+     * @return returns true if they are the same objects
+     */
     public boolean equals(User user) {
         if (this.getID() == user.getID() &&
                 this.getUsername().equals(user.getUsername()) &&
