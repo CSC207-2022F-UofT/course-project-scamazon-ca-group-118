@@ -60,7 +60,7 @@ public class ProfilePresenterUnitTests {
         String username = "Harry";
         String email = "hairee@gmail.com";
         double rating = 4.9;
-        ArrayList<Integer> reviews = new ArrayList<Integer>(List.of(5, 4, 2, 3, 4, 1));
+        ArrayList<Integer> reviews = new ArrayList<>(List.of(5, 4, 2, 3, 4, 1));
         ProfileResponseModel responseModel = new ProfileResponseModel(username, email, rating, reviews);
         ProfileResponseModel result = presenter.displaySuccess(responseModel);
 

@@ -782,7 +782,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * Method to set the path of the user csv file
      * @param path path of the csv file
      */
-    protected void setUserTablePath(String path) {
+    public void setUserTablePath(String path) {
         this.USER_TABLE_PATH = path;
     }
 
@@ -790,7 +790,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * method to get the path of the user csv file
      * @return returns the path as a string
      */
-    protected String getUserTablePath() {
+    public String getUserTablePath() {
         return this.USER_TABLE_PATH;
     }
 

@@ -9,7 +9,7 @@ public class ProfileResponseModelUnitTests {
 
     @Test
     void ProfileResponseModelCreation() {
-        ArrayList<Integer> reviews = new ArrayList<Integer>(List.of(1, 2, 3, 4, 5));
+        ArrayList<Integer> reviews = new ArrayList<>(List.of(1, 2, 3, 4, 5));
         ProfileResponseModel responseModel = new ProfileResponseModel("Ethan", "ethan3@hotmail.com",
                 3, reviews);
         assert responseModel.getUsername().equals("Ethan");
@@ -22,7 +22,7 @@ public class ProfileResponseModelUnitTests {
     void ProfileResponseModelCreationWithSetters() {
         ProfileResponseModel responseModel = new ProfileResponseModel(null, null, 0.0,
                 null);
-        ArrayList<Integer> reviews = new ArrayList<Integer>(List.of(1));
+        ArrayList<Integer> reviews = new ArrayList<>(List.of(1));
         responseModel.setUsername("toronto123");
         responseModel.setEmail("NEWfie@yahoo.com");
         responseModel.setRating(5);

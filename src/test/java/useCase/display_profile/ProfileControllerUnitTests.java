@@ -1,12 +1,13 @@
 package useCase.display_profile;
 
+import com.opencsv.CSVWriter;
 import database.DatabaseController;
-import database.GetUser;
 import database.ReviewDatabaseGateway;
 import entities.User;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ public class ProfileControllerUnitTests {
 
     @BeforeAll
     public static void setUp() throws IOException {
-        db.setListingTablePath("src/test/java/database/Listings.csv");
         db.setUserTablePath("src/test/java/database/Users.csv");
         File usersCSV = new File(db.getUserTablePath());
         usersCSV.createNewFile();
@@ -30,10 +30,6 @@ public class ProfileControllerUnitTests {
         if (usersCSV.delete()) {
             usersCSV.createNewFile();
         }
-        File listingsCSV = new File(db.getListingTablePath());
-        if (listingsCSV.delete()) {
-            listingsCSV.createNewFile();
-        }
         User.setNextId(0);
     }
 
@@ -41,12 +37,10 @@ public class ProfileControllerUnitTests {
     public static void deleteCSVFiles() {
         File usersCSV = new File(db.getUserTablePath());
         usersCSV.delete();
-        File listingsCSV = new File(db.getListingTablePath());
-        listingsCSV.delete();
     }
     @Test
     void checkSetUp() {
-        ReviewDatabaseGateway profileGateway = new GetUser();
+        ReviewDatabaseGateway profileGateway = db;
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
         ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
         ProfileController profileController = new ProfileController(inputBoundary);
@@ -55,12 +49,12 @@ public class ProfileControllerUnitTests {
         assertNotNull(profilePresenter);
         assertNotNull(profileController.getInputBoundary());
         assertNotNull(profileController);
-        assert profileController.getInputBoundary() == inputBoundary;
+        assert profileController.getInputBoundary().equals(inputBoundary);
     }
 
     @Test
     void checkSetUpUsingSetter() {
-        ReviewDatabaseGateway profileGateway = new GetUser();
+        ReviewDatabaseGateway profileGateway = db;
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
         ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
         ProfileController profileController = new ProfileController(null);
@@ -70,16 +64,15 @@ public class ProfileControllerUnitTests {
         assertNotNull(profilePresenter);
         assertNotNull(inputBoundary);
         assertNotNull(profileController);
-        assert profileController.getInputBoundary() == inputBoundary;
+        assert profileController.getInputBoundary().equals(inputBoundary);
     }
 
 
     @Test
     void createRequestEmpty() {
         String username = "";
-        ReviewDatabaseGateway profileGateway = new GetUser();
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
-        ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
+        ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
         ProfileController profileController = new ProfileController(inputBoundary);
         try {
             profileController.createRequest(username);
@@ -92,43 +85,41 @@ public class ProfileControllerUnitTests {
 
     @Test
     void createRequestSavedUser() {
-        String username = "seller";
-        ReviewDatabaseGateway profileGateway = new GetUser();
+        String username = "Ethan";
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
-        ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
+        ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
         ProfileController profileController = new ProfileController(inputBoundary);
         try {
+            FileWriter userCSV = new FileWriter(db.getUserTablePath());
+            CSVWriter userWriter = new CSVWriter(userCSV, ';', CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+            List<String[]> userData = new ArrayList<>();
+            userData.add(new String[]{"0", username, "password123", "Ethan@gmail.com", "[4,5,0]", "[0,1]", "[2,3]"});
+            userWriter.writeAll(userData);
+            userWriter.close();
+
             ProfileResponseModel output = profileController.createRequest(username);
             assert output.getUsername().equals(username);
-            assert output.getEmail().equals("seller@seller.com");
-            assert output.getRating() == 4.0;
-            assert output.getReviews().equals(new ArrayList<>(List.of(4)));
-        } catch (NoSuchUser e) {
+            assert output.getEmail().equals("Ethan@gmail.com");
+            assert output.getRating() == 3.0;
+            assert output.getReviews().equals(new ArrayList<>(List.of(4, 5, 0)));
+        } catch (NoSuchUser | IOException e) {
             assert false;
         }
     }
 
     @Test
     void createRequestNonSavedUser() {
-        String username = "Ethan";
-        DatabaseController db = new DatabaseController();
+        String username = "abcdefg";
+        ProfileOutputBoundary profilePresenter = new ProfilePresenter();
+        ProfileInputBoundary inputBoundary = new ProfileInteractor(db, profilePresenter);
+        ProfileController profileController = new ProfileController(inputBoundary);
         try {
-            boolean userExistence = db.checkUserWithUsername(username);
-            if (!userExistence) {
-                ReviewDatabaseGateway profileGateway = new GetUser();
-                ProfileOutputBoundary profilePresenter = new ProfilePresenter();
-                ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
-                ProfileController profileController = new ProfileController(inputBoundary);
-                try {
-                    profileController.createRequest(username);
-                    assert false;
-                } catch (NoSuchUser e2) {
-                    String message = e2.getMessage();
-                    assert message.equals("This user does not exist.") || message.equals("Something went wrong.");
-                }
-            }
-        } catch (IOException e1) {
+            profileController.createRequest(username);
             assert false;
+        } catch (NoSuchUser e) {
+            String message = e.getMessage();
+            assert message.equals("This user does not exist.") || message.equals("Something went wrong.");
         }
     }
 }

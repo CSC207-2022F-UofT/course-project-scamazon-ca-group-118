@@ -14,8 +14,8 @@ import java.util.Objects;
 public class ProfileInteractor implements ProfileInputBoundary {
     // Note: I use ReviewDatabaseGateway because it has the same methods the ProfilePage needs, and it would
     // be redundant to have two gateways with the same methods.
-    private final ReviewDatabaseGateway gateway;
-    private final ProfileOutputBoundary outputBoundary;
+    private ReviewDatabaseGateway gateway;
+    private ProfileOutputBoundary outputBoundary;
 
     /**
      * The ProfileInteractor constructor which assigns the gateway and output boundary needed to carry out the use case.
@@ -60,11 +60,28 @@ public class ProfileInteractor implements ProfileInputBoundary {
     }
 
     /**
+     * Sets the gateway of this ProfileInteractor.
+     * @param gateway The new gateway to update this ProfileInteractor with.
+     */
+    public void setGateway(ReviewDatabaseGateway gateway) {
+        this.gateway = gateway;
+    }
+
+    /**
      * Gets the OutputBoundary from this ProfileInteractor.
      * @return The ProfileOutputBoundary associated with this ProfileInteractor.
      */
     public ProfileOutputBoundary getOutputBoundary() {
         return this.outputBoundary;
     }
+
+    /**
+     * Sets the output boun of this ProfileInteractor.
+     * @param outputBoundary The new ProfileOutputBoundary to update this ProfileInteractor with.
+     */
+    public void setOutputBoundary(ProfileOutputBoundary outputBoundary) {
+        this.outputBoundary = outputBoundary;
+    }
+
 }
 
