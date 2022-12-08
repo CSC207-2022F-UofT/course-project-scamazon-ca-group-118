@@ -135,5 +135,3 @@ public class RegisterPage extends Page implements ActionListener{
     }
 }
 
-//submit page override
-
