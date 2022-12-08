@@ -3,8 +3,8 @@ package entities;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import useCase.createListing.ListingCreator;
-import useCase.writeReview.ReviewCreator;
+import use_case.create_listing.ListingCreator;
+import use_case.write_review.ReviewCreator;
 
 public class User {
     private String username;

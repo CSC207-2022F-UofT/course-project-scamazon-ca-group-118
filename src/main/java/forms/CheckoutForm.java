@@ -1,10 +1,10 @@
 package forms;
 
-import Main.Main;
-import UI.ListingListPage;
+import main.Main;
+import ui.ListingListPage;
 import entities.User;
-import useCase.checkout.CheckoutRequestModel;
-import useCase.checkout.CheckoutResponseModel;
+import use_case.checkout.CheckoutRequestModel;
+import use_case.checkout.CheckoutResponseModel;
 
 import java.io.IOException;
 import java.time.LocalDate;

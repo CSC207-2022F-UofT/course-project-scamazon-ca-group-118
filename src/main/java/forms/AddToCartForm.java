@@ -1,7 +1,7 @@
 package forms;
 
-import useCase.addToCart.AddToCartRequestModel;
-import useCase.addToCart.AddToCartResponseModel;
+import use_case.add_to_cart.AddToCartRequestModel;
+import use_case.add_to_cart.AddToCartResponseModel;
 import database.GetUser;
 import entities.Listing;
 

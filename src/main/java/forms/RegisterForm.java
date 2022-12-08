@@ -1,8 +1,8 @@
 package forms;
 
-import useCase.Register.RegisterFailed;
-import useCase.Register.RegisterRequestModel;
-import useCase.Register.RegisterResponseModel;
+import use_case.register.RegisterFailed;
+import use_case.register.RegisterRequestModel;
+import use_case.register.RegisterResponseModel;
 
 import java.io.IOException;
 
