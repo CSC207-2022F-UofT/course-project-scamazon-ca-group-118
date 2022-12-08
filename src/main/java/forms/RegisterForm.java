@@ -1,37 +1,37 @@
 package forms;
 
-import useCase.Register.RegisterFailed;
-import useCase.Register.RegisterRequestModel;
-import useCase.Register.RegisterResponseModel;
+import use_case.register.RegisterFailed;
+import use_case.register.RegisterRequestModel;
+import use_case.register.RegisterResponseModel;
 
 import java.io.IOException;
 
 public class RegisterForm extends Form{
 
-    private String username;
-    private String email;
-    private String password;
-    private String confirmPassword;
+    private final String USERNAME;
+    private final String EMAIL;
+    private final String PASSWORD;
+    private final String CONFIRM_PASSWORD;
     private RegisterResponseModel responseModel;
 
     public RegisterForm(String title, String email, String username, String password, String confirmPassword){
         super(title);
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
+        this.USERNAME = username;
+        this.EMAIL = email;
+        this.PASSWORD = password;
+        this.CONFIRM_PASSWORD = confirmPassword;
     }
 
     @Override
     protected boolean validateForm() {
         //password and confirm password
-        if (!(this.password.equals(this.confirmPassword))) {
+        if (!(this.PASSWORD.equals(this.CONFIRM_PASSWORD))) {
             throw new RegisterFailed("Passwords are not the same");
-        }else if (password.length() < 8){
+        }else if (PASSWORD.length() < 8){
             throw new RegisterFailed("Password must be at least 8 characters long");
         }
         //email validation
-        if (!this.email.contains("@")) {
+        if (!this.EMAIL.contains("@")) {
             throw new RegisterFailed ("Email must contain '@'");
         }
         return true;
@@ -40,8 +40,8 @@ public class RegisterForm extends Form{
     @Override
     protected void submitForm() throws IOException {
         //run form validate method
-        if (this.validateForm()){
-            RegisterRequestModel requestModel = new RegisterRequestModel(username, email, password);
+        if (this.validateForm()) {
+            RegisterRequestModel requestModel = new RegisterRequestModel(USERNAME, EMAIL, PASSWORD);
             this.responseModel = new RegisterResponseModel(requestModel);
         }
     }

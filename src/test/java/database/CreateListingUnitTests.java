@@ -2,6 +2,7 @@ package database;
 
 import com.opencsv.CSVWriter;
 import entities.Cart;
+import entities.Listing;
 import entities.User;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,11 +18,13 @@ public class CreateListingUnitTests {
     public static final DatabaseController db = new DatabaseController();
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws IOException {
         db.setListingTablePath("src/test/java/database/Listings.csv");
         db.setUserTablePath("src/test/java/database/Users.csv");
         File usersCSV = new File(db.getUserTablePath());
+        usersCSV.createNewFile();
         File listingsCSV = new File(db.getListingTablePath());
+        listingsCSV.createNewFile();
     }
 
     @BeforeEach
@@ -34,6 +37,8 @@ public class CreateListingUnitTests {
         if (listingsCSV.delete()) {
             listingsCSV.createNewFile();
         }
+        Listing.setNextId(0);
+        User.setNextId(0);
     }
 
     @AfterAll
@@ -101,6 +106,20 @@ public class CreateListingUnitTests {
         }
         // test
         assert result.equals(expected);
+    }
 
+    @Test
+    public void testAddListingUpdatesUserListings() throws IOException {
+        db.createUser("user", "pass", "email");
+        db.createListing("user", "title", 100, LocalDate.EPOCH, "desc", "imagePath");
+        User user = db.getUserWithUsername("user");
+        assert user.getListings().size() == 1;
+        assert user.getListings().get(0).getId() == 0;
+
+        db.createListing("user", "title2", 100, LocalDate.EPOCH, "desc2", "imagePath");
+        user = db.getUserWithUsername("user");
+        assert user.getListings().size() == 2;
+        assert user.getListings().get(0).getId() == 0;
+        assert user.getListings().get(1).getId() == 1;
     }
 }

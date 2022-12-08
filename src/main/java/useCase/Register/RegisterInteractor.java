@@ -33,7 +33,7 @@ public class RegisterInteractor {
             return true;
         }else{
             if (emailExists && usernameExists){
-                throw new RegisterFailed("Username and Email are already taken");
+                throw new RegisterFailed("Username and Email and already taken");
             }else if (usernameExists){
                 throw new RegisterFailed("Username is already taken");
             }else{
@@ -45,4 +45,5 @@ public class RegisterInteractor {
     public void createUser(String username, String email, String password){
         implementation.createUser(username, email, password);
     }
+
 }

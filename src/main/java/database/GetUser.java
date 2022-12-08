@@ -8,7 +8,7 @@ import java.io.IOException;
  * The GetUserWithUsername class will have a final attribute USER holds the User from the database with the
  * specified username, or an empty User if no user has this username
  */
-public class GetUser implements ReviewDatabaseGateway {
+public class GetUser implements LoginDatabaseGateway {
 
     /**
      * Creates an instance of GetUserWithUsername
@@ -26,12 +26,5 @@ public class GetUser implements ReviewDatabaseGateway {
     @Override
     public User getUserWithUsername(String username) throws IOException {
         return new DatabaseController().getUserWithUsername(username);
-
-
-    }
-    // idk what this class really does, had to implement addreview it implements reviewgateway
-    @Override
-    public void addReview(User reviewed, int rating) throws IOException {
-
     }
 }
