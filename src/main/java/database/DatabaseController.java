@@ -565,14 +565,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     }
 
     /**
-     * logout method
-     * sets curr user to null after logout
-     */
-    public void logout() {
-        Main.setCurrentUser(null);
-    }
-
-    /**
      * Serializer that creates a Listing object based on a String row
      *
      * @param row String row from our csv file
