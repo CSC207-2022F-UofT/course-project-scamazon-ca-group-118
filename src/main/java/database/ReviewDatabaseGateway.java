@@ -13,4 +13,12 @@ public interface ReviewDatabaseGateway {
      * @return User whose username is username, or an empty User
      */
     User getUserWithUsername(String username) throws IOException;
+
+    /**
+     * adds a review to a user
+     *
+     * @param rating number given by the reviewer
+     * @param reviewed user being reviewed
+     */
+    void addReview(User reviewed, int rating) throws IOException;
 }

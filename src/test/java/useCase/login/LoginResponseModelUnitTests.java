@@ -1,27 +1,45 @@
 package useCase.login;
 
 
-/**
- * TODO uncomment and implement these tests once Database implemented
+import entities.Cart;
+import entities.User;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 public class LoginResponseModelUnitTests {
+    static User clare = new User(1, "clare",
+            "12345",
+            "clare@gmail.com",
+            new ArrayList<>(),
+            new ArrayList<>(),
+            new Cart());
     @Test
     void testLoginResponseModelShouldLogin() {
         LoginResponseModel responseModel = new LoginResponseModel(new LoginRequestModel("clare",
                 "12345"));
-        assert (responseModel.getUser().getUsername().equals("clare"));
-        assert (responseModel.getUser().getPassword().equals("12345"));
-        assert (responseModel.getUser().getID() == 1);
-        assert (responseModel.getUser().getEmail().equals("clare@gmail.com"));
-        assert (responseModel.getUser().getReviews().isEmpty());
-        assert (responseModel.getUser().getListings().isEmpty());
-        //assert(responseModel.getCart().isEmpty());
+        responseModel.getInteractor().setUser(clare);
+        responseModel.getInteractor().setUserExists(true);
+        responseModel.refreshUser();
+        User user = responseModel.getUser();
+        assert (user.getUsername().equals("clare"));
+        assert (user.getPassword().equals("12345"));
+        assert (user.getID() == 1);
+        assert (user.getEmail().equals("clare@gmail.com"));
+        assert (user.getREVIEWS().isEmpty());
+        assert (user.getListings().isEmpty());
+        assert(user.getCart().countItems() == 0);
     }
 
     @Test
     void testLoginResponseModelPasswordsWrong() {
         try {
-            new LoginResponseModel(new LoginRequestModel("clare", "1234"));
-            assert 4 == 5; //assert a false statement to ensure the try failed
+            LoginResponseModel responseModel =
+                    new LoginResponseModel(new LoginRequestModel("clare", "1234"));
+            responseModel.getInteractor().setUser(clare);
+            responseModel.refreshUser();
+            responseModel.getUser();
+            assert false;
         } catch (LoginFailed e) {
             assert (e.getMessage().equals("The password you entered is incorrect"));
         }
@@ -30,11 +48,14 @@ public class LoginResponseModelUnitTests {
     @Test
     void testLoginResponseModelNoUserWithUsername() {
         try {
-            new LoginResponseModel(new LoginRequestModel("not clare", "1234"));
-            assert 4 == 5; //assert a false statement to ensure the try failed
+            LoginResponseModel responseModel =
+                    new LoginResponseModel(new LoginRequestModel("not clare", "1234"));
+            responseModel.getInteractor().setUser(null);
+            responseModel.refreshUser();
+            responseModel.getUser();
+            assert false;
         } catch (LoginFailed e) {
             assert (e.getMessage().equals("No user exists with this username"));
         }
     }
 }
-*/

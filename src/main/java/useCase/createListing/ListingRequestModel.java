@@ -1,12 +1,14 @@
 package useCase.createListing;
 
+import entities.User;
+
 import java.util.List;
 
 /**
  * Represents a ListingRequestModel object that holds all data to be passed to the ListingInteractor
  */
 public class ListingRequestModel {
-    private String sellerUsername;
+    private User seller;
     private String listingTitle;
     private float price;
     private String description;
@@ -15,22 +17,22 @@ public class ListingRequestModel {
     /**
      * Constructor for a ListingRequestModel
      *
-     * @param sellerUsername the seller username of the listing
+     * @param seller the seller username of the listing
      * @param listingTitle   the title of the listing
      * @param price          the price of the listing
      * @param description    the description of the listing
      * @param image          the file path to the listing image
      */
-    public ListingRequestModel(String sellerUsername, String listingTitle, float price, String description, String image) {
-        this.sellerUsername = sellerUsername;
+    public ListingRequestModel(User seller, String listingTitle, float price, String description, String image) {
+        this.seller = seller;
         this.listingTitle = listingTitle;
         this.price = price;
         this.description = description;
         this.image = image;
     }
 
-    public String getSellerUsername() {
-        return sellerUsername;
+    public User getSeller() {
+        return seller;
     }
 
     public String getTitle() {
@@ -49,8 +51,8 @@ public class ListingRequestModel {
         return image;
     }
 
-    public void setSellerUsername(String sellerUsername) {
-        this.sellerUsername = sellerUsername;
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
 
     public void setTitle(String listingTitle) {
@@ -64,4 +66,6 @@ public class ListingRequestModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setImage(String imgpath){this.image = imgpath;}
 }

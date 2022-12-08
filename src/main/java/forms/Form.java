@@ -1,9 +1,10 @@
 package forms;
 
-import javax.swing.*;
+import com.opencsv.exceptions.CsvException;
+
 import java.io.IOException;
 
-public abstract class Form extends JFrame {
+public abstract class Form {
     private String title;
 
     public Form(String title) {
@@ -19,5 +20,5 @@ public abstract class Form extends JFrame {
     }
 
     abstract boolean validateForm() throws IOException;
-    abstract void submitForm() throws IOException;
+    abstract void submitForm() throws IOException, CsvException;
 }

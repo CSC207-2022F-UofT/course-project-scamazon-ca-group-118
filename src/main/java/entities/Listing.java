@@ -15,6 +15,7 @@ public class Listing {
     private String description;
     private String imagePath; // Will store the directory path of the images
 
+    // TODO deprecated, remove this constructor
     public Listing(User seller, String listingTitle, float price, String description, String imagePath) {
         this.sellerUsername = seller.getUsername();
         this.listingTitle = listingTitle;
@@ -24,13 +25,26 @@ public class Listing {
         this.description = description;
         this.imagePath = imagePath;
     }
+
     public Listing(int id, String sellerUsername, String listingTitle, LocalDate dateAdded,
                    float price, String description, String imagePath) {
         this.id = id;
         this.sellerUsername = sellerUsername;
         this.listingTitle = listingTitle;
+        this.dateAdded = dateAdded;
+        this.price = price;
+        this.description = description;
+        this.imagePath = imagePath;
+    }
+
+    // for when this isn't a "new" listing, aka it already exists in the db
+    // and we just want to represent it in an object.
+    public Listing(String sellerUsername, String listingTitle, LocalDate dateAdded,
+                   float price, String description, String imagePath) {
         this.id = nextId++;
-        this.dateAdded = LocalDate.now(); // assigns the localDate with the current time
+        this.sellerUsername = sellerUsername;
+        this.listingTitle = listingTitle;
+        this.dateAdded = dateAdded;
         this.price = price;
         this.description = description;
         this.imagePath = imagePath;
@@ -38,6 +52,10 @@ public class Listing {
 
     public static int getNextID() {
         return nextID++;
+    }
+
+    public static void setNextId(int id) {
+        nextId = id;
     }
 
     public int getId() {
@@ -94,5 +112,18 @@ public class Listing {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public boolean equals(Listing listing) {
+        if (this.getId() == listing.getId() &&
+                this.getSellerUsername().equals(listing.getSellerUsername()) &&
+                this.getPrice() == listing.getPrice() &&
+                this.getDate().equals(listing.getDate()) &&
+                this.getDescription().equals(listing.getDescription()) &&
+                this.getImagePath().equals(listing.getImagePath()) &&
+                this.getTitle().equals(listing.getTitle())) {
+            return true;
+        }
+        return false;
     }
 }

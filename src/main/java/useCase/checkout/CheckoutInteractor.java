@@ -1,11 +1,12 @@
 package useCase.checkout;
 
+import Main.Main;
+import com.opencsv.exceptions.CsvException;
+import database.DatabaseController;
 import database.GetUser;
 import entities.User;
 import entities.Cart;
 import entities.Listing;
-import useCase.login.CheckPassword;
-import useCase.login.LoginFailed;
 
 import java.io.IOException;
 
@@ -15,24 +16,25 @@ import java.io.IOException;
  */
 public class CheckoutInteractor {
     private User buyer;
-    private String username;
 
     /**
-     * The constructor for the ReviewInteractor class
+     * The constructor for the CheckoutInteractor class
      *
-     * @param username the username entered by the User
+     * @param requestModel the request model that's data will be manipulated
      */
-    public CheckoutInteractor(String username) throws IOException {
-        this.username = username;
-        this.buyer = new GetUser().getUserWithUsername(this.username);
+    public CheckoutInteractor(CheckoutRequestModel requestModel) throws IOException {
+        this.buyer = requestModel.getBuyer();
+    }
+
+    public String getMessage() throws IOException, CsvException {
+        this.removeListings();
+        return "You have successfully checked out";
     }
 
     //removes all items in buyer User's cart by removing each item from the seller User's listings
-    public void removeListings() {
-        Cart cart = this.buyer.getCart();
-        for (Listing listing : cart.getItems()) {
-            //User seller = listing.getSeller();
-            //seller.removeListing(listing);
-        }
+    public void removeListings() throws IOException, CsvException {
+        DatabaseController db = new DatabaseController();
+        db.checkoutRemoveListings();
+        Main.setCurrentUser(db.getUserWithUsername(buyer.getUsername()));
     }
 }

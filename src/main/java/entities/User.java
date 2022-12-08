@@ -1,7 +1,7 @@
 package entities;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import useCase.createListing.ListingCreator;
 import useCase.writeReview.ReviewCreator;
@@ -9,26 +9,30 @@ import useCase.writeReview.ReviewCreator;
 public class User {
     private String username;
     private String password;
-    private int id;
+    private final int ID;
     private String email;
-    private ArrayList<Integer> reviews;
+    private final ArrayList<Integer> REVIEWS;
     private ArrayList<Listing> listings;
     private Cart cart;
-    private static int nextID = 0;
+    private static int nextId = 0;
 
     public User(int id, String username, String password, String email, ArrayList<Integer> reviews,
                 ArrayList<Listing> listings, Cart cart) {
         this.username = username;
         this.password = password;
-        this.id = id;
+        this.ID = id;
         this.email = email;
-        this.reviews = reviews;
+        this.REVIEWS = reviews;
         this.listings = listings;
         this.cart = cart;
     }
 
-    public static int getNextID() {
-        return nextID++;
+    public static int getNextId() {
+        return nextId++;
+    }
+
+    public static void setNextId(int id) {
+        nextId = id;
     }
 
     public String getUsername() {
@@ -48,7 +52,7 @@ public class User {
     }
 
     public int getID() {
-        return this.id;
+        return this.ID;
     }
 
     public String getEmail() {
@@ -68,8 +72,8 @@ public class User {
         this.listings = listings;
     }
 
-    public ArrayList<Integer> getReviews() {
-        return this.reviews;
+    public ArrayList<Integer> getREVIEWS() {
+        return this.REVIEWS;
     }
 
     public Cart getCart() {
@@ -82,13 +86,23 @@ public class User {
     }
 
 
-    public void createListing(String title, float price, String description, String image) {
+    public void createListing(String title, float price, String description, String image) throws IOException {
         new ListingCreator().createListing(this, title, price, description, image);
     }
 
 
     public void removeListing(Listing listing) {
-        listings.remove(listing);
+        int indexToRemove = -1;
+        for (int i = 0; i < getListings().size(); i++) {
+            if (getListings().get(i).getId() == listing.getId()) {
+                indexToRemove = i;
+            }
+        }
+        if (indexToRemove > -1) {
+            listings = getListings();
+            listings.remove(indexToRemove);
+            setListings(listings);
+        }
     }
 
     /**
@@ -105,60 +119,82 @@ public class User {
         this.getCart().addItem(listing);
     }
 
-    public void removeFromCart() {
+    public void removeFromCart(Listing listing) {
+        this.getCart().removeItem(listing);
+    }
+
+
+    public void writeReview(User reviewed, int rating) {
+        new ReviewCreator().createReview(reviewed, rating);
     }
 
 
     /**
-     * Creates a new review with this User as the reviewer, and the specified reviewer and rating
-     * then adds it to the reviewed User's reviews
+     * Adds a review to this User's list of reviews
      *
-     * @param reviewed the User being reviewed/the User whose reviews the new Review will be added to
-     * @param rating   the rating given to the User being reviewed
+     * @param review the review to be added to this User's reviews
      */
-    // TODO: Change writeReview, removeReview to not need Review class anymore, only integers
-//    public void writeReview(User reviewed, int rating) {
-//        new ReviewCreator().createReview(this, reviewed, rating);
-//
-//    }
-//
-//    /**
-//     * Removes a review from this User's list of reviews
-//     *
-//     * @param toBeRemoved the Review to be removed from this User's reviews
-//     */
-//    public void removeReview(Review toBeRemoved) {
-//        this.reviews.remove(toBeRemoved);
-//    }
-//
-//    /**
-//     * Adds a review to this User's list of reviews
-//     *
-//     * @param review the review to be added to this User's reviews
-//     */
-//    public void addReview(Review review) {
-//        this.reviews.add(review);
-//    }
-//
-//
-//    public void removeReview() {
-//    }
-//
+    public void addReview(int review) {
+        this.REVIEWS.add(review);
+    }
 
     /**
      * calculates the average integer rating earned by this User
+     * 0
      *
      * @return the average rating of all this User's reviews
      */
-    public int calculateRating() {
-        double rating = 0;
-        for (int review : reviews) {
+    public double calculateRating() {
+        double rating = 0.0;
+        for (int review : REVIEWS) {
             rating += review;
         }
-        rating /= reviews.size();
-        return (int) rating;
+        rating /= REVIEWS.size();
+        rating = (double) (Math.round(rating * 100)) / 100;
+        return rating;
     }
 
+    // TODO test
+    public boolean removeFromCartByID(int listingID) {
+        ArrayList<Listing> listings = this.getCart().getItems();
+        for (Listing listing : listings) {
+            if (listing.getId() == listingID) {
+                listings.remove(listing);
+                this.setCart(new Cart(listings));
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean equals(User user) {
+        if (this.getID() == user.getID() &&
+                this.getUsername().equals(user.getUsername()) &&
+                this.getPassword().equals(user.getPassword()) &&
+                this.getEmail().equals(user.getEmail()) &&
+                this.getREVIEWS().equals(user.getREVIEWS())
+        ) {
+            // check listings are equal, ORDER MATTERS
+            if (this.getListings().size() != user.getListings().size()) {
+                return false;
+            }
+            for (int i = 0; i < this.getListings().size(); i++) {
+                if (!this.getListings().get(i).equals(user.getListings().get(i))) {
+                    return false;
+                }
+            }
+            // check carts are equal, ORDER MATTERS
+            if (this.getCart().getItems().size() != user.getCart().getItems().size()) {
+                return false;
+            }
+            for (int i = 0; i < this.getCart().getItems().size(); i++) {
+                if (!this.getCart().getItems().get(i).equals(user.getCart().getItems().get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }
 
