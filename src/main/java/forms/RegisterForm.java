@@ -13,14 +13,6 @@ public class RegisterForm extends Form{
     private String password;
     private String confirmPassword;
     private RegisterResponseModel responseModel;
-    private String message;
-    public RegisterForm(String title) {
-        super(title);
-        this.username = "";
-        this.email = "";
-        this.password = "";
-        this.confirmPassword = "";
-    }
 
     public RegisterForm(String title, String email, String username, String password, String confirmPassword){
         super(title);
@@ -51,8 +43,6 @@ public class RegisterForm extends Form{
         if (this.validateForm()){
             RegisterRequestModel requestModel = new RegisterRequestModel(username, email, password);
             this.responseModel = new RegisterResponseModel(requestModel);
-        }else{
-            this.responseModel = new RegisterResponseModel(this.message);
         }
     }
 
