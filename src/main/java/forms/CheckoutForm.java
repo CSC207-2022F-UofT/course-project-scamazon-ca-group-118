@@ -18,7 +18,7 @@ public class CheckoutForm extends Form {
     private final String ADDRESS;
     private CheckoutResponseModel responseModel;
     private String message;
-    public CheckoutForm(String name, String card_number, String cvv, LocalDate expiration, String address) {
+    public CheckoutForm(User buyer, String name, String card_number, String cvv, LocalDate expiration, String address) {
         super("Checkout");
         this.BUYER = buyer;
         this.NAME = name;

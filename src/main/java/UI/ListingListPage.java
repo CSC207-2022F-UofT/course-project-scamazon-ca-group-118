@@ -24,7 +24,7 @@ public class ListingListPage extends Page implements ActionListener {
     private final JTextField JT_SEARCH = new JTextField(20);
     private final JButton SEARCH = new JButton("Search");
     private final DatabaseController CONTROLLER = new DatabaseController();
-    private final ArrayList<JButton> BUTTONS = new ArrayList<>();
+    private ArrayList<JButton> BUTTONS = new ArrayList<>();
     private List<Listing> displayedListings;
 
     public ListingListPage() throws IOException {
@@ -54,21 +54,19 @@ public class ListingListPage extends Page implements ActionListener {
 
         //LAYOUT FOR PANEL
         //align SearchBar and titleLabel near the middle
-        LAYOUT.putConstraint(SpringLayout.WEST, searchBar, 500, SpringLayout.WEST, this);
+        LAYOUT.putConstraint(SpringLayout.WEST, searchBar, 200, SpringLayout.WEST, this);
         LAYOUT.putConstraint(SpringLayout.WEST, titleLabel, 0, SpringLayout.WEST, searchBar);
         
         //align SearchBar and titleLabel vertically
         LAYOUT.putConstraint(SpringLayout.NORTH, searchBar, 150, SpringLayout.NORTH, this);
         LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 30, SpringLayout.SOUTH, searchBar);
 
-        //keeps track of previous listing for layout
-        ListingPanel previousListing = null;
         JPanel panelOfListings = new JPanel();
         panelOfListings.setLayout(new GridLayout(4, 1));
         JScrollPane scroll = new JScrollPane(panelOfListings);
-        scroll.setPreferredSize(new Dimension(800, 400));
-        LAYOUT.putConstraint(SpringLayout.WEST, scroll, 0, SpringLayout.WEST, SearchBar);
-        LAYOUT.putConstraint(SpringLayout.NORTH, scroll, 30, SpringLayout.SOUTH, SearchBar);
+        scroll.setPreferredSize(new Dimension(1000, 400));
+        LAYOUT.putConstraint(SpringLayout.WEST, scroll, 0, SpringLayout.WEST, searchBar);
+        LAYOUT.putConstraint(SpringLayout.NORTH, scroll, 30, SpringLayout.SOUTH, searchBar);
         this.add(scroll);
 
         //looping through listings
@@ -94,31 +92,15 @@ public class ListingListPage extends Page implements ActionListener {
             //align listing in the middle
             LAYOUT.putConstraint(SpringLayout.WEST, listingInfo, 0, SpringLayout.WEST, searchBar);
 
-            //align listing vertically
-/*
-            if (previousListing == null) {
-                //is the first listing --> put under titleLabel
-                layout.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, panelOfListings);
-                previousListing = listingInfo; //set previousListing to the one we just created
-            } else {
-                //not the first listing --> put under previousListing
-                layout.putConstraint(SpringLayout.NORTH, listingInfo, 30, SpringLayout.SOUTH, previousListing);
-                previousListing = listingInfo; //reset previousListing to the one we just created
-            }
-
- */
-
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
-            SearchForm form = new SearchForm(JT_SEARCH.getText(), CONTROLLER);
-            SearchResponseModel responseModel;
             try {
-                this.buttons = new ArrayList<>();
-                SearchForm form = new SearchForm(jtSearch.getText(), controller);
+                this.BUTTONS = new ArrayList<>();
+                SearchForm form = new SearchForm(JT_SEARCH.getText(), CONTROLLER);
                 SearchResponseModel responseModel = form.getResponseModel();
                 ArrayList<Listing> searchListings = responseModel.getListings();
                 setUpPanel(searchListings);
