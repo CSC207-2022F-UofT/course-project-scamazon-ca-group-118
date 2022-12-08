@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class CheckoutPage extends Page implements ActionListener {
     private final JButton SUBMIT = new JButton("Submit");
@@ -92,18 +95,29 @@ public class CheckoutPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SUBMIT) {
             try {
+                String expDate = JT_EXPIRATION.getText();
+
+                final Pattern expPattern = Pattern.compile("(0[1-9]|1[0-2])\\/[0-9]{2}");
+                Matcher m = expPattern.matcher(expDate);
+                if(!m.matches()){
+                    JOptionPane.showMessageDialog(this, "Please enter a valid date MM/YY");
+                }
+                else{
+                    String[] exp = expDate.split("/", 2);
+                    expDate = "20" + exp[1] + "-" + exp[0] + "-" + "01";
+                }
+
                 CheckoutForm form = new CheckoutForm(Main.getCurrentUser(), JT_NAME.getText(), JT_CARD_NUMBER.getText(), JT_CVV.getText(),
-                        LocalDate.parse(JT_EXPIRATION.getText()), JV_ADDRESS.getText());
+                        LocalDate.parse(expDate), JV_ADDRESS.getText());
                 form.getResponseModel();
                 String message = form.getMessage();
                 if(!message.equals("")) {
                     JOptionPane.showMessageDialog(new JFrame(), message);
                 }
             }
-            catch (DateTimeParseException error) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
-            }
+
             catch (IOException | CsvException ex) {
+
                 throw new RuntimeException(ex);
             }
         }
