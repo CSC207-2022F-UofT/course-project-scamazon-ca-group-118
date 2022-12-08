@@ -41,7 +41,7 @@ Thank you for using Scamazon!
 
 ## Some Design patterns used
 - Facade
-  - Databased implemented using Facade design pattern (Database Controller)
+  - Database implemented using Facade design pattern (Database Controller)
 - Factory
   - Listing Creator factory to create all listings
 - Singleton
