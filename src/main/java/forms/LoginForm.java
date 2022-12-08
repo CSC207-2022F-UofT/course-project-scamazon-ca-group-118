@@ -1,8 +1,8 @@
 package forms;
 
-import useCase.login.LoginFailed;
-import useCase.login.LoginRequestModel;
-import useCase.login.LoginResponseModel;
+import use_case.login.LoginFailed;
+import use_case.login.LoginRequestModel;
+import use_case.login.LoginResponseModel;
 
 import java.io.IOException;
 
