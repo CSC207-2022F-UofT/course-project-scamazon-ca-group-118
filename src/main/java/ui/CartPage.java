@@ -29,9 +29,10 @@ public class CartPage extends Page implements ActionListener {
      */
     public CartPage() throws IOException {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
+        DatabaseController db = new DatabaseController();
+        Main.setCurrentUser(db.getUserWithUsername(Main.getCurrentUser().getUsername()));
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
-        DatabaseController db = new DatabaseController();
         this.itemCart = db.getUserWithUsername(Main.getCurrentUser().getUsername()).getCart();
 
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
