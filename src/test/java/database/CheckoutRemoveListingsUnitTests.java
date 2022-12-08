@@ -1,6 +1,7 @@
 package database;
 
 import Main.Main;
+import com.opencsv.exceptions.CsvException;
 import entities.Listing;
 import entities.User;
 import org.junit.jupiter.api.AfterAll;
@@ -73,7 +74,7 @@ public class CheckoutRemoveListingsUnitTests {
     }
 
     @Test
-    public void checkoutRemoveListingsZeroListings() throws IOException {
+    public void checkoutRemoveListingsZeroListings() throws IOException, CsvException {
         db.createListing("1", "title1", 100, LocalDate.EPOCH, "desc", "imagePath");
         db.createListing("1", "title2", 100, LocalDate.EPOCH, "desc", "imagePath");
         db.createListing("1", "title3", 100, LocalDate.EPOCH, "desc", "imagePath");
