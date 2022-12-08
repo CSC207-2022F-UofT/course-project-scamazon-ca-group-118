@@ -116,9 +116,6 @@ public class CheckoutPage extends Page implements ActionListener {
                 }
             }
 
-            catch (DateTimeParseException error) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
-            }
             catch (IOException | CsvException ex) {
 
                 throw new RuntimeException(ex);
