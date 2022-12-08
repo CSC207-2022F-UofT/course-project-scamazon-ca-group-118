@@ -9,7 +9,7 @@ Check out with card information <br>
 Leave feedback for other users <br>
 
 How to Use: <br>
-Pull our repository <br>
+Clone our repository <br>
 Install this opencsv library https://sourceforge.net/projects/opencsv/ <br>
 Create an account or log in to your existing account <br>
 Start browsing or search for specific items <br>
