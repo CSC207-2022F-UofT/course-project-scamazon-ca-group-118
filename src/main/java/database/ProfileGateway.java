@@ -1,6 +1,6 @@
 package database;
 import entities.User;
-import useCase.displayProfile.NoSuchUser;
+import use_case.display_profile.NoSuchUser;
 
 // This interface is in the application business rules layer of clean architecture.
 // TODO This is essentially the same as Clare's LoginDatabase Gateway. We can use one or the other!

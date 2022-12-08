@@ -1,15 +1,12 @@
 package forms;
 
 import entities.User;
-import useCase.createListing.ListingRequestModel;
-import useCase.createListing.ListingResponseModel;
-import database.GetUser;
-import database.UserExists;
+import use_case.create_listing.ListingRequestModel;
+import use_case.create_listing.ListingResponseModel;
 
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class CreateListingForm extends Form {
 
@@ -43,17 +40,12 @@ public class CreateListingForm extends Form {
          */
         try{
             DecimalFormat df = new DecimalFormat("0.00");
-            float listingPrice = Float.parseFloat(df.format(Float.parseFloat(PRICE)));
-            FLOAT_PRICE = listingPrice;
+            FLOAT_PRICE = Float.parseFloat(df.format(Float.parseFloat(PRICE)));
         }
         catch(Exception e){
             return false;
         }
-        if (FLOAT_PRICE >= 0.0 && DESCRIPTION.length() < 1000 && LISTING_TITLE.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return FLOAT_PRICE >= 0.0 && DESCRIPTION.length() < 1000 && LISTING_TITLE.length() > 0;
 
 
     }
