@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 // This class is in the Frameworks & Drivers layer of clean architecture.
 
@@ -25,7 +24,6 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
     private JButton submit;
     private JButton reset;
     private JLabel message;
-
 
     /**
      * The constructor for the ProfileReviewPanel.
@@ -52,7 +50,6 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
 
         ratingChosen = new JLabel("");
         message = new JLabel("");
-
 
         JLabel ratingLabel = new JLabel("Give them a rating between 1 and 5: ");
         RatingButton rating1 = new RatingButton("1");
@@ -87,7 +84,6 @@ public class ProfileReviewPanel extends JPanel implements ActionListener {
         this.add(submit);
         this.add(reset);
         this.add(message);
-
     }
 
     /**

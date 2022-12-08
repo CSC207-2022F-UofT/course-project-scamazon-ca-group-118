@@ -20,11 +20,9 @@ public class ProfilePage extends Page {
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private final SpringLayout LAYOUT;
-
     private String username;
     private String email;
     private double rating;
-
     private JLabel usernameLabel;
     private JLabel emailLabel;
     private JLabel ratingLabel;
