@@ -1,14 +1,17 @@
 package ui;
 
 import main.Main;
+import database.DatabaseController;
 import entities.Cart;
 import entities.Listing;
+import entities.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CartPage extends Page implements ActionListener {
@@ -16,18 +19,20 @@ public class CartPage extends Page implements ActionListener {
     final int WIDTH = 1280;
     final int HEIGHT = 720;
     private final JButton REMOVE;
+    private final JButton CHECKOUT;
     private final JTable itemTable;
-    private final JLabel PRICE_TOTAL;
+    private JLabel priceTotal;
     public Cart itemCart;
 
     /**
      * Cart Page constructor that creates the CartPage Panel.
      */
-    public CartPage() {
+    public CartPage() throws IOException {
         super(Main.getCurrentUser().getUsername() + "'s Cart");
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
-        this.itemCart = Main.getCurrentUser().getCart();
+        DatabaseController db = new DatabaseController();
+        this.itemCart = db.getUserWithUsername(Main.getCurrentUser().getUsername()).getCart();
 
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
@@ -36,17 +41,17 @@ public class CartPage extends Page implements ActionListener {
         scrollPane.setPreferredSize(new Dimension(500, 500));
 
         //Create appropriate buttons and label
-        this.PRICE_TOTAL = new JLabel("Total Price: $" + itemCart.getPrice());
+        this.priceTotal = new JLabel("Total Price: $" + itemCart.getPrice());
         this.REMOVE = new JButton("Remove Item");
         this.REMOVE.addActionListener(this);
-        JButton CHECKOUT = new JButton("Checkout");
-        CHECKOUT.addActionListener(this);
+        this.CHECKOUT = new JButton("Checkout");
+        this.CHECKOUT.addActionListener(this);
 
         //Assign appropriate buttons to new button panel
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.add(this.REMOVE);
-        buttonPanel.add(CHECKOUT);
-        buttonPanel.add(this.PRICE_TOTAL);
+        buttonPanel.add(this.CHECKOUT);
+        buttonPanel.add(this.priceTotal);
         buttonPanel.setPreferredSize(new Dimension(500, 500));
 
         //Assigning all panes and panels to CartPage Panel
@@ -68,7 +73,7 @@ public class CartPage extends Page implements ActionListener {
     public JTable createItemTable() {
         ArrayList<Listing> items = this.itemCart.getItems();
         String[][] data = new String[itemCart.countItems()][];
-        String[] list;
+        String[] list = new String[2];
         for (int i = 0; i < this.itemCart.countItems(); i++) {
             list = new String[]{items.get(i).getTitle(), String.valueOf(items.get(i).getPrice())};
             data[i] = list;
@@ -96,11 +101,18 @@ public class CartPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.REMOVE) {
+            DatabaseController db = new DatabaseController();
             DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
             int row = this.itemTable.getSelectedRow();
-            itemCart.removeItem(row);
-            model.removeRow(row);
-            PRICE_TOTAL.setText("Total Price: $" + itemCart.getPrice());
+            Listing listing = itemCart.getItems().get(row);
+            try {
+                db.removeFromCartByID(listing.getId());
+                itemCart = db.getUserWithUsername(Main.getCurrentUser().getUsername()).getCart();
+                model.removeRow(row);
+                priceTotal.setText("Total Price: $" + itemCart.getPrice());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } else {
             this.goToCheckout();
         }

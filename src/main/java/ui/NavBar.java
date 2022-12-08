@@ -53,7 +53,7 @@ public class NavBar extends JPanel implements ActionListener {
     /**
      * Sets up the JButtons in this navBar, along with their actionListeners
      */
-    public void setUpButtonsAndListeners(){
+    public void setUpButtonsAndListeners() {
         profileButton = new JButton("Profile");
         listingsButton = new JButton("Listings");
         cartButton = new JButton("Cart");
@@ -109,6 +109,7 @@ public class NavBar extends JPanel implements ActionListener {
 
     /**
      * The actionListener for the buttons in this NavBar
+     *
      * @param e the event to be processed
      */
     @Override
@@ -130,6 +131,7 @@ public class NavBar extends JPanel implements ActionListener {
 
     /**
      * The action that should run when a button other than the logButton is clicked
+     *
      * @param source the button that was clicked to invoke the action listener
      */
     private void notLogButtonAction(JButton source) throws IOException {
@@ -143,7 +145,7 @@ public class NavBar extends JPanel implements ActionListener {
     /**
      * The action that should run if the logButton is clicked
      */
-    private void logButtonAction(){
+    private void logButtonAction() {
         if (logButton.getText().equals("Log In")) {
             Main.setCurrentPage(new LoginPage());
         } else if (logButton.getText().equals("Register")) {
@@ -159,7 +161,7 @@ public class NavBar extends JPanel implements ActionListener {
      * If no User is logged in (i.e. currentUser is Null) the current page is set to the Login Page with a
      * relevant error message displayed
      */
-    private void userIsNullAction(){
+    private void userIsNullAction() {
         LoginPage newLoginPage = new LoginPage();
         newLoginPage.setErrorMessage("Please log in or register");
         Main.setCurrentPage(newLoginPage);
@@ -167,6 +169,7 @@ public class NavBar extends JPanel implements ActionListener {
 
     /**
      * Switches the currentPage in Main to a different Page, to be displayed in View
+     *
      * @param source the button that was clicked to invoke the action listener
      */
     private void switchScreenAction(JButton source) throws IOException {
@@ -176,7 +179,7 @@ public class NavBar extends JPanel implements ActionListener {
             Main.setCurrentPage(new ListingListPage());
         } else if (source == cartButton) {
             Main.setCurrentPage(new CartPage());
-        } else if (source == createListingButton){
+        } else if (source == createListingButton) {
             Main.setCurrentPage(new CreateListingPage());
         }
     }
