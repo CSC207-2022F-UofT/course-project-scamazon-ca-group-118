@@ -1,6 +1,7 @@
 package UI;
 
 import Main.Main;
+import com.opencsv.exceptions.CsvException;
 import forms.CheckoutForm;
 
 import javax.swing.*;
@@ -102,7 +103,7 @@ public class CheckoutPage extends Page implements ActionListener {
             catch (DateTimeParseException error) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid date yyyy-MM-dd");
             }
-            catch (IOException ex) {
+            catch (IOException | CsvException ex) {
                 throw new RuntimeException(ex);
             }
         }
