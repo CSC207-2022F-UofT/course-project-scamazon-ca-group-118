@@ -106,7 +106,7 @@ public class CartPage extends Page implements ActionListener {
             Listing listing = itemCart.getItems().get(row);
             try {
                 db.removeFromCartByID(listing.getId());
-                itemCart.removeItem(row);
+                itemCart = db.getUserWithUsername(Main.getCurrentUser().getUsername()).getCart();
                 model.removeRow(row);
                 priceTotal.setText("Total Price: $" + itemCart.getPrice());
             } catch (IOException ex) {
