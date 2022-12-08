@@ -2,7 +2,7 @@ package UI;
 
 import database.GetUser;
 import database.ReviewDatabaseGateway;
-import useCase.displayProfile.*;
+import useCase.display_profile.*;
 
 import java.awt.Dimension;
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package useCase.displayProfile;
+package useCase.display_profile;
 
 // This class is in the application business rules layer of clean architecture.
 

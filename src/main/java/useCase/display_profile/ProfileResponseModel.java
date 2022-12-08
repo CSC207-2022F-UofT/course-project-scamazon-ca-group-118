@@ -1,4 +1,4 @@
-package useCase.displayProfile;
+package useCase.display_profile;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,6 @@ public class ProfileResponseModel {
     private String username;
     private String email;
     private double rating;
-    private String profilePic;
     private ArrayList<Integer> reviews;
 
     /**
@@ -20,15 +19,12 @@ public class ProfileResponseModel {
      * @param username The user's username.
      * @param email The user's email.
      * @param rating The user's rating.
-     * @param profilePic The user's profilePic.
      * @param reviews The user's reviews about themselves.
      */
-    public ProfileResponseModel(String username, String email, double rating, String profilePic,
-                                ArrayList<Integer> reviews) {
+    public ProfileResponseModel(String username, String email, double rating, ArrayList<Integer> reviews) {
         this.username = username;
         this.email = email;
         this.rating = rating;
-        this.profilePic = profilePic; // TODO take profilePic out if we don't have time to implement db method for it.
         this.reviews = reviews;
     }
 
@@ -78,22 +74,6 @@ public class ProfileResponseModel {
      */
     public void setRating(double newRating) {
         this.rating = newRating;
-    }
-
-    /**
-     * Gets the profile picture from this ProfileResponseModel.
-     * @return The profile picture image path associated with this ProfileResponseModel.
-     */
-    public String getProfilePic() {
-        return this.profilePic;
-    }
-
-    /**
-     * Sets the profile picture of this ProfileResponseModel.
-     * @param imagePath The new profile picture path to update this ProfileResponseModel with.
-     */
-    public void setProfilePic(String imagePath) {
-        this.profilePic = imagePath;
     }
 
     /**

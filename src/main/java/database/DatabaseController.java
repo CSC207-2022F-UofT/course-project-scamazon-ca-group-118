@@ -36,7 +36,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @throws IOException in case of IOException
      */
 
-    boolean checkUserWithUsername(String username) throws IOException {
+    public boolean checkUserWithUsername(String username) throws IOException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             String currLine;
@@ -393,7 +393,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             while ((currLine = reader.readLine()) != null) {
                 User userObject = createUserObject(currLine);
                 if (userObject == reviewed) {
-                    userObject.addReview(rating); // need to fix reviews
+                    //userObject.addReview(rating); // need to fix reviews
                     String userString = createUserString(userObject);
                     writer.writeNext(userString.split(";"));
                     continue;
@@ -616,19 +616,19 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     }
 
     // we need these methods for testing
-    protected void setUserTablePath(String path) {
+    public void setUserTablePath(String path) {
         this.USER_TABLE_PATH = path;
     }
 
-    protected String getUserTablePath() {
+    public String getUserTablePath() {
         return this.USER_TABLE_PATH;
     }
 
-    protected void setListingTablePath(String path) {
+    public void setListingTablePath(String path) {
         this.LISTING_TABLE_PATH = path;
     }
 
-    protected String getListingTablePath() {
+    public String getListingTablePath() {
         return this.LISTING_TABLE_PATH;
     }
 }

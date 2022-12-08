@@ -1,4 +1,4 @@
-package useCase.displayProfile;
+package useCase.display_profile;
 
 // This interface is in the interface adapters layer of clean architecture.
 

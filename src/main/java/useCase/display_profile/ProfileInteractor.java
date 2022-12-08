@@ -1,8 +1,9 @@
-package useCase.displayProfile;
+package useCase.display_profile;
 import database.ReviewDatabaseGateway;
 import entities.User;
 
 import java.io.IOException;
+import java.util.Objects;
 
 // This class is in the application business rules layer of clean architecture.
 
@@ -14,16 +15,16 @@ public class ProfileInteractor implements ProfileInputBoundary {
     // Note: I use ReviewDatabaseGateway because it has the same methods the ProfilePage needs, and it would
     // be redundant to have two gateways with the same methods.
     private final ReviewDatabaseGateway gateway;
-    private final ProfileOutputBoundary output;
+    private final ProfileOutputBoundary outputBoundary;
 
     /**
      * The ProfileInteractor constructor which assigns the gateway and output boundary needed to carry out the use case.
      * @param gateway The gateway to access the database for the necessary user information.
-     * @param output The output boundary to pass the response model between layers.
+     * @param outputBoundary The output boundary to pass the response model between layers.
      */
-    public ProfileInteractor(ReviewDatabaseGateway gateway, ProfileOutputBoundary output) {
+    public ProfileInteractor(ReviewDatabaseGateway gateway, ProfileOutputBoundary outputBoundary) {
         this.gateway = gateway;
-        this.output = output;
+        this.outputBoundary = outputBoundary;
     }
 
     /**
@@ -38,16 +39,32 @@ public class ProfileInteractor implements ProfileInputBoundary {
             User user = gateway.getUserWithUsername(username);
            /* TODO user.getProfilePic is not in user as of right now so we can add it as a field or not have a
                profile picture. */
-            if (user.equals(null)) {
-                return output.displayFail("This user does not exist");
+            if (Objects.isNull(user)) {
+                return outputBoundary.displayFail("This user does not exist.");
             } else {
                 ProfileResponseModel responseModel = new ProfileResponseModel(username, user.getEmail(),
-                        user.calculateRating(), "", user.getReviews());
-                return output.displaySuccess(responseModel);
+                        user.calculateRating(), user.getReviews());
+                return outputBoundary.displaySuccess(responseModel);
             }
         } catch (IOException error) {
-            return output.displayFail("Something went wrong.");
+            return outputBoundary.displayFail("Something went wrong.");
         }
+    }
+
+    /**
+     * Gets the Gateway from this ProfileInteractor.
+     * @return The ReviewDatabaseGateway associated with this ProfileController.
+     */
+    public ReviewDatabaseGateway getGateway() {
+        return this.gateway;
+    }
+
+    /**
+     * Gets the OutputBoundary from this ProfileInteractor.
+     * @return The ProfileOutputBoundary associated with this ProfileInteractor.
+     */
+    public ProfileOutputBoundary getOutputBoundary() {
+        return this.outputBoundary;
     }
 }
 

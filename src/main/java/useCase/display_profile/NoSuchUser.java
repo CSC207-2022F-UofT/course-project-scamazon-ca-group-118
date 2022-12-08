@@ -1,4 +1,4 @@
-package useCase.displayProfile;
+package useCase.display_profile;
 
 /**
  * This exception is thrown when searching for a user that does not exist.
