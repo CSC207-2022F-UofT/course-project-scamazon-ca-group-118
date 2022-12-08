@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ListingDetailPage extends Page implements ActionListener {
     final int WIDTH = 1280;
@@ -107,6 +108,7 @@ public class ListingDetailPage extends Page implements ActionListener {
             message.setFont(new Font("Arial", Font.PLAIN, 20));
             message.setLocation(500, 580);
             message.setSize(500, 50);
+
             this.add(message);
         } else {
             message.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -142,12 +144,22 @@ public class ListingDetailPage extends Page implements ActionListener {
     }
 
     private boolean canAddToCart() throws IOException {
-
-        if (db.currentUserHasListingInCart(Main.getCurrentUser(), listing)) {
+        User currUser = db.getUserWithUsername(Main.getCurrentUser().getUsername());
+        ArrayList<Listing> listings = currUser.getListings();
+        boolean found = false;
+        for (Listing userListing : listings) {
+            if (listing.getId() == userListing.getId()) {
+                found = true;
+                break;
+            }
+        }
+        if (db.currentUserHasListingInCart(currUser, listing)) {
             message = new JLabel("This item is already in your cart");
             return false;
-        } else if (Main.getCurrentUser().getCart().getItems().contains(listing)) {
-            message = new JLabel("This is your listing");
+        }
+        else if (found) {
+
+            message = new JLabel("You can't buy your own listing");
             return false;
         } else {
             message = new JLabel("");
