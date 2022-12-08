@@ -32,7 +32,7 @@ public class RegisterInteractor {
             return true;
         }else{
             if (EMAIL_EXISTS && USERNAME_EXISTS){
-                throw new RegisterFailed("Username and Email and already taken");
+                throw new RegisterFailed("Username and Email are already taken");
             }else if (USERNAME_EXISTS){
                 throw new RegisterFailed("Username is already taken");
             }else{
