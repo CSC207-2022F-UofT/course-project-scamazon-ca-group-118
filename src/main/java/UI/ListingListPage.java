@@ -27,14 +27,20 @@ public class ListingListPage extends Page implements ActionListener {
     private ArrayList<JButton> BUTTONS = new ArrayList<>();
     private List<Listing> displayedListings;
 
+    public ListingListPage(ArrayList<Listing> listings) throws IOException {
+        super("Scamazon.ca");
+        this.LAYOUT = new SpringLayout();
+
+        //displays all listings from database before User has searched anything
+        setUpPanel(listings);
+    }
     public ListingListPage() throws IOException {
         super("Scamazon.ca");
         this.LAYOUT = new SpringLayout();
 
-        ArrayList<Listing> allListings = CONTROLLER.getAllListings();
-
         //displays all listings from database before User has searched anything
-        setUpPanel(allListings);
+        DatabaseController db = new DatabaseController();
+        setUpPanel(db.getAllListings());
     }
 
     private void setUpPanel(List<Listing> listings) throws IOException {
@@ -99,11 +105,10 @@ public class ListingListPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SEARCH) {
             try {
-                this.BUTTONS = new ArrayList<>();
                 SearchForm form = new SearchForm(JT_SEARCH.getText(), CONTROLLER);
                 SearchResponseModel responseModel = form.getResponseModel();
                 ArrayList<Listing> searchListings = responseModel.getListings();
-                setUpPanel(searchListings);
+                Main.setCurrentPage(new ListingListPage(searchListings));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
