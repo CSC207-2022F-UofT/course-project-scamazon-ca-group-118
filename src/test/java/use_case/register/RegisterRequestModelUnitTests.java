@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class RegisterRequestModelUnitTests {
 
     @Test
-    void TestRegisterRequestModel(){
+    void TestRegisterRequestModel() {
         RegisterRequestModel registerRequestModel = new RegisterRequestModel("eric1230",
                 "eric.guo1230@gmail.com", "12345678");
         assert registerRequestModel.getUsername().equals("eric1230");
@@ -15,7 +15,7 @@ public class RegisterRequestModelUnitTests {
     }
 
     @Test
-    void TestRegisterRequestSetMethods(){
+    void TestRegisterRequestSetMethods() {
         RegisterRequestModel registerRequestModel = new RegisterRequestModel("", "", "");
         registerRequestModel.setEmail("eric.guo1230@gmail.com");
         registerRequestModel.setUsername("ericguo1230");

@@ -5,11 +5,14 @@ import java.io.IOException;
 public class RegisterResponseModel {
 
     private String message;
+    private String username;
+    private String password;
+    private String email;
 
     public RegisterResponseModel(RegisterRequestModel requestModel) throws IOException {
-        String username = requestModel.getUsername();
-        String password = requestModel.getPassword();
-        String email = requestModel.getUserEmail();
+        this.username = requestModel.getUsername();
+        this.password = requestModel.getPassword();
+        this.email = requestModel.getUserEmail();
         RegisterInteractor interactor = new RegisterInteractor(password, email, username);
         if (interactor.shouldRegister()){
             interactor.createUser();
@@ -20,6 +23,18 @@ public class RegisterResponseModel {
     public String getMessage(){
         RegisterPresenter presenter = new RegisterPresenter(this.message);
         return presenter.getMessage();
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
+
+    public String getUsername(){
+        return this.username;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
 }

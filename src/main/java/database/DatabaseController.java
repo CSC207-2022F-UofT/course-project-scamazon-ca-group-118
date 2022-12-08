@@ -792,7 +792,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @return returns the path as a string
      */
-    protected String getUserTablePath() {
+    public String getUserTablePath() {
         return this.USER_TABLE_PATH;
     }
 
@@ -810,7 +810,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @return returns the path as a string
      */
-    protected String getListingTablePath() {
+    public String getListingTablePath() {
         return this.LISTING_TABLE_PATH;
     }
 
