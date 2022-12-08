@@ -1,7 +1,6 @@
 package UI;
 
 import Main.Main;
-import forms.RegisterForm;
 
 import javax.swing.*;
 import java.awt.*;

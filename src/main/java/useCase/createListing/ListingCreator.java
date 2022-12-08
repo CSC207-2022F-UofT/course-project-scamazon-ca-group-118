@@ -3,12 +3,9 @@ package useCase.createListing;
 import entities.User;
 
 import java.io.IOException;
-import java.util.List;
 
-import entities.Listing;
 import database.DatabaseController;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
 /**
