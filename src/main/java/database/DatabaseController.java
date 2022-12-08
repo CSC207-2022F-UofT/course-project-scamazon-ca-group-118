@@ -6,10 +6,9 @@ import com.opencsv.exceptions.CsvException;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
-import Main.Main;
+import main.Main;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +110,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         try {
             BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             String currLine;
-            while ((currLine = reader.readLine()) != null) {
+            while (!(Objects.isNull(currLine = reader.readLine()))) {
                 String[] user = currLine.split(";");
                 if (user[1].equals(username)) {
                     return createUserObject(currLine);
@@ -235,7 +234,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * removes listing in csv file from the user's list of listings they are selling
      *
      * @param id id of the listing to be removed
-     * @throws IOException catches if there is an IOException
+     * @throws IOException  catches if there is an IOException
      * @throws CsvException catches if there is a CSVException
      */
     protected void removeListingFromUserListings(int id) throws IOException, CsvException {
@@ -780,6 +779,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     /**
      * Method to set the path of the user csv file
+     *
      * @param path path of the csv file
      */
     public void setUserTablePath(String path) {
@@ -788,6 +788,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     /**
      * method to get the path of the user csv file
+     *
      * @return returns the path as a string
      */
     public String getUserTablePath() {
@@ -796,6 +797,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     /**
      * Method to set the path of the listing csv file
+     *
      * @param path path of the csv file
      */
     protected void setListingTablePath(String path) {
@@ -804,10 +806,45 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
 
     /**
      * method to get the path of the listing csv file
+     *
      * @return returns the path as a string
      */
     protected String getListingTablePath() {
         return this.LISTING_TABLE_PATH;
+    }
+
+    public int getNextListingIDOnStartUp() throws RuntimeException {
+        int largestSoFar = 0;
+        try {
+            FileReader listingFile = new FileReader(getListingTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(listingFile).withCSVParser(parser).build();
+            List<String[]> csvBody = reader.readAll();
+            for (String[] row : csvBody) {
+                largestSoFar = Math.max(Integer.parseInt(row[0]), largestSoFar);
+            }
+            reader.close();
+            return largestSoFar;
+        } catch (IOException | CsvException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getNextUserIDOnStartUp() throws RuntimeException {
+        int largestSoFar = 0;
+        try {
+            FileReader userFile = new FileReader(getUserTablePath());
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader reader = new CSVReaderBuilder(userFile).withCSVParser(parser).build();
+            List<String[]> csvBody = reader.readAll();
+            for (String[] row : csvBody) {
+                largestSoFar = Math.max(Integer.parseInt(row[0]), largestSoFar);
+            }
+            reader.close();
+            return largestSoFar;
+        } catch (IOException | CsvException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

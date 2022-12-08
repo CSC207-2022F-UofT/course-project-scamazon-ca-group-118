@@ -3,8 +3,8 @@ package entities;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import useCase.createListing.ListingCreator;
-import useCase.writeReview.ReviewCreator;
+import use_case.create_listing.ListingCreator;
+import use_case.write_review.ReviewCreator;
 
 public class User {
     private String username;
@@ -124,7 +124,7 @@ public class User {
     }
 
 
-    public void writeReview(User reviewed, int rating) {
+    public void writeReview(User reviewed, int rating) throws IOException {
         new ReviewCreator().createReview(reviewed, rating);
     }
 
