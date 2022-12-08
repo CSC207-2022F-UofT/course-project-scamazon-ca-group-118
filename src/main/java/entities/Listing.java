@@ -15,7 +15,7 @@ public class Listing {
     private String description;
     private String imagePath; // Will store the directory path of the images
 
-    // TODO deprecated, remove this constructor
+
     public Listing(User seller, String listingTitle, float price, String description, String imagePath) {
         this.sellerUsername = seller.getUsername();
         this.listingTitle = listingTitle;
@@ -37,8 +37,15 @@ public class Listing {
         this.imagePath = imagePath;
     }
 
-    // for when this isn't a "new" listing, aka it already exists in the db
-    // and we just want to represent it in an object.
+    /**
+     * constructor for the serializer in the database controller
+     * @param sellerUsername username of the seller
+     * @param listingTitle title of the listing
+     * @param dateAdded date added of listing
+     * @param price price of listing
+     * @param description description of listing
+     * @param imagePath image path of the listing
+     */
     public Listing(String sellerUsername, String listingTitle, LocalDate dateAdded,
                    float price, String description, String imagePath) {
         this.id = nextId++;
@@ -114,6 +121,11 @@ public class Listing {
         this.imagePath = imagePath;
     }
 
+    /**
+     * checks to see if the current listing and the selected listing are the same
+     * @param listing listing object of selected listing
+     * @return returns true if duplicates, false if unique
+     */
     public boolean equals(Listing listing) {
         if (this.getId() == listing.getId() &&
                 this.getSellerUsername().equals(listing.getSellerUsername()) &&

@@ -35,7 +35,6 @@ public class AddToCartForm extends Form {
         if (this.validateForm()) {
             AddToCartRequestModel requestModel = new AddToCartRequestModel(this.BUYER_USERNAME, this.LISTING, this.CAN_ADD_TO_CART);
             this.responseModel = new AddToCartResponseModel(requestModel);
-            // TODO: how do we now navigate back to the ListingListPage?
         }
     }
 
