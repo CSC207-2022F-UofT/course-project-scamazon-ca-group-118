@@ -1,5 +1,6 @@
 package forms;
 
+import use_case.register.RegisterResponseModel;
 import use_case.register.RegisterFailed;
 import use_case.register.RegisterRequestModel;
 import use_case.register.RegisterResponseModel;

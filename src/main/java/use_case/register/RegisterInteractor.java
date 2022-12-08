@@ -44,4 +44,5 @@ public class RegisterInteractor {
     public void createUser(){
         IMPLEMENTATION.createUser(USERNAME, EMAIL, PASSWORD);
     }
+
 }

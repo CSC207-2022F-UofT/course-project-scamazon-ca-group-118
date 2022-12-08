@@ -1,8 +1,11 @@
-package UI;
+package ui;
 
 import forms.RegisterForm;
-import useCase.Register.RegisterFailed;
-import useCase.Register.RegisterResponseModel;
+import ui.Page;
+import use_case.register.RegisterFailed;
+import use_case.register.RegisterResponseModel;
+import use_case.register.RegisterFailed;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

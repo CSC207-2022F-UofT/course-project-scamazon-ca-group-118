@@ -1,4 +1,7 @@
-package useCase.Register;
+package use_case.register;
+
+import use_case.register.RegisterPresenter;
+import use_case.register.RegisterRequestModel;
 
 import java.io.IOException;
 
@@ -15,7 +18,7 @@ public class RegisterResponseModel {
         this.email = requestModel.getUserEmail();
         RegisterInteractor interactor = new RegisterInteractor(password, email, username);
         if (interactor.shouldRegister()){
-            interactor.createUser(username, email, password);
+            interactor.createUser();
             this.message = "Account Created";
         }
     }

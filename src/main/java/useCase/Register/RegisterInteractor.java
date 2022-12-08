@@ -2,6 +2,7 @@ package useCase.Register;
 
 import database.RegisterGatewayImplementation;
 import entities.User;
+import use_case.register.RegisterFailed;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public class RegisterInteractor {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.implementation = new RegisterGatewayImplementation(email, username, password);
+        this.implementation = new RegisterGatewayImplementation();
         this.emailExists = implementation.checkUserWithEmail(email);
         this.usernameExists = implementation.checkUserWithUsername(username);
     }
