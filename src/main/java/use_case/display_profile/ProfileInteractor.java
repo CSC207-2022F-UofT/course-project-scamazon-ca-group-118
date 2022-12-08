@@ -10,7 +10,6 @@ public class ProfileInteractor implements ProfileInputBoundary {
     // Note: I use ReviewDatabaseGateway because it has the same methods the ProfilePage needs.
     private final ReviewDatabaseGateway gateway;
     private final ProfileOutputBoundary output;
-    // TODO do we need a User or UserFactory attribute here?
 
     /**
      * The ProfileInteractor constructor which assigns the gateway and output boundary needed to carry out the use case.
@@ -32,8 +31,6 @@ public class ProfileInteractor implements ProfileInputBoundary {
         try {
             String username = requestModel.getUsername();
             User user = gateway.getUserWithUsername(username);
-           /* TODO user.getProfilePic is not in user as of right now so we can add it as a field or not have a
-               profile picture. */
             ProfileResponseModel responseModel = new ProfileResponseModel(username, user.getEmail(),
                     user.calculateRating(), "", user.getREVIEWS());
             return output.displaySuccess(responseModel);

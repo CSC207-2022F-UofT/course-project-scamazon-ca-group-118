@@ -7,7 +7,6 @@ import use_case.search.SearchResponseModel;
 import java.io.IOException;
 
 public class SearchForm extends Form {
-    //TODO Make after database interactor is there
 
     public String query;
 
