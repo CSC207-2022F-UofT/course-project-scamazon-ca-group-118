@@ -51,6 +51,14 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
+    /**
+     * checks given email with every email in database to see if given email is unique
+     *
+     * @param email email address of user
+     * @return true/false depending on if there is a duplicate
+     * @throws IOException catches if there is an IOException
+     */
+
     public boolean checkUserWithEmail(String email) throws IOException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
@@ -182,7 +190,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @param ID id passed to removeListing
      */
-    // TODO: test
     public void removeListing(int ID) throws IOException, CsvException {
         try {
             FileReader listingFile = new FileReader(getListingTablePath());
@@ -198,7 +205,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                 Listing listingObject = createListingObject(listingString.substring(0, listingString.length() - 1));
                 if (listingObject.getId() == ID) {
                     removeListingFromAllCarts(ID);
-                    removeListingFromUserListings(ID); // TODO: test
+                    removeListingFromUserListings(ID);
                     continue;
                 }
                 String newListingString = createListingString(listingObject);
@@ -224,6 +231,13 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
+    /**
+     * removes listing in csv file from the user's list of listings they are selling
+     *
+     * @param id id of the listing to be removed
+     * @throws IOException catches if there is an IOException
+     * @throws CsvException catches if there is a CSVException
+     */
     protected void removeListingFromUserListings(int id) throws IOException, CsvException {
         Listing listing = getListingByID(id);
 
@@ -258,6 +272,13 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         userWriter.flush();
         userWriter.close();
     }
+
+    /**
+     * removes a listing that is taken or checked out from every user's cart
+     *
+     * @param listingID id of the listing that was taken down
+     * @throws IOException catches if there is an IOException
+     */
 
     protected void removeListingFromAllCarts(int listingID) throws IOException {
         try {
@@ -295,8 +316,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
             writer.writeAll(csvBody);
             writer.flush();
             writer.close();
-        } catch (FileNotFoundException e) {
-            throw new IOException(e);
         } catch (IOException e) {
             throw new IOException(e);
         } catch (CsvException e) {
@@ -304,7 +323,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
-    //TODO test
 
     /**
      * Creates a listing given sellerUsername, listingTitle, price, dateAdded,
@@ -421,7 +439,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @param listingID pass the id of the listing to be removed
      */
-    // TODO: test
     @Override
     public void removeFromCartByID(int listingID) throws IOException {
         User currUser = Main.getCurrentUser();
@@ -469,7 +486,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @param reviewed user being reviewed
      * @param rating   number given by the reviewer
      */
-    // TODO: test
     @Override
     public void addReview(User reviewed, int rating) throws RuntimeException {
 
@@ -518,7 +534,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * also calls removeListingFromAllCarts to remove all listings that were
      * checked out from everyone else's cart
      */
-    // TODO: test
     @Override
     public void checkoutRemoveListings() throws IOException, CsvException {
 
@@ -718,7 +733,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      * @return true if currentUser already has the listing in their cart, false otherwise
      */
 
-    // TODO implement
     @Override
     public boolean currentUserHasListingInCart(User currentUser, Listing listing) throws IOException {
         ArrayList<Listing> currCart = currentUser.getCart().getItems();
@@ -733,7 +747,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     /**
      * @param user    the current user
      * @param listing the listing we want to add to their cart
-     * @throws IOException
+     * @throws IOException in case of IOException
      */
     @Override
     public void addListingToUserCart(User user, Listing listing) throws IOException {
@@ -773,19 +787,34 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         }
     }
 
-    // we need these methods for testing
+    /**
+     * Method to set the path of the user csv file
+     * @param path path of the csv file
+     */
     protected void setUserTablePath(String path) {
         this.USER_TABLE_PATH = path;
     }
 
+    /**
+     * method to get the path of the user csv file
+     * @return returns the path as a string
+     */
     protected String getUserTablePath() {
         return this.USER_TABLE_PATH;
     }
 
+    /**
+     * Method to set the path of the listing csv file
+     * @param path path of the csv file
+     */
     protected void setListingTablePath(String path) {
         this.LISTING_TABLE_PATH = path;
     }
 
+    /**
+     * method to get the path of the listing csv file
+     * @return returns the path as a string
+     */
     protected String getListingTablePath() {
         return this.LISTING_TABLE_PATH;
     }
