@@ -1,6 +1,7 @@
 package UI;
 
 import Main.Main;
+import com.opencsv.exceptions.CsvException;
 import forms.CheckoutForm;
 
 import javax.swing.*;
@@ -114,7 +115,8 @@ public class CheckoutPage extends Page implements ActionListener {
                     JOptionPane.showMessageDialog(new JFrame(), message);
                 }
             }
-            catch (IOException ex) {
+
+            catch (IOException | CsvException ex) {
                 throw new RuntimeException(ex);
             }
         }
