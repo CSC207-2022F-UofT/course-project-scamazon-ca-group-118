@@ -1,6 +1,7 @@
 package UI;
 
 import Main.Main;
+import database.DatabaseController;
 import entities.Cart;
 import entities.Listing;
 import entities.User;
@@ -10,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CartPage extends Page implements ActionListener {
@@ -98,11 +100,18 @@ public class CartPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.REMOVE) {
+            DatabaseController db = new DatabaseController();
             DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
             int row = this.itemTable.getSelectedRow();
-            itemCart.removeItem(row);
-            model.removeRow(row);
-            priceTotal.setText("Total Price: $" + itemCart.getPrice());
+            Listing listing = itemCart.getItems().get(row);
+            try {
+                db.removeFromCartByID(listing.getId());
+                itemCart.removeItem(row);
+                model.removeRow(row);
+                priceTotal.setText("Total Price: $" + itemCart.getPrice());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         } else {
             this.goToCheckout();
         }
