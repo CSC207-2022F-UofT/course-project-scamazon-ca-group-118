@@ -19,22 +19,4 @@ public class RegisterResponseModel {
             this.message = "Account Created";
         }
     }
-
-    public String getMessage(){
-        RegisterPresenter presenter = new RegisterPresenter(this.message);
-        return presenter.getMessage();
-    }
-
-    public String getUsername(){
-        return this.username;
-    }
-
-    public String getPassword(){
-        return this.password;
-    }
-
-    public String getEmail(){
-        return this.email;
-    }
-
 }
