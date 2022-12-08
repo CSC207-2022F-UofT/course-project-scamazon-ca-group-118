@@ -13,16 +13,14 @@ import java.io.IOException;
  */
 public class CheckoutInteractor {
     private User buyer;
-    private String username;
 
     /**
-     * The constructor for the ReviewInteractor class
+     * The constructor for the CheckoutInteractor class
      *
-     * @param username the username entered by the User
+     * @param requestModel the request model that's data will be manipulated
      */
-    public CheckoutInteractor(String username) throws IOException {
-        this.username = username;
-        this.buyer = new GetUser().getUserWithUsername(this.username);
+    public CheckoutInteractor(CheckoutRequestModel requestModel) throws IOException {
+        this.buyer = requestModel.getBuyer();
     }
 
     public String getMessage() throws IOException {

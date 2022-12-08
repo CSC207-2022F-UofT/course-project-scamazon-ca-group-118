@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class CheckoutForm extends Form {
+    private final User BUYER;
     private final String NAME;
     private final String CARD_NUMBER;
     private final String CVV;
@@ -19,6 +20,7 @@ public class CheckoutForm extends Form {
     private String message;
     public CheckoutForm(String name, String card_number, String cvv, LocalDate expiration, String address) {
         super("Checkout");
+        this.BUYER = buyer;
         this.NAME = name;
         this.CARD_NUMBER = card_number;
         this.CVV = cvv;
@@ -58,8 +60,7 @@ public class CheckoutForm extends Form {
     @Override
     protected void submitForm() throws IOException {
         if (this.validateForm()) {
-            User user = Main.getCurrentUser();
-            CheckoutRequestModel requestModel = new CheckoutRequestModel(user.getUsername());
+            CheckoutRequestModel requestModel = new CheckoutRequestModel(BUYER);
             responseModel = new CheckoutResponseModel(requestModel);
             //redirects User back to ListingListPage
             Main.setCurrentPage(new ListingListPage());
