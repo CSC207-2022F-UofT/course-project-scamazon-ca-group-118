@@ -83,6 +83,7 @@ public class CartPage extends Page implements ActionListener {
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable itemTable = new JTable(model);
         itemTable.setFont(new Font("Serif", Font.PLAIN, 20));
+        itemTable.setRowHeight(50);
         return itemTable;
     }
 
