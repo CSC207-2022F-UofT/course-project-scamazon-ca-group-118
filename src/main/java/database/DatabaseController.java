@@ -103,7 +103,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
         try {
             BufferedReader reader = new BufferedReader(new FileReader(USER_TABLE_PATH));
             String currLine;
-            while ((currLine = reader.readLine()) != null) {
+            while (!(currLine = reader.readLine()).equals("")) {
                 String[] user = currLine.split(";");
                 if (user[1].equals(username)) {
                     return createUserObject(currLine);
