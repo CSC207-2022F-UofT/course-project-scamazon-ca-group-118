@@ -87,14 +87,6 @@ public class ReviewInteractor {
         return rating;
     }
 
-    public void setReviewer(User reviewer) {
-        this.reviewer = reviewer;
-    }
-
-    public void setReviewed(User reviewed) {
-        this.reviewed = reviewed;
-    }
-
     public void setRating(int rating) {
         this.rating = rating;
     }

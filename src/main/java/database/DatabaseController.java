@@ -773,19 +773,19 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
     }
 
     // we need these methods for testing
-    protected void setUserTablePath(String path) {
+    public void setUserTablePath(String path) {
         this.USER_TABLE_PATH = path;
     }
 
-    protected String getUserTablePath() {
+    public String getUserTablePath() {
         return this.USER_TABLE_PATH;
     }
 
-    protected void setListingTablePath(String path) {
+    public void setListingTablePath(String path) {
         this.LISTING_TABLE_PATH = path;
     }
 
-    protected String getListingTablePath() {
+    public String getListingTablePath() {
         return this.LISTING_TABLE_PATH;
     }
 }
