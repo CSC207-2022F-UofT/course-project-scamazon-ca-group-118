@@ -2,6 +2,7 @@ package forms;
 
 import Main.Main;
 import UI.ListingListPage;
+import com.opencsv.exceptions.CsvException;
 import entities.User;
 import useCase.checkout.CheckoutRequestModel;
 import useCase.checkout.CheckoutResponseModel;
@@ -58,7 +59,7 @@ public class CheckoutForm extends Form {
     }
 
     @Override
-    protected void submitForm() throws IOException {
+    protected void submitForm() throws IOException, CsvException {
         if (this.validateForm()) {
             CheckoutRequestModel requestModel = new CheckoutRequestModel(BUYER);
             responseModel = new CheckoutResponseModel(requestModel);
@@ -67,7 +68,7 @@ public class CheckoutForm extends Form {
         }
     }
 
-    public CheckoutResponseModel getResponseModel() throws IOException {
+    public CheckoutResponseModel getResponseModel() throws IOException, CsvException {
         this.submitForm();
         return responseModel;
     }
