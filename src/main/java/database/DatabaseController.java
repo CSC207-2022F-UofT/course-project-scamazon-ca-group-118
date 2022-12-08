@@ -487,7 +487,6 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      */
     @Override
     public void addReview(User reviewed, int rating) throws RuntimeException {
-
         try {
             User reviewedUser = getUserWithUsername(reviewed.getUsername());
             ArrayList<Integer> reviewedUserRatings = reviewedUser.getREVIEWS();
@@ -783,7 +782,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @param path path of the csv file
      */
-    protected void setUserTablePath(String path) {
+    public void setUserTablePath(String path) {
         this.USER_TABLE_PATH = path;
     }
 
@@ -792,7 +791,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
      *
      * @return returns the path as a string
      */
-    protected String getUserTablePath() {
+    public String getUserTablePath() {
         return this.USER_TABLE_PATH;
     }
 

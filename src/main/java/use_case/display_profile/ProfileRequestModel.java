@@ -2,6 +2,9 @@ package use_case.display_profile;
 
 // This class is in the application business rules layer of clean architecture.
 
+/**
+ * This is the request model for the display profile page use case.
+ */
 public class ProfileRequestModel {
     private String username;
 

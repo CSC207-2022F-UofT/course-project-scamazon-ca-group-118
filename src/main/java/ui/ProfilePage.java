@@ -11,8 +11,6 @@ import java.awt.*;
 import static main.Main.getCurrentUser;
 
 // This class is in the Frameworks & Drivers layer of clean architecture.
-// TODO Should I allow a user to update their username and email
-// right now I have a default profile picture set.
 
 /**
  * This is the GUI for the user's profile page which creates a request for the user's profile and displays the page.
@@ -20,16 +18,16 @@ import static main.Main.getCurrentUser;
 public class ProfilePage extends Page {
     private final String PAGE_TITLE;
     private final SpringLayout LAYOUT;
-    private final String username;
-    private final String email;
-    private final double rating;
+    private String username;
+    private String email;
+    private double rating;
     private JLabel usernameLabel;
     private JLabel emailLabel;
     private JLabel ratingLabel;
     private JLabel titleLabel;
-    private JLabel image;
     private JPanel reviewForm;
-
+    private JPanel profilePicPanel;
+    private final JLabel errorMessage = new JLabel();
 
     /**
      * The ProfilePage constructor which creates a request and sets the necessary attributes from the
@@ -40,8 +38,6 @@ public class ProfilePage extends Page {
         super("Scamazon.ca");
         this.LAYOUT = new SpringLayout();
         this.PAGE_TITLE = pageTitle;
-
-        // TODO for now I use the current user to get the username
         this.username = getCurrentUser().getUsername();
 
         // Make a request for the user's profile.
@@ -49,12 +45,17 @@ public class ProfilePage extends Page {
         ProfileOutputBoundary profilePresenter = new ProfilePresenter();
         ProfileInputBoundary inputBoundary = new ProfileInteractor(profileGateway, profilePresenter);
         ProfileController profileController = new ProfileController(inputBoundary);
-        // TODO add a try-catch in case IOException is thrown if user doesn't exist
-        ProfileResponseModel user = profileController.createRequest(this.username);
-
-        this.email = user.getEmail();
-        this.rating = user.getRating();
-
+        try {
+            ProfileResponseModel user = profileController.createRequest(username);
+            this.email = user.getEmail();
+            this.rating = user.getRating();
+        } catch (NoSuchUser exception) {
+            String error = exception.getMessage();
+            errorMessage.setText(error);
+            this.username = "";
+            this.email = "";
+            this.rating = 0;
+        }
         setUpPanel();
         setUpLayout();
     }
@@ -83,13 +84,13 @@ public class ProfilePage extends Page {
         ratingLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         this.add(ratingLabel);
 
+        this.add(errorMessage);
+
         reviewForm = new ProfileReviewPanel();
         this.add(reviewForm);
 
-        ImageIcon imageIcon = new ImageIcon("images/profile_picture.png");
-        Image img = imageIcon.getImage().getScaledInstance(128, 128, Image.SCALE_SMOOTH);
-        image = new JLabel(new ImageIcon(img));
-        this.add(image);
+        profilePicPanel = new ProfilePicPanel();
+        this.add(profilePicPanel);
     }
 
     /**
@@ -99,7 +100,9 @@ public class ProfilePage extends Page {
         // Aligning everything to the middle:
         LAYOUT.putConstraint(SpringLayout.HORIZONTAL_CENTER, titleLabel, 0, SpringLayout.HORIZONTAL_CENTER,
                 this);
-        LAYOUT.putConstraint(SpringLayout.HORIZONTAL_CENTER, image, 0, SpringLayout.HORIZONTAL_CENTER,
+        LAYOUT.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorMessage, 0, SpringLayout.HORIZONTAL_CENTER,
+                titleLabel);
+        LAYOUT.putConstraint(SpringLayout.HORIZONTAL_CENTER, profilePicPanel, 84, SpringLayout.HORIZONTAL_CENTER,
                 titleLabel);
         LAYOUT.putConstraint(SpringLayout.HORIZONTAL_CENTER, usernameLabel, 0, SpringLayout.HORIZONTAL_CENTER,
                 titleLabel);
@@ -112,8 +115,9 @@ public class ProfilePage extends Page {
 
         // Aligning everything vertically:
         LAYOUT.putConstraint(SpringLayout.NORTH, titleLabel, 160, SpringLayout.NORTH, this);
-        LAYOUT.putConstraint(SpringLayout.NORTH, image, 20, SpringLayout.SOUTH, titleLabel);
-        LAYOUT.putConstraint(SpringLayout.NORTH, usernameLabel, 20, SpringLayout.SOUTH, image);
+        LAYOUT.putConstraint(SpringLayout.NORTH, errorMessage, 0, SpringLayout.SOUTH, titleLabel);
+        LAYOUT.putConstraint(SpringLayout.NORTH, profilePicPanel, 0, SpringLayout.SOUTH, errorMessage);
+        LAYOUT.putConstraint(SpringLayout.NORTH, usernameLabel, 5, SpringLayout.SOUTH, profilePicPanel);
         LAYOUT.putConstraint(SpringLayout.NORTH, emailLabel, 20, SpringLayout.SOUTH, usernameLabel);
         LAYOUT.putConstraint(SpringLayout.NORTH, ratingLabel, 20, SpringLayout.SOUTH, emailLabel);
         LAYOUT.putConstraint(SpringLayout.NORTH, reviewForm, 20, SpringLayout.SOUTH, ratingLabel);
