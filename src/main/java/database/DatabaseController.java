@@ -825,7 +825,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                 largestSoFar = Math.max(Integer.parseInt(row[0]), largestSoFar);
             }
             reader.close();
-            return largestSoFar;
+            return ++largestSoFar;
         } catch (IOException | CsvException e) {
             throw new RuntimeException(e);
         }
@@ -842,7 +842,7 @@ public class DatabaseController implements CreateListingDatabaseGateway, ReviewD
                 largestSoFar = Math.max(Integer.parseInt(row[0]), largestSoFar);
             }
             reader.close();
-            return largestSoFar;
+            return ++largestSoFar;
         } catch (IOException | CsvException e) {
             throw new RuntimeException(e);
         }
